@@ -30,6 +30,10 @@ async function switchAdminTab(tab, updateHistory = true) {
   const titles = { overview: 'Ringkasan', proctor: 'Pengawasan', questions: 'Bank soal', users: 'Akun pengguna' };
   const currentTitle = document.getElementById('adminCurrentTitle');
   if (currentTitle) currentTitle.textContent = titles[tab] || 'Ringkasan';
+  const pageTitle = document.getElementById('adminPageTitle');
+  if (pageTitle) pageTitle.textContent = titles[tab] || 'Ringkasan';
+  const breadcrumb = document.getElementById('adminBreadcrumb');
+  if (breadcrumb) breadcrumb.textContent = titles[tab] || 'Ringkasan';
   const operations = { overview: loadAdminOverview, proctor: loadProctorSessions, questions: loadAdminQuestionsTable, users: loadAdminUsersTable };
   if (operations[tab]) await operations[tab]();
   return true;

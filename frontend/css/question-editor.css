@@ -1,5 +1,4 @@
-/* Hallmark · shape: app screen · genre: modern-minimal · theme: brand · redesign: full
- * signature: question bank and authoring form · nav: existing admin tabs · footer: none · v2.0.0 */
+/* Cobalt Modern - LinguaPulse TOEFL EPT */
 .question-bank-heading { display: flex; align-items: center; justify-content: space-between; gap: var(--space-lg); margin-bottom: 20px; }
 .question-bank-heading h2 { font-size: 26px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
 .question-bank-heading p { font-size: 14px; color: #64748b; max-width: 60ch; margin: 0; }

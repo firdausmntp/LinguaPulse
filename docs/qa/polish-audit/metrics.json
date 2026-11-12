@@ -1,0 +1,5533 @@
+{
+  "pages": [
+    {
+      "name": "landing",
+      "route": "/",
+      "width": 1440,
+      "height": 4291,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "Persiapan TOEFL EPT. Prototipe untuk pembelajaran dan penelitian.",
+          "ratio": 4.34,
+          "size": 14,
+          "selector": ""
+        },
+        {
+          "text": "TOEFL adalah merek dagang ETS. LinguaPulse tidak berafiliasi dengan ETS.",
+          "ratio": 4.34,
+          "size": 12,
+          "selector": "footer-note"
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Daftar",
+          "y": 18
+        },
+        {
+          "text": "Mulai persiapan EPT",
+          "y": 666
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Lebih paham. Lebih siap EPT."
+        },
+        {
+          "tag": "H2",
+          "text": "Tiga bagian. Satu langkah lebih siap."
+        },
+        {
+          "tag": "H3",
+          "text": "Dengarkan konteksnya. Tangkap maksudnya."
+        },
+        {
+          "tag": "H2",
+          "text": "Satu soal. Satu pemahaman baru."
+        },
+        {
+          "tag": "H3",
+          "text": "The outer ear, ________ the fleshy pinna and the auditory canal, picks up and funnels soun"
+        },
+        {
+          "tag": "H2",
+          "text": "Ada waktu sebentar? Tetap bisa belajar."
+        },
+        {
+          "tag": "H2",
+          "text": "Belajar dengan alur yang jelas."
+        },
+        {
+          "tag": "H3",
+          "text": "Siapkan sesi"
+        },
+        {
+          "tag": "H3",
+          "text": "Kerjakan dengan fokus"
+        },
+        {
+          "tag": "H3",
+          "text": "Tinjau hasil pribadi"
+        },
+        {
+          "tag": "H2",
+          "text": "Fokus pada latihan. Tetap pahami privasinya."
+        },
+        {
+          "tag": "H2",
+          "text": "Sebelum memulai."
+        }
+      ]
+    },
+    {
+      "name": "landing",
+      "route": "/",
+      "width": 375,
+      "height": 5603,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "Persiapan TOEFL EPT. Prototipe untuk pembelajaran dan penelitian.",
+          "ratio": 4.34,
+          "size": 14,
+          "selector": ""
+        },
+        {
+          "text": "TOEFL adalah merek dagang ETS. LinguaPulse tidak berafiliasi dengan ETS.",
+          "ratio": 4.34,
+          "size": 12,
+          "selector": "footer-note"
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Daftar",
+          "y": 15
+        },
+        {
+          "text": "Mulai persiapan EPT",
+          "y": 331
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Lebih paham. Lebih siap EPT."
+        },
+        {
+          "tag": "H2",
+          "text": "Tiga bagian. Satu langkah lebih siap."
+        },
+        {
+          "tag": "H3",
+          "text": "Dengarkan konteksnya. Tangkap maksudnya."
+        },
+        {
+          "tag": "H2",
+          "text": "Satu soal. Satu pemahaman baru."
+        },
+        {
+          "tag": "H3",
+          "text": "The outer ear, ________ the fleshy pinna and the auditory canal, picks up and funnels soun"
+        },
+        {
+          "tag": "H2",
+          "text": "Ada waktu sebentar? Tetap bisa belajar."
+        },
+        {
+          "tag": "H2",
+          "text": "Belajar dengan alur yang jelas."
+        },
+        {
+          "tag": "H3",
+          "text": "Siapkan sesi"
+        },
+        {
+          "tag": "H3",
+          "text": "Kerjakan dengan fokus"
+        },
+        {
+          "tag": "H3",
+          "text": "Tinjau hasil pribadi"
+        },
+        {
+          "tag": "H2",
+          "text": "Fokus pada latihan. Tetap pahami privasinya."
+        },
+        {
+          "tag": "H2",
+          "text": "Sebelum memulai."
+        }
+      ]
+    },
+    {
+      "name": "landing",
+      "route": "/",
+      "width": 320,
+      "height": 6174,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "Persiapan TOEFL EPT. Prototipe untuk pembelajaran dan penelitian.",
+          "ratio": 4.34,
+          "size": 14,
+          "selector": ""
+        },
+        {
+          "text": "TOEFL adalah merek dagang ETS. LinguaPulse tidak berafiliasi dengan ETS.",
+          "ratio": 4.34,
+          "size": 12,
+          "selector": "footer-note"
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Daftar",
+          "y": 15
+        },
+        {
+          "text": "Mulai persiapan EPT",
+          "y": 360
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Lebih paham. Lebih siap EPT."
+        },
+        {
+          "tag": "H2",
+          "text": "Tiga bagian. Satu langkah lebih siap."
+        },
+        {
+          "tag": "H3",
+          "text": "Dengarkan konteksnya. Tangkap maksudnya."
+        },
+        {
+          "tag": "H2",
+          "text": "Satu soal. Satu pemahaman baru."
+        },
+        {
+          "tag": "H3",
+          "text": "The outer ear, ________ the fleshy pinna and the auditory canal, picks up and funnels soun"
+        },
+        {
+          "tag": "H2",
+          "text": "Ada waktu sebentar? Tetap bisa belajar."
+        },
+        {
+          "tag": "H2",
+          "text": "Belajar dengan alur yang jelas."
+        },
+        {
+          "tag": "H3",
+          "text": "Siapkan sesi"
+        },
+        {
+          "tag": "H3",
+          "text": "Kerjakan dengan fokus"
+        },
+        {
+          "tag": "H3",
+          "text": "Tinjau hasil pribadi"
+        },
+        {
+          "tag": "H2",
+          "text": "Fokus pada latihan. Tetap pahami privasinya."
+        },
+        {
+          "tag": "H2",
+          "text": "Sebelum memulai."
+        }
+      ]
+    },
+    {
+      "name": "login",
+      "route": "/login",
+      "width": 1440,
+      "height": 900,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Masuk",
+          "y": 505
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Masuk ke akun Anda"
+        },
+        {
+          "tag": "H2",
+          "text": "Belajar dengan fokus. Tinjau setiap kemajuan."
+        }
+      ]
+    },
+    {
+      "name": "login",
+      "route": "/login",
+      "width": 375,
+      "height": 812,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Masuk",
+          "y": 507
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Masuk ke akun Anda"
+        }
+      ]
+    },
+    {
+      "name": "login",
+      "route": "/login",
+      "width": 320,
+      "height": 812,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Masuk",
+          "y": 531
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Masuk ke akun Anda"
+        }
+      ]
+    },
+    {
+      "name": "register",
+      "route": "/register",
+      "width": 1440,
+      "height": 1060,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Buat akun peserta",
+          "y": 871
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Buat akun peserta"
+        },
+        {
+          "tag": "H2",
+          "text": "Belajar dengan fokus. Tinjau setiap kemajuan."
+        }
+      ]
+    },
+    {
+      "name": "register",
+      "route": "/register",
+      "width": 375,
+      "height": 1123,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Buat akun peserta",
+          "y": 971
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Buat akun peserta"
+        }
+      ]
+    },
+    {
+      "name": "register",
+      "route": "/register",
+      "width": 320,
+      "height": 1166,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Buat akun peserta",
+          "y": 1014
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Buat akun peserta"
+        }
+      ]
+    },
+    {
+      "name": "privacy",
+      "route": "/privacy",
+      "width": 1440,
+      "height": 2201,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "Persiapan TOEFL EPT. Prototipe untuk pembelajaran dan penelitian.",
+          "ratio": 4.34,
+          "size": 14,
+          "selector": ""
+        },
+        {
+          "text": "TOEFL adalah merek dagang ETS. LinguaPulse tidak berafiliasi dengan ETS.",
+          "ratio": 4.34,
+          "size": 12,
+          "selector": "footer-note"
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Daftar",
+          "y": 18
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Privasi & partisipasi riset"
+        },
+        {
+          "tag": "H2",
+          "text": "Di halaman ini"
+        },
+        {
+          "tag": "H2",
+          "text": "Tujuan penggunaan"
+        },
+        {
+          "tag": "H2",
+          "text": "Informasi yang disimpan"
+        },
+        {
+          "tag": "H2",
+          "text": "Batas pengamatan"
+        },
+        {
+          "tag": "H2",
+          "text": "Akses dan persetujuan"
+        },
+        {
+          "tag": "H2",
+          "text": "Umpan balik tulisan"
+        },
+        {
+          "tag": "H2",
+          "text": "Batasan prototipe"
+        }
+      ]
+    },
+    {
+      "name": "privacy",
+      "route": "/privacy",
+      "width": 375,
+      "height": 2988,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "Persiapan TOEFL EPT. Prototipe untuk pembelajaran dan penelitian.",
+          "ratio": 4.34,
+          "size": 14,
+          "selector": ""
+        },
+        {
+          "text": "TOEFL adalah merek dagang ETS. LinguaPulse tidak berafiliasi dengan ETS.",
+          "ratio": 4.34,
+          "size": 12,
+          "selector": "footer-note"
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Daftar",
+          "y": 15
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Privasi & partisipasi riset"
+        },
+        {
+          "tag": "H2",
+          "text": "Di halaman ini"
+        },
+        {
+          "tag": "H2",
+          "text": "Tujuan penggunaan"
+        },
+        {
+          "tag": "H2",
+          "text": "Informasi yang disimpan"
+        },
+        {
+          "tag": "H2",
+          "text": "Batas pengamatan"
+        },
+        {
+          "tag": "H2",
+          "text": "Akses dan persetujuan"
+        },
+        {
+          "tag": "H2",
+          "text": "Umpan balik tulisan"
+        },
+        {
+          "tag": "H2",
+          "text": "Batasan prototipe"
+        }
+      ]
+    },
+    {
+      "name": "privacy",
+      "route": "/privacy",
+      "width": 320,
+      "height": 3241,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "Persiapan TOEFL EPT. Prototipe untuk pembelajaran dan penelitian.",
+          "ratio": 4.34,
+          "size": 14,
+          "selector": ""
+        },
+        {
+          "text": "TOEFL adalah merek dagang ETS. LinguaPulse tidak berafiliasi dengan ETS.",
+          "ratio": 4.34,
+          "size": 12,
+          "selector": "footer-note"
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Daftar",
+          "y": 15
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Privasi & partisipasi riset"
+        },
+        {
+          "tag": "H2",
+          "text": "Di halaman ini"
+        },
+        {
+          "tag": "H2",
+          "text": "Tujuan penggunaan"
+        },
+        {
+          "tag": "H2",
+          "text": "Informasi yang disimpan"
+        },
+        {
+          "tag": "H2",
+          "text": "Batas pengamatan"
+        },
+        {
+          "tag": "H2",
+          "text": "Akses dan persetujuan"
+        },
+        {
+          "tag": "H2",
+          "text": "Umpan balik tulisan"
+        },
+        {
+          "tag": "H2",
+          "text": "Batasan prototipe"
+        }
+      ]
+    },
+    {
+      "name": "terms",
+      "route": "/terms",
+      "width": 1440,
+      "height": 1635,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "Persiapan TOEFL EPT. Prototipe untuk pembelajaran dan penelitian.",
+          "ratio": 4.34,
+          "size": 14,
+          "selector": ""
+        },
+        {
+          "text": "TOEFL adalah merek dagang ETS. LinguaPulse tidak berafiliasi dengan ETS.",
+          "ratio": 4.34,
+          "size": 12,
+          "selector": "footer-note"
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Daftar",
+          "y": 18
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Syarat dan ketentuan"
+        },
+        {
+          "tag": "H2",
+          "text": "Di halaman ini"
+        },
+        {
+          "tag": "H2",
+          "text": "Penggunaan platform"
+        },
+        {
+          "tag": "H2",
+          "text": "Akun peserta"
+        },
+        {
+          "tag": "H2",
+          "text": "Data dan partisipasi"
+        },
+        {
+          "tag": "H2",
+          "text": "Materi dan hasil"
+        }
+      ]
+    },
+    {
+      "name": "terms",
+      "route": "/terms",
+      "width": 375,
+      "height": 2167,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "Persiapan TOEFL EPT. Prototipe untuk pembelajaran dan penelitian.",
+          "ratio": 4.34,
+          "size": 14,
+          "selector": ""
+        },
+        {
+          "text": "TOEFL adalah merek dagang ETS. LinguaPulse tidak berafiliasi dengan ETS.",
+          "ratio": 4.34,
+          "size": 12,
+          "selector": "footer-note"
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Daftar",
+          "y": 15
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Syarat dan ketentuan"
+        },
+        {
+          "tag": "H2",
+          "text": "Di halaman ini"
+        },
+        {
+          "tag": "H2",
+          "text": "Penggunaan platform"
+        },
+        {
+          "tag": "H2",
+          "text": "Akun peserta"
+        },
+        {
+          "tag": "H2",
+          "text": "Data dan partisipasi"
+        },
+        {
+          "tag": "H2",
+          "text": "Materi dan hasil"
+        }
+      ]
+    },
+    {
+      "name": "terms",
+      "route": "/terms",
+      "width": 320,
+      "height": 2300,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "Persiapan TOEFL EPT. Prototipe untuk pembelajaran dan penelitian.",
+          "ratio": 4.34,
+          "size": 14,
+          "selector": ""
+        },
+        {
+          "text": "TOEFL adalah merek dagang ETS. LinguaPulse tidak berafiliasi dengan ETS.",
+          "ratio": 4.34,
+          "size": 12,
+          "selector": "footer-note"
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Daftar",
+          "y": 15
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Syarat dan ketentuan"
+        },
+        {
+          "tag": "H2",
+          "text": "Di halaman ini"
+        },
+        {
+          "tag": "H2",
+          "text": "Penggunaan platform"
+        },
+        {
+          "tag": "H2",
+          "text": "Akun peserta"
+        },
+        {
+          "tag": "H2",
+          "text": "Data dan partisipasi"
+        },
+        {
+          "tag": "H2",
+          "text": "Materi dan hasil"
+        }
+      ]
+    },
+    {
+      "name": "not-found",
+      "route": "/missing-page",
+      "width": 1440,
+      "height": 1322,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "Persiapan TOEFL EPT. Prototipe untuk pembelajaran dan penelitian.",
+          "ratio": 4.34,
+          "size": 14,
+          "selector": ""
+        },
+        {
+          "text": "TOEFL adalah merek dagang ETS. LinguaPulse tidak berafiliasi dengan ETS.",
+          "ratio": 4.34,
+          "size": 12,
+          "selector": "footer-note"
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Daftar",
+          "y": 18
+        },
+        {
+          "text": "Kembali ke beranda",
+          "y": 474
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Halaman tidak ditemukan"
+        }
+      ]
+    },
+    {
+      "name": "not-found",
+      "route": "/missing-page",
+      "width": 375,
+      "height": 1427,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "Persiapan TOEFL EPT. Prototipe untuk pembelajaran dan penelitian.",
+          "ratio": 4.34,
+          "size": 14,
+          "selector": ""
+        },
+        {
+          "text": "TOEFL adalah merek dagang ETS. LinguaPulse tidak berafiliasi dengan ETS.",
+          "ratio": 4.34,
+          "size": 12,
+          "selector": "footer-note"
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Daftar",
+          "y": 15
+        },
+        {
+          "text": "Kembali ke beranda",
+          "y": 421
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Halaman tidak ditemukan"
+        }
+      ]
+    },
+    {
+      "name": "not-found",
+      "route": "/missing-page",
+      "width": 320,
+      "height": 1450,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "Persiapan TOEFL EPT. Prototipe untuk pembelajaran dan penelitian.",
+          "ratio": 4.34,
+          "size": 14,
+          "selector": ""
+        },
+        {
+          "text": "TOEFL adalah merek dagang ETS. LinguaPulse tidak berafiliasi dengan ETS.",
+          "ratio": 4.34,
+          "size": 12,
+          "selector": "footer-note"
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Daftar",
+          "y": 15
+        },
+        {
+          "text": "Kembali ke beranda",
+          "y": 421
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Halaman tidak ditemukan"
+        }
+      ]
+    },
+    {
+      "name": "dashboard-empty",
+      "route": "/dashboard",
+      "width": 1440,
+      "height": 1399,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Mulai latihan bebas",
+          "y": 476
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Siap belajar hari ini?"
+        },
+        {
+          "tag": "H2",
+          "text": "Satu soal, satu langkah lebih paham."
+        },
+        {
+          "tag": "H2",
+          "text": "Sesi ujian EPT"
+        },
+        {
+          "tag": "H2",
+          "text": "Sesi ujian terakhir"
+        },
+        {
+          "tag": "H3",
+          "text": "Belum ada sesi yang selesai"
+        },
+        {
+          "tag": "H2",
+          "text": "Fokus pada satu keterampilan"
+        },
+        {
+          "tag": "H3",
+          "text": "Listening"
+        },
+        {
+          "tag": "H3",
+          "text": "Structure"
+        },
+        {
+          "tag": "H3",
+          "text": "Reading"
+        }
+      ]
+    },
+    {
+      "name": "dashboard-empty",
+      "route": "/dashboard",
+      "width": 375,
+      "height": 1853,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Mulai latihan bebas",
+          "y": 403
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Siap belajar hari ini?"
+        },
+        {
+          "tag": "H2",
+          "text": "Satu soal, satu langkah lebih paham."
+        },
+        {
+          "tag": "H2",
+          "text": "Sesi ujian EPT"
+        },
+        {
+          "tag": "H2",
+          "text": "Sesi ujian terakhir"
+        },
+        {
+          "tag": "H3",
+          "text": "Belum ada sesi yang selesai"
+        },
+        {
+          "tag": "H2",
+          "text": "Fokus pada satu keterampilan"
+        },
+        {
+          "tag": "H3",
+          "text": "Listening"
+        },
+        {
+          "tag": "H3",
+          "text": "Structure"
+        },
+        {
+          "tag": "H3",
+          "text": "Reading"
+        }
+      ]
+    },
+    {
+      "name": "dashboard-empty",
+      "route": "/dashboard",
+      "width": 320,
+      "height": 1976,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Mulai latihan bebas",
+          "y": 403
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Siap belajar hari ini?"
+        },
+        {
+          "tag": "H2",
+          "text": "Satu soal, satu langkah lebih paham."
+        },
+        {
+          "tag": "H2",
+          "text": "Sesi ujian EPT"
+        },
+        {
+          "tag": "H2",
+          "text": "Sesi ujian terakhir"
+        },
+        {
+          "tag": "H3",
+          "text": "Belum ada sesi yang selesai"
+        },
+        {
+          "tag": "H2",
+          "text": "Fokus pada satu keterampilan"
+        },
+        {
+          "tag": "H3",
+          "text": "Listening"
+        },
+        {
+          "tag": "H3",
+          "text": "Structure"
+        },
+        {
+          "tag": "H3",
+          "text": "Reading"
+        }
+      ]
+    },
+    {
+      "name": "history-empty",
+      "route": "/history",
+      "width": 1440,
+      "height": 910,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Riwayat latihan"
+        },
+        {
+          "tag": "H3",
+          "text": "Belum ada sesi yang selesai"
+        }
+      ]
+    },
+    {
+      "name": "history-empty",
+      "route": "/history",
+      "width": 375,
+      "height": 947,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Riwayat latihan"
+        },
+        {
+          "tag": "H3",
+          "text": "Belum ada sesi yang selesai"
+        }
+      ]
+    },
+    {
+      "name": "history-empty",
+      "route": "/history",
+      "width": 320,
+      "height": 1000,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Riwayat latihan"
+        },
+        {
+          "tag": "H3",
+          "text": "Belum ada sesi yang selesai"
+        }
+      ]
+    },
+    {
+      "name": "results-empty",
+      "route": "/results",
+      "width": 1440,
+      "height": 910,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Buka riwayat latihan",
+          "y": 429
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Hasil latihan"
+        },
+        {
+          "tag": "H2",
+          "text": "Pilih sesi yang ingin ditinjau"
+        }
+      ]
+    },
+    {
+      "name": "results-empty",
+      "route": "/results",
+      "width": 375,
+      "height": 812,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Buka riwayat latihan",
+          "y": 509
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Hasil latihan"
+        },
+        {
+          "tag": "H2",
+          "text": "Pilih sesi yang ingin ditinjau"
+        }
+      ]
+    },
+    {
+      "name": "results-empty",
+      "route": "/results",
+      "width": 320,
+      "height": 812,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Buka riwayat latihan",
+          "y": 536
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Hasil latihan"
+        },
+        {
+          "tag": "H2",
+          "text": "Pilih sesi yang ingin ditinjau"
+        }
+      ]
+    },
+    {
+      "name": "prepare",
+      "route": "/exam",
+      "width": 1440,
+      "height": 1000,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Mulai sesi ujian",
+          "y": 620
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Persiapan TOEFL EPT"
+        },
+        {
+          "tag": "H2",
+          "text": "Paket latihan Anda"
+        },
+        {
+          "tag": "H2",
+          "text": "Cek suara sebelum mulai"
+        },
+        {
+          "tag": "H2",
+          "text": "Pengaturan sesi"
+        }
+      ]
+    },
+    {
+      "name": "prepare",
+      "route": "/exam",
+      "width": 375,
+      "height": 1667,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Mulai sesi ujian",
+          "y": 1538
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Persiapan TOEFL EPT"
+        },
+        {
+          "tag": "H2",
+          "text": "Paket latihan Anda"
+        },
+        {
+          "tag": "H2",
+          "text": "Cek suara sebelum mulai"
+        },
+        {
+          "tag": "H2",
+          "text": "Pengaturan sesi"
+        }
+      ]
+    },
+    {
+      "name": "prepare",
+      "route": "/exam",
+      "width": 320,
+      "height": 1762,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Mulai sesi ujian",
+          "y": 1633
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Persiapan TOEFL EPT"
+        },
+        {
+          "tag": "H2",
+          "text": "Paket latihan Anda"
+        },
+        {
+          "tag": "H2",
+          "text": "Cek suara sebelum mulai"
+        },
+        {
+          "tag": "H2",
+          "text": "Pengaturan sesi"
+        }
+      ]
+    },
+    {
+      "name": "practice-grammar",
+      "route": "/practice?module=grammar",
+      "width": 1440,
+      "height": 1167,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "Pahami pola kalimat",
+          "ratio": 4.37,
+          "size": 12,
+          "selector": ""
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Periksa jawaban",
+          "y": 954
+        }
+      ],
+      "questionY": 500,
+      "answerY": 597,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Latihan bebas"
+        },
+        {
+          "tag": "H2",
+          "text": "The university senate recommended that every international applicant ________ an English p"
+        }
+      ]
+    },
+    {
+      "name": "practice-grammar",
+      "route": "/practice?module=grammar",
+      "width": 375,
+      "height": 1075,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Periksa jawaban",
+          "y": 832
+        }
+      ],
+      "questionY": 365,
+      "answerY": 499,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Latihan bebas"
+        },
+        {
+          "tag": "H2",
+          "text": "The university senate recommended that every international applicant ________ an English p"
+        }
+      ]
+    },
+    {
+      "name": "practice-grammar",
+      "route": "/practice?module=grammar",
+      "width": 320,
+      "height": 1132,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Periksa jawaban",
+          "y": 889
+        }
+      ],
+      "questionY": 365,
+      "answerY": 556,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Latihan bebas"
+        },
+        {
+          "tag": "H2",
+          "text": "The university senate recommended that every international applicant ________ an English p"
+        }
+      ]
+    },
+    {
+      "name": "practice-listening",
+      "route": "/practice?module=listening",
+      "width": 1440,
+      "height": 1167,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "Dengarkan dan pahami",
+          "ratio": 4.37,
+          "size": 12,
+          "selector": ""
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Periksa jawaban",
+          "y": 954
+        }
+      ],
+      "questionY": 500,
+      "answerY": 597,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Latihan bebas"
+        },
+        {
+          "tag": "H2",
+          "text": "Dengarkan rekamannya"
+        },
+        {
+          "tag": "H2",
+          "text": "By what time should students visit the circulation desk to borrow a book?"
+        }
+      ]
+    },
+    {
+      "name": "practice-listening",
+      "route": "/practice?module=listening",
+      "width": 375,
+      "height": 1074,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Periksa jawaban",
+          "y": 831
+        }
+      ],
+      "questionY": 421,
+      "answerY": 498,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Latihan bebas"
+        },
+        {
+          "tag": "H2",
+          "text": "By what time should students visit the circulation desk to borrow a book?"
+        }
+      ]
+    },
+    {
+      "name": "practice-listening",
+      "route": "/practice?module=listening",
+      "width": 320,
+      "height": 1102,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Periksa jawaban",
+          "y": 859
+        }
+      ],
+      "questionY": 421,
+      "answerY": 527,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Latihan bebas"
+        },
+        {
+          "tag": "H2",
+          "text": "By what time should students visit the circulation desk to borrow a book?"
+        }
+      ]
+    },
+    {
+      "name": "practice-reading",
+      "route": "/practice?module=reading",
+      "width": 1440,
+      "height": 1264,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "Temukan makna dalam teks",
+          "ratio": 4.37,
+          "size": 12,
+          "selector": ""
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Periksa jawaban",
+          "y": 954
+        }
+      ],
+      "questionY": 500,
+      "answerY": 597,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Latihan bebas"
+        },
+        {
+          "tag": "H2",
+          "text": "Bacaan"
+        },
+        {
+          "tag": "H3",
+          "text": "Bioluminescence in Deep-Sea Organisms"
+        },
+        {
+          "tag": "H2",
+          "text": "According to the passage, why is deep-sea bioluminescence predominantly in the blue-green "
+        }
+      ]
+    },
+    {
+      "name": "practice-reading",
+      "route": "/practice?module=reading",
+      "width": 375,
+      "height": 1148,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Periksa jawaban",
+          "y": 905
+        }
+      ],
+      "questionY": 421,
+      "answerY": 527,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Latihan bebas"
+        },
+        {
+          "tag": "H2",
+          "text": "According to the passage, why is deep-sea bioluminescence predominantly in the blue-green "
+        }
+      ]
+    },
+    {
+      "name": "practice-reading",
+      "route": "/practice?module=reading",
+      "width": 320,
+      "height": 1220,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Periksa jawaban",
+          "y": 977
+        }
+      ],
+      "questionY": 421,
+      "answerY": 555,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Latihan bebas"
+        },
+        {
+          "tag": "H2",
+          "text": "According to the passage, why is deep-sea bioluminescence predominantly in the blue-green "
+        }
+      ]
+    },
+    {
+      "name": "practice-feedback",
+      "route": "/practice?module=reading",
+      "width": 1440,
+      "height": 1340,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "Temukan makna dalam teks",
+          "ratio": 4.37,
+          "size": 12,
+          "selector": ""
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Soal berikutnya",
+          "y": 1127
+        }
+      ],
+      "questionY": 500,
+      "answerY": 597,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Latihan bebas"
+        },
+        {
+          "tag": "H2",
+          "text": "Bacaan"
+        },
+        {
+          "tag": "H3",
+          "text": "Bioluminescence in Deep-Sea Organisms"
+        },
+        {
+          "tag": "H2",
+          "text": "According to the passage, why is deep-sea bioluminescence predominantly in the blue-green "
+        }
+      ]
+    },
+    {
+      "name": "practice-feedback",
+      "route": "/practice?module=reading",
+      "width": 375,
+      "height": 1441,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Soal berikutnya",
+          "y": 1198
+        }
+      ],
+      "questionY": 421,
+      "answerY": 527,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Latihan bebas"
+        },
+        {
+          "tag": "H2",
+          "text": "According to the passage, why is deep-sea bioluminescence predominantly in the blue-green "
+        }
+      ]
+    },
+    {
+      "name": "practice-feedback",
+      "route": "/practice?module=reading",
+      "width": 320,
+      "height": 1564,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Soal berikutnya",
+          "y": 1321
+        }
+      ],
+      "questionY": 421,
+      "answerY": 555,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Latihan bebas"
+        },
+        {
+          "tag": "H2",
+          "text": "According to the passage, why is deep-sea bioluminescence predominantly in the blue-green "
+        }
+      ]
+    },
+    {
+      "name": "admin-overview-empty",
+      "route": "/admin/overview",
+      "width": 1440,
+      "height": 1074,
+      "pageOverflow": false,
+      "internalOverflow": [
+        {
+          "selector": "adminSidebar",
+          "scroll": 268,
+          "width": 255,
+          "overflow": "auto"
+        }
+      ],
+      "smallText": [
+        {
+          "text": "ADMINISTRASI EPT",
+          "size": "10.5px"
+        },
+        {
+          "text": "Administrator",
+          "size": "11px"
+        },
+        {
+          "text": "Akun peserta aktif",
+          "size": "11.5px"
+        },
+        {
+          "text": "Siap sesi baru",
+          "size": "11.5px"
+        },
+        {
+          "text": "Hasil tersimpan",
+          "size": "11.5px"
+        },
+        {
+          "text": "Batas waktu aktif",
+          "size": "11.5px"
+        },
+        {
+          "text": "Modul TOEFL EPT",
+          "size": "11.5px"
+        },
+        {
+          "text": "dari 2 soal",
+          "size": "11.5px"
+        },
+        {
+          "text": "Modul TOEFL EPT",
+          "size": "11.5px"
+        },
+        {
+          "text": "dari 6 soal",
+          "size": "11.5px"
+        },
+        {
+          "text": "Modul TOEFL EPT",
+          "size": "11.5px"
+        },
+        {
+          "text": "dari 2 soal",
+          "size": "11.5px"
+        },
+        {
+          "text": "Tugas tambahan penelitian",
+          "size": "11.5px"
+        },
+        {
+          "text": "dari 1 soal",
+          "size": "11.5px"
+        },
+        {
+          "text": "Perubahan materi berlaku untuk sesi baru. Soal pada sesi yang sedang dikerjakan tetap sama",
+          "size": "11.5px"
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "Beranda",
+          "w": 50,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "text": "Administrasi",
+          "w": 75,
+          "h": 20
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "ADMINISTRASI EPT",
+          "ratio": 2.56,
+          "size": 10.5,
+          "selector": "admin-role sidebar-label"
+        },
+        {
+          "text": "Akun peserta aktif",
+          "ratio": 2.56,
+          "size": 11.5,
+          "selector": "kpi-subtext"
+        },
+        {
+          "text": "Siap sesi baru",
+          "ratio": 2.56,
+          "size": 11.5,
+          "selector": "kpi-subtext"
+        },
+        {
+          "text": "Hasil tersimpan",
+          "ratio": 2.56,
+          "size": 11.5,
+          "selector": "kpi-subtext"
+        },
+        {
+          "text": "Batas waktu aktif",
+          "ratio": 2.56,
+          "size": 11.5,
+          "selector": "kpi-subtext"
+        }
+      ],
+      "primaryActions": [],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ringkasan"
+        },
+        {
+          "tag": "H2",
+          "text": "Status Operasional TOEFL EPT"
+        },
+        {
+          "tag": "H3",
+          "text": "Sesi terbaru"
+        },
+        {
+          "tag": "H3",
+          "text": "Kesiapan materi"
+        }
+      ]
+    },
+    {
+      "name": "admin-overview-empty",
+      "route": "/admin/overview",
+      "width": 375,
+      "height": 2093,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [
+        {
+          "text": "Akun peserta aktif",
+          "size": "11.5px"
+        },
+        {
+          "text": "Siap sesi baru",
+          "size": "11.5px"
+        },
+        {
+          "text": "Hasil tersimpan",
+          "size": "11.5px"
+        },
+        {
+          "text": "Batas waktu aktif",
+          "size": "11.5px"
+        },
+        {
+          "text": "Modul TOEFL EPT",
+          "size": "11.5px"
+        },
+        {
+          "text": "dari 2 soal",
+          "size": "11.5px"
+        },
+        {
+          "text": "Modul TOEFL EPT",
+          "size": "11.5px"
+        },
+        {
+          "text": "dari 6 soal",
+          "size": "11.5px"
+        },
+        {
+          "text": "Modul TOEFL EPT",
+          "size": "11.5px"
+        },
+        {
+          "text": "dari 2 soal",
+          "size": "11.5px"
+        },
+        {
+          "text": "Tugas tambahan penelitian",
+          "size": "11.5px"
+        },
+        {
+          "text": "dari 1 soal",
+          "size": "11.5px"
+        },
+        {
+          "text": "Perubahan materi berlaku untuk sesi baru. Soal pada sesi yang sedang dikerjakan tetap sama",
+          "size": "11.5px"
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "Beranda",
+          "w": 50,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "text": "Administrasi",
+          "w": 75,
+          "h": 20
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "Akun peserta aktif",
+          "ratio": 2.56,
+          "size": 11.5,
+          "selector": "kpi-subtext"
+        },
+        {
+          "text": "Siap sesi baru",
+          "ratio": 2.56,
+          "size": 11.5,
+          "selector": "kpi-subtext"
+        },
+        {
+          "text": "Hasil tersimpan",
+          "ratio": 2.56,
+          "size": 11.5,
+          "selector": "kpi-subtext"
+        },
+        {
+          "text": "Batas waktu aktif",
+          "ratio": 2.56,
+          "size": 11.5,
+          "selector": "kpi-subtext"
+        }
+      ],
+      "primaryActions": [],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ringkasan"
+        },
+        {
+          "tag": "H2",
+          "text": "Status Operasional TOEFL EPT"
+        },
+        {
+          "tag": "H3",
+          "text": "Sesi terbaru"
+        },
+        {
+          "tag": "H3",
+          "text": "Kesiapan materi"
+        }
+      ]
+    },
+    {
+      "name": "admin-overview-empty",
+      "route": "/admin/overview",
+      "width": 320,
+      "height": 2204,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [
+        {
+          "text": "Akun peserta aktif",
+          "size": "11.5px"
+        },
+        {
+          "text": "Siap sesi baru",
+          "size": "11.5px"
+        },
+        {
+          "text": "Hasil tersimpan",
+          "size": "11.5px"
+        },
+        {
+          "text": "Batas waktu aktif",
+          "size": "11.5px"
+        },
+        {
+          "text": "Modul TOEFL EPT",
+          "size": "11.5px"
+        },
+        {
+          "text": "dari 2 soal",
+          "size": "11.5px"
+        },
+        {
+          "text": "Modul TOEFL EPT",
+          "size": "11.5px"
+        },
+        {
+          "text": "dari 6 soal",
+          "size": "11.5px"
+        },
+        {
+          "text": "Modul TOEFL EPT",
+          "size": "11.5px"
+        },
+        {
+          "text": "dari 2 soal",
+          "size": "11.5px"
+        },
+        {
+          "text": "Tugas tambahan penelitian",
+          "size": "11.5px"
+        },
+        {
+          "text": "dari 1 soal",
+          "size": "11.5px"
+        },
+        {
+          "text": "Perubahan materi berlaku untuk sesi baru. Soal pada sesi yang sedang dikerjakan tetap sama",
+          "size": "11.5px"
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "Beranda",
+          "w": 50,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "text": "Administrasi",
+          "w": 75,
+          "h": 20
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "Akun peserta aktif",
+          "ratio": 2.56,
+          "size": 11.5,
+          "selector": "kpi-subtext"
+        },
+        {
+          "text": "Siap sesi baru",
+          "ratio": 2.56,
+          "size": 11.5,
+          "selector": "kpi-subtext"
+        },
+        {
+          "text": "Hasil tersimpan",
+          "ratio": 2.56,
+          "size": 11.5,
+          "selector": "kpi-subtext"
+        },
+        {
+          "text": "Batas waktu aktif",
+          "ratio": 2.56,
+          "size": 11.5,
+          "selector": "kpi-subtext"
+        }
+      ],
+      "primaryActions": [],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ringkasan"
+        },
+        {
+          "tag": "H2",
+          "text": "Status Operasional TOEFL EPT"
+        },
+        {
+          "tag": "H3",
+          "text": "Sesi terbaru"
+        },
+        {
+          "tag": "H3",
+          "text": "Kesiapan materi"
+        }
+      ]
+    },
+    {
+      "name": "admin-proctor-empty",
+      "route": "/admin/proctor",
+      "width": 1440,
+      "height": 900,
+      "pageOverflow": false,
+      "internalOverflow": [
+        {
+          "selector": "adminSidebar",
+          "scroll": 268,
+          "width": 255,
+          "overflow": "auto"
+        }
+      ],
+      "smallText": [
+        {
+          "text": "ADMINISTRASI EPT",
+          "size": "10.5px"
+        },
+        {
+          "text": "Administrator",
+          "size": "11px"
+        },
+        {
+          "text": "CARI PESERTA ATAU KODE SESI",
+          "size": "11px"
+        },
+        {
+          "text": "INDIKATOR RULE",
+          "size": "11px"
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "Beranda",
+          "w": 50,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "text": "Administrasi",
+          "w": 75,
+          "h": 20
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "ADMINISTRASI EPT",
+          "ratio": 2.56,
+          "size": 10.5,
+          "selector": "admin-role sidebar-label"
+        }
+      ],
+      "primaryActions": [],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ringkasan"
+        },
+        {
+          "tag": "H2",
+          "text": "Tinjau sesi peserta"
+        },
+        {
+          "tag": "H3",
+          "text": "Sesi terkirim"
+        }
+      ]
+    },
+    {
+      "name": "admin-proctor-empty",
+      "route": "/admin/proctor",
+      "width": 375,
+      "height": 972,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [
+        {
+          "text": "CARI PESERTA ATAU KODE SESI",
+          "size": "11px"
+        },
+        {
+          "text": "INDIKATOR RULE",
+          "size": "11px"
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "Beranda",
+          "w": 50,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "text": "Administrasi",
+          "w": 75,
+          "h": 20
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ringkasan"
+        },
+        {
+          "tag": "H2",
+          "text": "Tinjau sesi peserta"
+        },
+        {
+          "tag": "H3",
+          "text": "Sesi terkirim"
+        }
+      ]
+    },
+    {
+      "name": "admin-proctor-empty",
+      "route": "/admin/proctor",
+      "width": 320,
+      "height": 1065,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [
+        {
+          "text": "CARI PESERTA ATAU KODE SESI",
+          "size": "11px"
+        },
+        {
+          "text": "INDIKATOR RULE",
+          "size": "11px"
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "Beranda",
+          "w": 50,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "text": "Administrasi",
+          "w": 75,
+          "h": 20
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ringkasan"
+        },
+        {
+          "tag": "H2",
+          "text": "Tinjau sesi peserta"
+        },
+        {
+          "tag": "H3",
+          "text": "Sesi terkirim"
+        }
+      ]
+    },
+    {
+      "name": "admin-questions",
+      "route": "/admin/questions",
+      "width": 1440,
+      "height": 2400,
+      "pageOverflow": false,
+      "internalOverflow": [
+        {
+          "selector": "adminSidebar",
+          "scroll": 268,
+          "width": 255,
+          "overflow": "auto"
+        }
+      ],
+      "smallText": [
+        {
+          "text": "ADMINISTRASI EPT",
+          "size": "10.5px"
+        },
+        {
+          "text": "Administrator",
+          "size": "11px"
+        },
+        {
+          "text": "CARI SOAL",
+          "size": "11px"
+        },
+        {
+          "text": "MODUL",
+          "size": "11px"
+        },
+        {
+          "text": "STATUS",
+          "size": "11px"
+        },
+        {
+          "text": "BENTUK TUGAS",
+          "size": "11px"
+        },
+        {
+          "text": "SOAL",
+          "size": "11px"
+        },
+        {
+          "text": "MODUL",
+          "size": "11px"
+        },
+        {
+          "text": "STATUS",
+          "size": "11px"
+        },
+        {
+          "text": "AKSI",
+          "size": "11px"
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "Beranda",
+          "w": 50,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "text": "Administrasi",
+          "w": 75,
+          "h": 20
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "ADMINISTRASI EPT",
+          "ratio": 2.56,
+          "size": 10.5,
+          "selector": "admin-role sidebar-label"
+        },
+        {
+          "text": "Nonaktifkan soal G1",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal G2",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal G3",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal G4",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal GR1",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal GR2",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal L1",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal L2",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal R1",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal R2",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal W1",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Halaman sebelumnya",
+          "ratio": 4.34,
+          "size": 13,
+          "selector": "qPrevPage"
+        },
+        {
+          "text": "Halaman berikutnya",
+          "ratio": 4.34,
+          "size": 13,
+          "selector": "qNextPage"
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Tambah soal",
+          "y": 149
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ringkasan"
+        },
+        {
+          "tag": "H2",
+          "text": "Bank soal TOEFL EPT"
+        }
+      ]
+    },
+    {
+      "name": "admin-questions",
+      "route": "/admin/questions",
+      "width": 375,
+      "height": 4530,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [
+        {
+          "text": "CARI SOAL",
+          "size": "11px"
+        },
+        {
+          "text": "MODUL",
+          "size": "11px"
+        },
+        {
+          "text": "STATUS",
+          "size": "11px"
+        },
+        {
+          "text": "BENTUK TUGAS",
+          "size": "11px"
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "Beranda",
+          "w": 50,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "text": "Administrasi",
+          "w": 75,
+          "h": 20
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "Nonaktifkan soal G1",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal G2",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal G3",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal G4",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal GR1",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal GR2",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal L1",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal L2",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal R1",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal R2",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal W1",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Halaman sebelumnya",
+          "ratio": 4.34,
+          "size": 13,
+          "selector": "qPrevPage"
+        },
+        {
+          "text": "Halaman berikutnya",
+          "ratio": 4.34,
+          "size": 13,
+          "selector": "qNextPage"
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Tambah soal",
+          "y": 223
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ringkasan"
+        },
+        {
+          "tag": "H2",
+          "text": "Bank soal TOEFL EPT"
+        }
+      ]
+    },
+    {
+      "name": "admin-questions",
+      "route": "/admin/questions",
+      "width": 320,
+      "height": 5175,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [
+        {
+          "text": "CARI SOAL",
+          "size": "11px"
+        },
+        {
+          "text": "MODUL",
+          "size": "11px"
+        },
+        {
+          "text": "STATUS",
+          "size": "11px"
+        },
+        {
+          "text": "BENTUK TUGAS",
+          "size": "11px"
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "Beranda",
+          "w": 50,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "text": "Administrasi",
+          "w": 75,
+          "h": 20
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "Nonaktifkan soal G1",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal G2",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal G3",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal G4",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal GR1",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal GR2",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal L1",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal L2",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal R1",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal R2",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal W1",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Halaman sebelumnya",
+          "ratio": 4.34,
+          "size": 13,
+          "selector": "qPrevPage"
+        },
+        {
+          "text": "Halaman berikutnya",
+          "ratio": 4.34,
+          "size": 13,
+          "selector": "qNextPage"
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Tambah soal",
+          "y": 234
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ringkasan"
+        },
+        {
+          "tag": "H2",
+          "text": "Bank soal TOEFL EPT"
+        }
+      ]
+    },
+    {
+      "name": "admin-users",
+      "route": "/admin/users",
+      "width": 1440,
+      "height": 900,
+      "pageOverflow": false,
+      "internalOverflow": [
+        {
+          "selector": "adminSidebar",
+          "scroll": 268,
+          "width": 255,
+          "overflow": "auto"
+        }
+      ],
+      "smallText": [
+        {
+          "text": "ADMINISTRASI EPT",
+          "size": "10.5px"
+        },
+        {
+          "text": "Administrator",
+          "size": "11px"
+        },
+        {
+          "text": "CARI AKUN",
+          "size": "11px"
+        },
+        {
+          "text": "PERAN",
+          "size": "11px"
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "Beranda",
+          "w": 50,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "text": "Administrasi",
+          "w": 75,
+          "h": 20
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "ADMINISTRASI EPT",
+          "ratio": 2.56,
+          "size": 10.5,
+          "selector": "admin-role sidebar-label"
+        },
+        {
+          "text": "Hapus",
+          "ratio": 4.34,
+          "size": 12,
+          "selector": "btn-secondary user-delete"
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Tambah akun",
+          "y": 149
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ringkasan"
+        },
+        {
+          "tag": "H2",
+          "text": "Akun pengguna"
+        }
+      ]
+    },
+    {
+      "name": "admin-users",
+      "route": "/admin/users",
+      "width": 375,
+      "height": 2060,
+      "pageOverflow": false,
+      "internalOverflow": [
+        {
+          "selector": "table-scroll",
+          "scroll": 346,
+          "width": 291,
+          "overflow": "auto"
+        }
+      ],
+      "smallText": [
+        {
+          "text": "CARI AKUN",
+          "size": "11px"
+        },
+        {
+          "text": "PERAN",
+          "size": "11px"
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "Beranda",
+          "w": 50,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "text": "Administrasi",
+          "w": 75,
+          "h": 20
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "Hapus",
+          "ratio": 4.34,
+          "size": 12,
+          "selector": "btn-secondary user-delete"
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Tambah akun",
+          "y": 261
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ringkasan"
+        },
+        {
+          "tag": "H2",
+          "text": "Akun pengguna"
+        }
+      ]
+    },
+    {
+      "name": "admin-users",
+      "route": "/admin/users",
+      "width": 320,
+      "height": 2060,
+      "pageOverflow": false,
+      "internalOverflow": [
+        {
+          "selector": "table-scroll",
+          "scroll": 346,
+          "width": 236,
+          "overflow": "auto"
+        }
+      ],
+      "smallText": [
+        {
+          "text": "CARI AKUN",
+          "size": "11px"
+        },
+        {
+          "text": "PERAN",
+          "size": "11px"
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "Beranda",
+          "w": 50,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "text": "Administrasi",
+          "w": 75,
+          "h": 20
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "Hapus",
+          "ratio": 4.34,
+          "size": 12,
+          "selector": "btn-secondary user-delete"
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Tambah akun",
+          "y": 261
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ringkasan"
+        },
+        {
+          "tag": "H2",
+          "text": "Akun pengguna"
+        }
+      ]
+    },
+    {
+      "name": "admin-user-editor",
+      "route": "/admin/users",
+      "width": 1440,
+      "height": 900,
+      "pageOverflow": false,
+      "internalOverflow": [
+        {
+          "selector": "adminSidebar",
+          "scroll": 268,
+          "width": 255,
+          "overflow": "auto"
+        }
+      ],
+      "smallText": [
+        {
+          "text": "ADMINISTRASI EPT",
+          "size": "10.5px"
+        },
+        {
+          "text": "Administrator",
+          "size": "11px"
+        },
+        {
+          "text": "CARI AKUN",
+          "size": "11px"
+        },
+        {
+          "text": "PERAN",
+          "size": "11px"
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "Beranda",
+          "w": 50,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "text": "Administrasi",
+          "w": 75,
+          "h": 20
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "ADMINISTRASI EPT",
+          "ratio": 2.56,
+          "size": 10.5,
+          "selector": "admin-role sidebar-label"
+        },
+        {
+          "text": "Hapus",
+          "ratio": 4.34,
+          "size": 12,
+          "selector": "btn-secondary user-delete"
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Tambah akun",
+          "y": 149
+        },
+        {
+          "text": "Simpan akun",
+          "y": 705
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ringkasan"
+        },
+        {
+          "tag": "H2",
+          "text": "Akun pengguna"
+        },
+        {
+          "tag": "H2",
+          "text": "Tambah akun"
+        }
+      ]
+    },
+    {
+      "name": "admin-user-editor",
+      "route": "/admin/users",
+      "width": 375,
+      "height": 2060,
+      "pageOverflow": false,
+      "internalOverflow": [
+        {
+          "selector": "table-scroll",
+          "scroll": 346,
+          "width": 291,
+          "overflow": "auto"
+        }
+      ],
+      "smallText": [
+        {
+          "text": "CARI AKUN",
+          "size": "11px"
+        },
+        {
+          "text": "PERAN",
+          "size": "11px"
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "Beranda",
+          "w": 50,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "text": "Administrasi",
+          "w": 75,
+          "h": 20
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "Hapus",
+          "ratio": 4.34,
+          "size": 12,
+          "selector": "btn-secondary user-delete"
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Tambah akun",
+          "y": 261
+        },
+        {
+          "text": "Simpan akun",
+          "y": 661
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ringkasan"
+        },
+        {
+          "tag": "H2",
+          "text": "Akun pengguna"
+        },
+        {
+          "tag": "H2",
+          "text": "Tambah akun"
+        }
+      ]
+    },
+    {
+      "name": "admin-user-editor",
+      "route": "/admin/users",
+      "width": 320,
+      "height": 2060,
+      "pageOverflow": false,
+      "internalOverflow": [
+        {
+          "selector": "table-scroll",
+          "scroll": 346,
+          "width": 236,
+          "overflow": "auto"
+        }
+      ],
+      "smallText": [
+        {
+          "text": "CARI AKUN",
+          "size": "11px"
+        },
+        {
+          "text": "PERAN",
+          "size": "11px"
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "Beranda",
+          "w": 50,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "text": "Administrasi",
+          "w": 75,
+          "h": 20
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "Hapus",
+          "ratio": 4.34,
+          "size": 12,
+          "selector": "btn-secondary user-delete"
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Tambah akun",
+          "y": 261
+        },
+        {
+          "text": "Simpan akun",
+          "y": 661
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ringkasan"
+        },
+        {
+          "tag": "H2",
+          "text": "Akun pengguna"
+        },
+        {
+          "tag": "H2",
+          "text": "Tambah akun"
+        }
+      ]
+    },
+    {
+      "name": "exam-listening",
+      "route": "/exam/session",
+      "width": 1440,
+      "height": 1672,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Selesaikan & kirim jawaban",
+          "y": 1518
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": 1518,
+      "telemetry": true,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ruang ujian EPT"
+        },
+        {
+          "tag": "H2",
+          "text": "Listening comprehension"
+        },
+        {
+          "tag": "H2",
+          "text": "Jawaban Listening"
+        },
+        {
+          "tag": "H3",
+          "text": "1. Why will the university library close early on Friday?"
+        },
+        {
+          "tag": "H3",
+          "text": "2. By what time should students visit the circulation desk to borrow a book?"
+        }
+      ]
+    },
+    {
+      "name": "exam-listening",
+      "route": "/exam/session",
+      "width": 375,
+      "height": 1556,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Selesaikan & kirim jawaban",
+          "y": 1435
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": 1435,
+      "telemetry": true,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ruang ujian EPT"
+        },
+        {
+          "tag": "H2",
+          "text": "Jawaban Listening"
+        },
+        {
+          "tag": "H3",
+          "text": "1. Why will the university library close early on Friday?"
+        },
+        {
+          "tag": "H3",
+          "text": "2. By what time should students visit the circulation desk to borrow a book?"
+        }
+      ]
+    },
+    {
+      "name": "exam-listening",
+      "route": "/exam/session",
+      "width": 320,
+      "height": 1652,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Selesaikan & kirim jawaban",
+          "y": 1531
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": 1531,
+      "telemetry": true,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ruang ujian EPT"
+        },
+        {
+          "tag": "H2",
+          "text": "Jawaban Listening"
+        },
+        {
+          "tag": "H3",
+          "text": "1. Why will the university library close early on Friday?"
+        },
+        {
+          "tag": "H3",
+          "text": "2. By what time should students visit the circulation desk to borrow a book?"
+        }
+      ]
+    },
+    {
+      "name": "exam-structure",
+      "route": "/exam/session",
+      "width": 1440,
+      "height": 2999,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Selesaikan & kirim jawaban",
+          "y": 2845
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": 2845,
+      "telemetry": true,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ruang ujian EPT"
+        },
+        {
+          "tag": "H2",
+          "text": ""
+        },
+        {
+          "tag": "H2",
+          "text": "Jawaban Structure"
+        },
+        {
+          "tag": "H3",
+          "text": "3. Rarely ________ located near city lights or at lower elevations because light pollution"
+        },
+        {
+          "tag": "H3",
+          "text": "4. The outer ear, ________ the fleshy pinna and the auditory canal, picks up and funnels s"
+        },
+        {
+          "tag": "H3",
+          "text": "5. The university senate recommended that every international applicant ________ an Englis"
+        },
+        {
+          "tag": "H3",
+          "text": "6. Pilih bagian kata/frasa yang SALAH secara grammar: \"The new superconducting material is"
+        },
+        {
+          "tag": "H3",
+          "text": "Perbaikan kalimat untuk riset"
+        },
+        {
+          "tag": "H3",
+          "text": "7. Perbaiki kesalahan grammar pada kalimat berikut dengan mengetik ulang kalimat yang bena"
+        },
+        {
+          "tag": "H3",
+          "text": "8. Tulis ulang kalimat berikut agar diawali dengan struktur inversi 'Not only...': \"Solar "
+        }
+      ]
+    },
+    {
+      "name": "exam-structure",
+      "route": "/exam/session",
+      "width": 375,
+      "height": 3240,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Selesaikan & kirim jawaban",
+          "y": 3120
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": 3120,
+      "telemetry": true,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ruang ujian EPT"
+        },
+        {
+          "tag": "H2",
+          "text": "Jawaban Structure"
+        },
+        {
+          "tag": "H3",
+          "text": "3. Rarely ________ located near city lights or at lower elevations because light pollution"
+        },
+        {
+          "tag": "H3",
+          "text": "4. The outer ear, ________ the fleshy pinna and the auditory canal, picks up and funnels s"
+        },
+        {
+          "tag": "H3",
+          "text": "5. The university senate recommended that every international applicant ________ an Englis"
+        },
+        {
+          "tag": "H3",
+          "text": "6. Pilih bagian kata/frasa yang SALAH secara grammar: \"The new superconducting material is"
+        },
+        {
+          "tag": "H3",
+          "text": "Perbaikan kalimat untuk riset"
+        },
+        {
+          "tag": "H3",
+          "text": "7. Perbaiki kesalahan grammar pada kalimat berikut dengan mengetik ulang kalimat yang bena"
+        },
+        {
+          "tag": "H3",
+          "text": "8. Tulis ulang kalimat berikut agar diawali dengan struktur inversi 'Not only...': \"Solar "
+        }
+      ]
+    },
+    {
+      "name": "exam-structure",
+      "route": "/exam/session",
+      "width": 320,
+      "height": 3419,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Selesaikan & kirim jawaban",
+          "y": 3299
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": 3299,
+      "telemetry": true,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ruang ujian EPT"
+        },
+        {
+          "tag": "H2",
+          "text": "Jawaban Structure"
+        },
+        {
+          "tag": "H3",
+          "text": "3. Rarely ________ located near city lights or at lower elevations because light pollution"
+        },
+        {
+          "tag": "H3",
+          "text": "4. The outer ear, ________ the fleshy pinna and the auditory canal, picks up and funnels s"
+        },
+        {
+          "tag": "H3",
+          "text": "5. The university senate recommended that every international applicant ________ an Englis"
+        },
+        {
+          "tag": "H3",
+          "text": "6. Pilih bagian kata/frasa yang SALAH secara grammar: \"The new superconducting material is"
+        },
+        {
+          "tag": "H3",
+          "text": "Perbaikan kalimat untuk riset"
+        },
+        {
+          "tag": "H3",
+          "text": "7. Perbaiki kesalahan grammar pada kalimat berikut dengan mengetik ulang kalimat yang bena"
+        },
+        {
+          "tag": "H3",
+          "text": "8. Tulis ulang kalimat berikut agar diawali dengan struktur inversi 'Not only...': \"Solar "
+        }
+      ]
+    },
+    {
+      "name": "exam-reading",
+      "route": "/exam/session",
+      "width": 1440,
+      "height": 1705,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Selesaikan & kirim jawaban",
+          "y": 1551
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": 1551,
+      "telemetry": true,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ruang ujian EPT"
+        },
+        {
+          "tag": "H2",
+          "text": "Bioluminescence in Deep-Sea Organisms"
+        },
+        {
+          "tag": "H2",
+          "text": "Jawaban Reading"
+        },
+        {
+          "tag": "H3",
+          "text": "9. According to the passage, why is deep-sea bioluminescence predominantly in the blue-gre"
+        },
+        {
+          "tag": "H3",
+          "text": "10. How does 'counterillumination' protect mesopelagic squid and shrimp from predators?"
+        }
+      ]
+    },
+    {
+      "name": "exam-reading",
+      "route": "/exam/session",
+      "width": 375,
+      "height": 1859,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Selesaikan & kirim jawaban",
+          "y": 1738
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": 1738,
+      "telemetry": true,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ruang ujian EPT"
+        },
+        {
+          "tag": "H2",
+          "text": "Jawaban Reading"
+        },
+        {
+          "tag": "H3",
+          "text": "9. According to the passage, why is deep-sea bioluminescence predominantly in the blue-gre"
+        },
+        {
+          "tag": "H3",
+          "text": "10. How does 'counterillumination' protect mesopelagic squid and shrimp from predators?"
+        }
+      ]
+    },
+    {
+      "name": "exam-reading",
+      "route": "/exam/session",
+      "width": 320,
+      "height": 2054,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Selesaikan & kirim jawaban",
+          "y": 1933
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": 1933,
+      "telemetry": true,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ruang ujian EPT"
+        },
+        {
+          "tag": "H2",
+          "text": "Jawaban Reading"
+        },
+        {
+          "tag": "H3",
+          "text": "9. According to the passage, why is deep-sea bioluminescence predominantly in the blue-gre"
+        },
+        {
+          "tag": "H3",
+          "text": "10. How does 'counterillumination' protect mesopelagic squid and shrimp from predators?"
+        }
+      ]
+    },
+    {
+      "name": "exam-writing",
+      "route": "/exam/session",
+      "width": 1440,
+      "height": 1530,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Selesaikan & kirim jawaban",
+          "y": 1376
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": 1376,
+      "telemetry": true,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ruang ujian EPT"
+        },
+        {
+          "tag": "H2",
+          "text": "Writing untuk riset"
+        },
+        {
+          "tag": "H2",
+          "text": "Esai akademik"
+        }
+      ]
+    },
+    {
+      "name": "exam-writing",
+      "route": "/exam/session",
+      "width": 375,
+      "height": 1338,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Selesaikan & kirim jawaban",
+          "y": 1218
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": 1218,
+      "telemetry": true,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ruang ujian EPT"
+        },
+        {
+          "tag": "H2",
+          "text": "Esai akademik"
+        }
+      ]
+    },
+    {
+      "name": "exam-writing",
+      "route": "/exam/session",
+      "width": 320,
+      "height": 1338,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Selesaikan & kirim jawaban",
+          "y": 1218
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": 1218,
+      "telemetry": true,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ruang ujian EPT"
+        },
+        {
+          "tag": "H2",
+          "text": "Esai akademik"
+        }
+      ]
+    },
+    {
+      "name": "results-populated",
+      "route": "/results?id=SES-c6b60a66-b996-5e24-b9ad-0698bc0ca1d3",
+      "width": 1440,
+      "height": 2396,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [
+        {
+          "tag": "INPUT",
+          "text": "",
+          "w": 13,
+          "h": 13
+        },
+        {
+          "tag": "INPUT",
+          "text": "",
+          "w": 13,
+          "h": 13
+        },
+        {
+          "tag": "INPUT",
+          "text": "",
+          "w": 13,
+          "h": 13
+        },
+        {
+          "tag": "INPUT",
+          "text": "",
+          "w": 13,
+          "h": 13
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "/ 2 benar",
+          "ratio": 4.37,
+          "size": 14,
+          "selector": ""
+        },
+        {
+          "text": "Kunci",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": ""
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Kirim Konfirmasi Riset",
+          "y": 759
+        },
+        {
+          "text": "Latih Listening",
+          "y": 1272
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Hasil latihan"
+        },
+        {
+          "tag": "H3",
+          "text": "Konfirmasi Perilaku Pengerjaan Responden"
+        },
+        {
+          "tag": "H2",
+          "text": "Ketepatan jawaban EPT"
+        },
+        {
+          "tag": "H2",
+          "text": "Fokus berikutnya: Listening"
+        },
+        {
+          "tag": "H2",
+          "text": "Pembahasan Listening"
+        },
+        {
+          "tag": "H3",
+          "text": "Why will the university library close early on Friday?"
+        },
+        {
+          "tag": "H3",
+          "text": ""
+        }
+      ]
+    },
+    {
+      "name": "results-populated",
+      "route": "/results?id=SES-c6b60a66-b996-5e24-b9ad-0698bc0ca1d3",
+      "width": 375,
+      "height": 3027,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [
+        {
+          "tag": "INPUT",
+          "text": "",
+          "w": 13,
+          "h": 13
+        },
+        {
+          "tag": "INPUT",
+          "text": "",
+          "w": 13,
+          "h": 13
+        },
+        {
+          "tag": "INPUT",
+          "text": "",
+          "w": 13,
+          "h": 13
+        },
+        {
+          "tag": "INPUT",
+          "text": "",
+          "w": 13,
+          "h": 13
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "/ 2 benar",
+          "ratio": 4.37,
+          "size": 12,
+          "selector": ""
+        },
+        {
+          "text": "Kunci",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": ""
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Kirim Konfirmasi Riset",
+          "y": 1088
+        },
+        {
+          "text": "Latih Listening",
+          "y": 1698
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Hasil latihan"
+        },
+        {
+          "tag": "H3",
+          "text": "Konfirmasi Perilaku Pengerjaan Responden"
+        },
+        {
+          "tag": "H2",
+          "text": "Ketepatan jawaban EPT"
+        },
+        {
+          "tag": "H2",
+          "text": "Fokus berikutnya: Listening"
+        },
+        {
+          "tag": "H2",
+          "text": "Pembahasan Listening"
+        },
+        {
+          "tag": "H3",
+          "text": "Why will the university library close early on Friday?"
+        },
+        {
+          "tag": "H3",
+          "text": ""
+        }
+      ]
+    },
+    {
+      "name": "results-populated",
+      "route": "/results?id=SES-c6b60a66-b996-5e24-b9ad-0698bc0ca1d3",
+      "width": 320,
+      "height": 3373,
+      "pageOverflow": false,
+      "internalOverflow": [
+        {
+          "selector": "respondentSurveyForm",
+          "scroll": 255,
+          "width": 238,
+          "overflow": "visible"
+        }
+      ],
+      "smallText": [],
+      "smallTargets": [
+        {
+          "tag": "INPUT",
+          "text": "",
+          "w": 13,
+          "h": 13
+        },
+        {
+          "tag": "INPUT",
+          "text": "",
+          "w": 13,
+          "h": 13
+        },
+        {
+          "tag": "INPUT",
+          "text": "",
+          "w": 13,
+          "h": 13
+        },
+        {
+          "tag": "INPUT",
+          "text": "",
+          "w": 13,
+          "h": 13
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "/ 2 benar",
+          "ratio": 4.37,
+          "size": 12,
+          "selector": ""
+        },
+        {
+          "text": "Kunci",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": ""
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Kirim Konfirmasi Riset",
+          "y": 1208
+        },
+        {
+          "text": "Latih Listening",
+          "y": 1861
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Hasil latihan"
+        },
+        {
+          "tag": "H3",
+          "text": "Konfirmasi Perilaku Pengerjaan Responden"
+        },
+        {
+          "tag": "H2",
+          "text": "Ketepatan jawaban EPT"
+        },
+        {
+          "tag": "H2",
+          "text": "Fokus berikutnya: Listening"
+        },
+        {
+          "tag": "H2",
+          "text": "Pembahasan Listening"
+        },
+        {
+          "tag": "H3",
+          "text": "Why will the university library close early on Friday?"
+        },
+        {
+          "tag": "H3",
+          "text": ""
+        }
+      ]
+    },
+    {
+      "name": "history-populated",
+      "route": "/history",
+      "width": 1440,
+      "height": 910,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Riwayat latihan"
+        }
+      ]
+    },
+    {
+      "name": "history-populated",
+      "route": "/history",
+      "width": 375,
+      "height": 877,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Riwayat latihan"
+        }
+      ]
+    },
+    {
+      "name": "history-populated",
+      "route": "/history",
+      "width": 320,
+      "height": 877,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Riwayat latihan"
+        }
+      ]
+    },
+    {
+      "name": "dashboard-populated",
+      "route": "/dashboard",
+      "width": 1440,
+      "height": 1325,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Mulai latihan bebas",
+          "y": 476
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Siap belajar hari ini?"
+        },
+        {
+          "tag": "H2",
+          "text": "Satu soal, satu langkah lebih paham."
+        },
+        {
+          "tag": "H2",
+          "text": "Sesi ujian EPT"
+        },
+        {
+          "tag": "H2",
+          "text": "Sesi ujian terakhir"
+        },
+        {
+          "tag": "H2",
+          "text": "Fokus pada satu keterampilan"
+        },
+        {
+          "tag": "H3",
+          "text": "Listening"
+        },
+        {
+          "tag": "H3",
+          "text": "Structure"
+        },
+        {
+          "tag": "H3",
+          "text": "Reading"
+        }
+      ]
+    },
+    {
+      "name": "dashboard-populated",
+      "route": "/dashboard",
+      "width": 375,
+      "height": 1806,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Mulai latihan bebas",
+          "y": 403
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Siap belajar hari ini?"
+        },
+        {
+          "tag": "H2",
+          "text": "Satu soal, satu langkah lebih paham."
+        },
+        {
+          "tag": "H2",
+          "text": "Sesi ujian EPT"
+        },
+        {
+          "tag": "H2",
+          "text": "Sesi ujian terakhir"
+        },
+        {
+          "tag": "H2",
+          "text": "Fokus pada satu keterampilan"
+        },
+        {
+          "tag": "H3",
+          "text": "Listening"
+        },
+        {
+          "tag": "H3",
+          "text": "Structure"
+        },
+        {
+          "tag": "H3",
+          "text": "Reading"
+        }
+      ]
+    },
+    {
+      "name": "dashboard-populated",
+      "route": "/dashboard",
+      "width": 320,
+      "height": 1916,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Mulai latihan bebas",
+          "y": 403
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Siap belajar hari ini?"
+        },
+        {
+          "tag": "H2",
+          "text": "Satu soal, satu langkah lebih paham."
+        },
+        {
+          "tag": "H2",
+          "text": "Sesi ujian EPT"
+        },
+        {
+          "tag": "H2",
+          "text": "Sesi ujian terakhir"
+        },
+        {
+          "tag": "H2",
+          "text": "Fokus pada satu keterampilan"
+        },
+        {
+          "tag": "H3",
+          "text": "Listening"
+        },
+        {
+          "tag": "H3",
+          "text": "Structure"
+        },
+        {
+          "tag": "H3",
+          "text": "Reading"
+        }
+      ]
+    },
+    {
+      "name": "admin-overview-populated",
+      "route": "/admin/overview",
+      "width": 1440,
+      "height": 1074,
+      "pageOverflow": false,
+      "internalOverflow": [
+        {
+          "selector": "adminSidebar",
+          "scroll": 268,
+          "width": 255,
+          "overflow": "auto"
+        }
+      ],
+      "smallText": [
+        {
+          "text": "ADMINISTRASI EPT",
+          "size": "10.5px"
+        },
+        {
+          "text": "Administrator",
+          "size": "11px"
+        },
+        {
+          "text": "Akun peserta aktif",
+          "size": "11.5px"
+        },
+        {
+          "text": "Siap sesi baru",
+          "size": "11.5px"
+        },
+        {
+          "text": "Hasil tersimpan",
+          "size": "11.5px"
+        },
+        {
+          "text": "Batas waktu aktif",
+          "size": "11.5px"
+        },
+        {
+          "text": "RESP-1001",
+          "size": "11.5px"
+        },
+        {
+          "text": "Modul TOEFL EPT",
+          "size": "11.5px"
+        },
+        {
+          "text": "dari 2 soal",
+          "size": "11.5px"
+        },
+        {
+          "text": "Modul TOEFL EPT",
+          "size": "11.5px"
+        },
+        {
+          "text": "dari 6 soal",
+          "size": "11.5px"
+        },
+        {
+          "text": "Modul TOEFL EPT",
+          "size": "11.5px"
+        },
+        {
+          "text": "dari 2 soal",
+          "size": "11.5px"
+        },
+        {
+          "text": "Tugas tambahan penelitian",
+          "size": "11.5px"
+        },
+        {
+          "text": "dari 1 soal",
+          "size": "11.5px"
+        },
+        {
+          "text": "Perubahan materi berlaku untuk sesi baru. Soal pada sesi yang sedang dikerjakan tetap sama",
+          "size": "11.5px"
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "Beranda",
+          "w": 50,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "text": "Administrasi",
+          "w": 75,
+          "h": 20
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "ADMINISTRASI EPT",
+          "ratio": 2.56,
+          "size": 10.5,
+          "selector": "admin-role sidebar-label"
+        },
+        {
+          "text": "Akun peserta aktif",
+          "ratio": 2.56,
+          "size": 11.5,
+          "selector": "kpi-subtext"
+        },
+        {
+          "text": "Siap sesi baru",
+          "ratio": 2.56,
+          "size": 11.5,
+          "selector": "kpi-subtext"
+        },
+        {
+          "text": "Hasil tersimpan",
+          "ratio": 2.56,
+          "size": 11.5,
+          "selector": "kpi-subtext"
+        },
+        {
+          "text": "Batas waktu aktif",
+          "ratio": 2.56,
+          "size": 11.5,
+          "selector": "kpi-subtext"
+        }
+      ],
+      "primaryActions": [],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ringkasan"
+        },
+        {
+          "tag": "H2",
+          "text": "Status Operasional TOEFL EPT"
+        },
+        {
+          "tag": "H3",
+          "text": "Sesi terbaru"
+        },
+        {
+          "tag": "H3",
+          "text": "Kesiapan materi"
+        }
+      ]
+    },
+    {
+      "name": "admin-overview-populated",
+      "route": "/admin/overview",
+      "width": 375,
+      "height": 1940,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [
+        {
+          "text": "Akun peserta aktif",
+          "size": "11.5px"
+        },
+        {
+          "text": "Siap sesi baru",
+          "size": "11.5px"
+        },
+        {
+          "text": "Hasil tersimpan",
+          "size": "11.5px"
+        },
+        {
+          "text": "Batas waktu aktif",
+          "size": "11.5px"
+        },
+        {
+          "text": "RESP-1001",
+          "size": "11.5px"
+        },
+        {
+          "text": "Modul TOEFL EPT",
+          "size": "11.5px"
+        },
+        {
+          "text": "dari 2 soal",
+          "size": "11.5px"
+        },
+        {
+          "text": "Modul TOEFL EPT",
+          "size": "11.5px"
+        },
+        {
+          "text": "dari 6 soal",
+          "size": "11.5px"
+        },
+        {
+          "text": "Modul TOEFL EPT",
+          "size": "11.5px"
+        },
+        {
+          "text": "dari 2 soal",
+          "size": "11.5px"
+        },
+        {
+          "text": "Tugas tambahan penelitian",
+          "size": "11.5px"
+        },
+        {
+          "text": "dari 1 soal",
+          "size": "11.5px"
+        },
+        {
+          "text": "Perubahan materi berlaku untuk sesi baru. Soal pada sesi yang sedang dikerjakan tetap sama",
+          "size": "11.5px"
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "Beranda",
+          "w": 50,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "text": "Administrasi",
+          "w": 75,
+          "h": 20
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "Akun peserta aktif",
+          "ratio": 2.56,
+          "size": 11.5,
+          "selector": "kpi-subtext"
+        },
+        {
+          "text": "Siap sesi baru",
+          "ratio": 2.56,
+          "size": 11.5,
+          "selector": "kpi-subtext"
+        },
+        {
+          "text": "Hasil tersimpan",
+          "ratio": 2.56,
+          "size": 11.5,
+          "selector": "kpi-subtext"
+        },
+        {
+          "text": "Batas waktu aktif",
+          "ratio": 2.56,
+          "size": 11.5,
+          "selector": "kpi-subtext"
+        }
+      ],
+      "primaryActions": [],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ringkasan"
+        },
+        {
+          "tag": "H2",
+          "text": "Status Operasional TOEFL EPT"
+        },
+        {
+          "tag": "H3",
+          "text": "Sesi terbaru"
+        },
+        {
+          "tag": "H3",
+          "text": "Kesiapan materi"
+        }
+      ]
+    },
+    {
+      "name": "admin-overview-populated",
+      "route": "/admin/overview",
+      "width": 320,
+      "height": 2051,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [
+        {
+          "text": "Akun peserta aktif",
+          "size": "11.5px"
+        },
+        {
+          "text": "Siap sesi baru",
+          "size": "11.5px"
+        },
+        {
+          "text": "Hasil tersimpan",
+          "size": "11.5px"
+        },
+        {
+          "text": "Batas waktu aktif",
+          "size": "11.5px"
+        },
+        {
+          "text": "RESP-1001",
+          "size": "11.5px"
+        },
+        {
+          "text": "Modul TOEFL EPT",
+          "size": "11.5px"
+        },
+        {
+          "text": "dari 2 soal",
+          "size": "11.5px"
+        },
+        {
+          "text": "Modul TOEFL EPT",
+          "size": "11.5px"
+        },
+        {
+          "text": "dari 6 soal",
+          "size": "11.5px"
+        },
+        {
+          "text": "Modul TOEFL EPT",
+          "size": "11.5px"
+        },
+        {
+          "text": "dari 2 soal",
+          "size": "11.5px"
+        },
+        {
+          "text": "Tugas tambahan penelitian",
+          "size": "11.5px"
+        },
+        {
+          "text": "dari 1 soal",
+          "size": "11.5px"
+        },
+        {
+          "text": "Perubahan materi berlaku untuk sesi baru. Soal pada sesi yang sedang dikerjakan tetap sama",
+          "size": "11.5px"
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "Beranda",
+          "w": 50,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "text": "Administrasi",
+          "w": 75,
+          "h": 20
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "Akun peserta aktif",
+          "ratio": 2.56,
+          "size": 11.5,
+          "selector": "kpi-subtext"
+        },
+        {
+          "text": "Siap sesi baru",
+          "ratio": 2.56,
+          "size": 11.5,
+          "selector": "kpi-subtext"
+        },
+        {
+          "text": "Hasil tersimpan",
+          "ratio": 2.56,
+          "size": 11.5,
+          "selector": "kpi-subtext"
+        },
+        {
+          "text": "Batas waktu aktif",
+          "ratio": 2.56,
+          "size": 11.5,
+          "selector": "kpi-subtext"
+        }
+      ],
+      "primaryActions": [],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ringkasan"
+        },
+        {
+          "tag": "H2",
+          "text": "Status Operasional TOEFL EPT"
+        },
+        {
+          "tag": "H3",
+          "text": "Sesi terbaru"
+        },
+        {
+          "tag": "H3",
+          "text": "Kesiapan materi"
+        }
+      ]
+    },
+    {
+      "name": "admin-proctor-populated",
+      "route": "/admin/proctor",
+      "width": 1440,
+      "height": 900,
+      "pageOverflow": false,
+      "internalOverflow": [
+        {
+          "selector": "adminSidebar",
+          "scroll": 268,
+          "width": 255,
+          "overflow": "auto"
+        }
+      ],
+      "smallText": [
+        {
+          "text": "ADMINISTRASI EPT",
+          "size": "10.5px"
+        },
+        {
+          "text": "Administrator",
+          "size": "11px"
+        },
+        {
+          "text": "CARI PESERTA ATAU KODE SESI",
+          "size": "11px"
+        },
+        {
+          "text": "INDIKATOR RULE",
+          "size": "11px"
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "Beranda",
+          "w": 50,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "text": "Administrasi",
+          "w": 75,
+          "h": 20
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "ADMINISTRASI EPT",
+          "ratio": 2.56,
+          "size": 10.5,
+          "selector": "admin-role sidebar-label"
+        }
+      ],
+      "primaryActions": [],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ringkasan"
+        },
+        {
+          "tag": "H2",
+          "text": "Tinjau sesi peserta"
+        },
+        {
+          "tag": "H3",
+          "text": "Sesi terkirim"
+        }
+      ]
+    },
+    {
+      "name": "admin-proctor-populated",
+      "route": "/admin/proctor",
+      "width": 375,
+      "height": 1139,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [
+        {
+          "text": "CARI PESERTA ATAU KODE SESI",
+          "size": "11px"
+        },
+        {
+          "text": "INDIKATOR RULE",
+          "size": "11px"
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "Beranda",
+          "w": 50,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "text": "Administrasi",
+          "w": 75,
+          "h": 20
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ringkasan"
+        },
+        {
+          "tag": "H2",
+          "text": "Tinjau sesi peserta"
+        },
+        {
+          "tag": "H3",
+          "text": "Sesi terkirim"
+        }
+      ]
+    },
+    {
+      "name": "admin-proctor-populated",
+      "route": "/admin/proctor",
+      "width": 320,
+      "height": 1232,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [
+        {
+          "text": "CARI PESERTA ATAU KODE SESI",
+          "size": "11px"
+        },
+        {
+          "text": "INDIKATOR RULE",
+          "size": "11px"
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "Beranda",
+          "w": 50,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "text": "Administrasi",
+          "w": 75,
+          "h": 20
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ringkasan"
+        },
+        {
+          "tag": "H2",
+          "text": "Tinjau sesi peserta"
+        },
+        {
+          "tag": "H3",
+          "text": "Sesi terkirim"
+        }
+      ]
+    },
+    {
+      "name": "admin-proctor-detail",
+      "route": "/admin/proctor",
+      "width": 1440,
+      "height": 2878,
+      "pageOverflow": false,
+      "internalOverflow": [
+        {
+          "selector": "adminSidebar",
+          "scroll": 268,
+          "width": 255,
+          "overflow": "auto"
+        }
+      ],
+      "smallText": [
+        {
+          "text": "ADMINISTRASI EPT",
+          "size": "10.5px"
+        },
+        {
+          "text": "Administrator",
+          "size": "11px"
+        },
+        {
+          "text": "CARI PESERTA ATAU KODE SESI",
+          "size": "11px"
+        },
+        {
+          "text": "INDIKATOR RULE",
+          "size": "11px"
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "Beranda",
+          "w": 50,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "text": "Administrasi",
+          "w": 75,
+          "h": 20
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "ADMINISTRASI EPT",
+          "ratio": 2.56,
+          "size": 10.5,
+          "selector": "admin-role sidebar-label"
+        },
+        {
+          "text": "RESP-1001",
+          "ratio": 4.37,
+          "size": 12,
+          "selector": ""
+        },
+        {
+          "text": "12 Nov 2026, 22.19",
+          "ratio": 4.37,
+          "size": 12,
+          "selector": ""
+        },
+        {
+          "text": "Sesi bc0ca1d3",
+          "ratio": 4.37,
+          "size": 12,
+          "selector": "monitor-session-code"
+        }
+      ],
+      "primaryActions": [],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ringkasan"
+        },
+        {
+          "tag": "H2",
+          "text": "Tinjau sesi peserta"
+        },
+        {
+          "tag": "H3",
+          "text": "Sesi terkirim"
+        },
+        {
+          "tag": "H3",
+          "text": "Peserta RESP-1001"
+        }
+      ]
+    },
+    {
+      "name": "admin-proctor-detail",
+      "route": "/admin/proctor",
+      "width": 375,
+      "height": 2209,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "Beranda",
+          "w": 50,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "text": "Administrasi",
+          "w": 75,
+          "h": 20
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ringkasan"
+        },
+        {
+          "tag": "H2",
+          "text": "Tinjau sesi peserta"
+        },
+        {
+          "tag": "H3",
+          "text": "Peserta RESP-1001"
+        }
+      ]
+    },
+    {
+      "name": "admin-proctor-detail",
+      "route": "/admin/proctor",
+      "width": 320,
+      "height": 2292,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "Beranda",
+          "w": 50,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "text": "Administrasi",
+          "w": 75,
+          "h": 20
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ringkasan"
+        },
+        {
+          "tag": "H2",
+          "text": "Tinjau sesi peserta"
+        },
+        {
+          "tag": "H3",
+          "text": "Peserta RESP-1001"
+        }
+      ]
+    },
+    {
+      "name": "admin-question-editor",
+      "route": "/admin/questions",
+      "width": 1440,
+      "height": 1673,
+      "pageOverflow": false,
+      "internalOverflow": [
+        {
+          "selector": "adminSidebar",
+          "scroll": 268,
+          "width": 255,
+          "overflow": "auto"
+        },
+        {
+          "selector": "table-scroll bank-table-scroll",
+          "scroll": 516,
+          "width": 441,
+          "overflow": "auto"
+        }
+      ],
+      "smallText": [
+        {
+          "text": "ADMINISTRASI EPT",
+          "size": "10.5px"
+        },
+        {
+          "text": "Administrator",
+          "size": "11px"
+        },
+        {
+          "text": "CARI SOAL",
+          "size": "11px"
+        },
+        {
+          "text": "MODUL",
+          "size": "11px"
+        },
+        {
+          "text": "STATUS",
+          "size": "11px"
+        },
+        {
+          "text": "BENTUK TUGAS",
+          "size": "11px"
+        },
+        {
+          "text": "SOAL",
+          "size": "11px"
+        },
+        {
+          "text": "MODUL",
+          "size": "11px"
+        },
+        {
+          "text": "STATUS",
+          "size": "11px"
+        },
+        {
+          "text": "AKSI",
+          "size": "11px"
+        }
+      ],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "Beranda",
+          "w": 50,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "text": "Administrasi",
+          "w": 75,
+          "h": 20
+        },
+        {
+          "tag": "INPUT",
+          "text": "",
+          "w": 20,
+          "h": 20
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [
+        {
+          "text": "ADMINISTRASI EPT",
+          "ratio": 2.56,
+          "size": 10.5,
+          "selector": "admin-role sidebar-label"
+        },
+        {
+          "text": "Nonaktifkan soal G1",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal G2",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal G3",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal G4",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal GR1",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal GR2",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal L1",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal L2",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal R1",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal R2",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Nonaktifkan soal W1",
+          "ratio": 3.58,
+          "size": 12,
+          "selector": "question-status is-active"
+        },
+        {
+          "text": "Halaman sebelumnya",
+          "ratio": 4.34,
+          "size": 13,
+          "selector": "qPrevPage"
+        },
+        {
+          "text": "Halaman berikutnya",
+          "ratio": 4.34,
+          "size": 13,
+          "selector": "qNextPage"
+        }
+      ],
+      "primaryActions": [
+        {
+          "text": "Tambah soal",
+          "y": 149
+        },
+        {
+          "text": "Simpan soal",
+          "y": 513
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ringkasan"
+        },
+        {
+          "tag": "H2",
+          "text": "Bank soal TOEFL EPT"
+        },
+        {
+          "tag": "H2",
+          "text": "Soal baru"
+        }
+      ]
+    },
+    {
+      "name": "admin-question-editor",
+      "route": "/admin/questions",
+      "width": 375,
+      "height": 2171,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "Beranda",
+          "w": 50,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "text": "Administrasi",
+          "w": 75,
+          "h": 20
+        },
+        {
+          "tag": "INPUT",
+          "text": "",
+          "w": 20,
+          "h": 20
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Tambah soal",
+          "y": 223
+        },
+        {
+          "text": "Simpan soal",
+          "y": 931
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ringkasan"
+        },
+        {
+          "tag": "H2",
+          "text": "Bank soal TOEFL EPT"
+        },
+        {
+          "tag": "H2",
+          "text": "Soal baru"
+        }
+      ]
+    },
+    {
+      "name": "admin-question-editor",
+      "route": "/admin/questions",
+      "width": 320,
+      "height": 2693,
+      "pageOverflow": false,
+      "internalOverflow": [],
+      "smallText": [],
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "Beranda",
+          "w": 50,
+          "h": 20
+        },
+        {
+          "tag": "A",
+          "text": "Administrasi",
+          "w": 75,
+          "h": 20
+        },
+        {
+          "tag": "INPUT",
+          "text": "",
+          "w": 20,
+          "h": 20
+        }
+      ],
+      "unnamedButtons": 0,
+      "contrast": [],
+      "primaryActions": [
+        {
+          "text": "Tambah soal",
+          "y": 234
+        },
+        {
+          "text": "Simpan soal",
+          "y": 1438
+        }
+      ],
+      "questionY": null,
+      "answerY": null,
+      "submitY": null,
+      "telemetry": false,
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Ringkasan"
+        },
+        {
+          "tag": "H2",
+          "text": "Bank soal TOEFL EPT"
+        },
+        {
+          "tag": "H2",
+          "text": "Soal baru"
+        }
+      ]
+    }
+  ],
+  "browserErrors": []
+}

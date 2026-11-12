@@ -1,5 +1,3 @@
-/* Hallmark · shape: product-led assessment · genre: modern-minimal · theme: brand · v2.0.0 */
-/* Hallmark · pre-emit critique: keep global navigation on one line and give the mobile menu a clear focusable trigger. */
 .site-menu-toggle { display: none; }
 .header-inner { position: relative; }
 .main-nav a { padding-block: var(--space-sm); }

@@ -1,22 +1,44 @@
-/* Hallmark · shape: app screen · genre: modern-minimal · theme: brand · redesign: full
- * signature: EPT listening workspace · posture: restrained · v2.0.0 */
-/* Hallmark · pre-emit critique: task controls carry the screen; no reward chrome or ornamental diagrams. */
+/* Cobalt Modern - LinguaPulse TOEFL EPT */
 .ept-exam { padding-top: var(--space-xl); }
 .ept-exam .exam-heading { margin-bottom: var(--space-lg); }
 .ept-exam .exam-heading h1 { text-wrap: balance; font-size: 32px; margin-bottom: var(--space-xs); }
 .ept-exam .exam-heading p { color: var(--color-muted); font-size: 14px; }
 .ept-exam .exam-heading > button { margin-left: auto; }
-.exam-session-header { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: var(--space-xl); padding: var(--space-lg) 32px; background: var(--color-hero-bg); border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+.exam-session-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-xl);
+  padding: 20px 28px;
+  background: linear-gradient(180deg, #0f1c32 0%, #0a1322 100%);
+  border: 1px solid #1e293b;
+  border-bottom: 0;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  box-shadow: 0 4px 16px -2px rgba(10, 19, 34, 0.2);
+}
 .exam-progress-summary { max-width: 480px; }
-.exam-progress-summary label { color: var(--color-hero-ink); font-size: 16px; font-weight: 500; margin-bottom: var(--space-sm); }
-.exam-progress-summary p { color: var(--color-hero-muted); font-size: 12px; margin-top: var(--space-xs); }
-#examProgress { display: block; appearance: none; border: 0; width: 100%; height: 6px; background: var(--color-hero-rule); border-radius: var(--radius-pill); overflow: clip; }
-#examProgress::-webkit-progress-bar { background: var(--color-hero-rule); border-radius: var(--radius-pill); }
-#examProgress::-webkit-progress-value { background: var(--color-hero-ink); border-radius: var(--radius-pill); }
-#examProgress::-moz-progress-bar { background: var(--color-hero-ink); border-radius: var(--radius-pill); }
+.exam-progress-summary label { color: #f8fafc; font-size: 15px; font-weight: 600; margin-bottom: 8px; display: block; letter-spacing: -0.01em; }
+.exam-progress-summary p { color: #94a3b8; font-size: 12px; margin-top: 6px; }
+#examProgress { display: block; appearance: none; border: 0; width: 100%; height: 7px; background: #1e293b; border-radius: var(--radius-pill); overflow: clip; }
+#examProgress::-webkit-progress-bar { background: #1e293b; border-radius: var(--radius-pill); }
+#examProgress::-webkit-progress-value { background: linear-gradient(90deg, #3b82f6, #60a5fa); border-radius: var(--radius-pill); }
+#examProgress::-moz-progress-bar { background: linear-gradient(90deg, #3b82f6, #60a5fa); border-radius: var(--radius-pill); }
 .exam-time-block { text-align: right; }
-.exam-time-block > span { display: block; color: var(--color-hero-muted); font-size: 12px; }
-.ept-exam .timer-pill { padding: 0; background: none; box-shadow: none; color: var(--color-hero-ink); font-family: var(--font-body); font-weight: 600; font-size: 32px; line-height: 1.25; font-variant-numeric: tabular-nums; }
+.exam-time-block > span { display: block; color: #94a3b8; font-size: 11.5px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
+.ept-exam .timer-pill {
+  padding: 4px 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-family: var(--font-outlier);
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
 .ept-exam .exam-control-bar { margin-bottom: 0; border-radius: 0; border-top: 0; padding: var(--space-md) 32px; box-shadow: none; gap: var(--space-lg); }
 .ept-exam .section-stepper { display: flex; gap: var(--space-xs); flex-wrap: wrap; }
 .ept-exam .step-btn { background: none; border: 1px solid var(--color-rule); border-radius: var(--radius-sm); color: var(--color-ink-2); min-height: 44px; padding-inline: var(--space-lg); font-size: 14px; font-weight: 500; }
@@ -27,10 +49,39 @@
 .question-navigation summary { cursor: pointer; font-size: 14px; color: var(--color-ink-2); padding-block: var(--space-2xs); }
 .question-navigation summary > span { color: var(--color-muted); margin-left: var(--space-sm); font-size: 12px; }
 .question-number-list { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin-top: var(--space-md); }
-.question-number { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--color-input-border); border-radius: var(--radius-sm); background: var(--color-paper-2); color: var(--color-ink); cursor: pointer; font-size: 14px; font-variant-numeric: tabular-nums; }
-.question-number:hover { background: var(--color-paper-3); }
-.question-number.is-answered { background: var(--color-accent-soft); border-color: var(--color-accent); color: var(--color-accent); font-weight: 600; }
-.question-number.is-marked { outline: 2px solid var(--color-warm); outline-offset: 1px; }
+.question-number {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #334155;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.question-number:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px -1px rgba(15, 23, 42, 0.08);
+}
+.question-number.is-answered {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 2px 6px -1px rgba(29, 78, 216, 0.35);
+}
+.question-number.is-marked {
+  outline: 2px solid #d97706;
+  outline-offset: 2px;
+}
 .question-legend { display: flex; flex-wrap: wrap; gap: var(--space-lg); font-size: 12px; color: var(--color-muted); margin-top: var(--space-sm); }
 .ept-exam .exam-workspace { grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr); gap: var(--space-lg); align-items: start; }
 .ept-exam .pane { padding: 32px; min-width: 0; border-radius: var(--radius-lg); box-shadow: none; }
@@ -60,11 +111,51 @@
 .question-flag:hover { color: var(--color-ink); border-color: var(--color-input-border); }
 .question-flag[aria-pressed="true"] { color: var(--color-warm); border-color: var(--color-warm); background: var(--color-warm-soft); }
 .question-flag[aria-pressed="true"] svg { fill: currentColor; }
-.ept-exam .q-option-label { border-radius: var(--radius-sm); padding: var(--space-sm); min-height: 48px; align-items: center; gap: var(--space-sm); font-size: 15px; font-weight: 400; line-height: 1.6; }
-.ept-exam .q-option-label input { margin: 0; width: 24px; height: 24px; flex-shrink: 0; }
-.ept-exam .option-letter { font-size: 13px; font-weight: 600; color: var(--color-muted); }
-.ept-exam .q-option-label:has(input:checked) .option-letter { color: var(--color-accent); }
-.ept-exam .q-option-label:has(input:checked) { font-weight: 500; }
+.ept-exam .q-option-label {
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  min-height: 52px;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.55;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+  transition: all 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ept-exam .q-option-label:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px -1px rgba(15, 23, 42, 0.06);
+}
+.ept-exam .q-option-label input { margin: 0; width: 20px; height: 20px; flex-shrink: 0; accent-color: #1d4ed8; }
+.ept-exam .option-letter {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: #f1f5f9;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #475569;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+.ept-exam .q-option-label:has(input:checked) {
+  background: #eff6ff;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1px #3b82f6, 0 4px 12px -2px rgba(29, 78, 216, 0.12);
+  font-weight: 500;
+  color: #0f172a;
+}
+.ept-exam .q-option-label:has(input:checked) .option-letter {
+  background: #1d4ed8;
+  color: #ffffff;
+}
 .ept-exam .rewrite-heading { font-size: 19px; margin-top: var(--space-xl); margin-bottom: 0; }
 .section-actions { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-sm); margin-top: var(--space-lg); }
 .ept-exam .editor-top-row { padding-bottom: var(--space-lg); border-bottom: 1px solid var(--color-rule); margin-bottom: var(--space-md); }

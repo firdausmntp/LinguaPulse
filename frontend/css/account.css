@@ -1,19 +1,28 @@
-/* Hallmark · shape: assessment index · genre: modern-minimal · theme: brand · redesign: full
- * paper: cobalt light · accent: cobalt · display: Familjen Grotesk · body: IBM Plex Sans
- * hero: Banner · nav: edge-aligned · footer: mast · signature: three assessment rows
- * axes: light/grotesk-sans/cool · posture: restrained · v2.0.0 */
-/* Hallmark · pre-emit critique: keep the real assessment outline; remove ornamental claims and all reward mechanics. */
-
+/* Cobalt Modern - LinguaPulse TOEFL EPT */
 .account-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr); gap: 100px; align-items: start; padding-block: 64px 96px; min-height: 700px; }
-.auth-intro { grid-column: 1; grid-row: 1; background: var(--color-accent-soft); padding: 48px; border-radius: var(--radius-lg); min-height: 500px; display: flex; flex-direction: column; align-items: start; justify-content: center; }
-.auth-intro h2 { font-size: clamp(36px, 3.5vw, 48px); letter-spacing: -1.5px; margin-bottom: 28px; }
-.auth-intro p { max-width: 45ch; margin-bottom: 32px; }
-.auth-panel { grid-column: 2; grid-row: 1; padding-top: var(--space-xs); max-width: 440px; width: 100%; }
-.auth-links { display: flex; gap: 28px; border-bottom: 1px solid var(--color-rule); margin-bottom: 32px; }
-.auth-links a { display: inline-block; padding: 0 0 var(--space-md); text-decoration: none; color: var(--color-muted); }
-.auth-links a[aria-current="page"] { border-bottom: 2px solid var(--color-accent); color: var(--color-accent); }
-.auth-panel h1 { font-size: 30px; margin-bottom: var(--space-sm); }
-.auth-panel > p { font-size: 15px; margin-bottom: 32px; }
+.auth-intro {
+  grid-column: 1;
+  grid-row: 1;
+  background: linear-gradient(145deg, #eff6ff 0%, #dbeafe 100%);
+  border: 1px solid #bfdbfe;
+  padding: 48px;
+  border-radius: var(--radius-lg);
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  box-shadow: var(--shadow-card);
+}
+.auth-intro h2 { font-size: clamp(34px, 3.2vw, 44px); letter-spacing: -0.025em; margin-bottom: 20px; color: #0f172a; font-family: var(--font-display); line-height: 1.15; }
+.auth-intro p { max-width: 45ch; margin-bottom: 32px; color: #334155; font-size: 15.5px; line-height: 1.65; }
+.auth-panel { grid-column: 2; grid-row: 1; padding: 36px 40px; max-width: 480px; width: 100%; background: #ffffff; border: 1px solid #e2e8f0; border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
+.auth-links { display: flex; gap: 24px; border-bottom: 1px solid #e2e8f0; margin-bottom: 28px; }
+.auth-links a { display: inline-block; padding: 0 4px 12px; text-decoration: none; color: #64748b; font-weight: 500; font-size: 15px; border-bottom: 2px solid transparent; transition: all 0.15s ease; }
+.auth-links a:hover { color: #0f172a; }
+.auth-links a[aria-current="page"] { border-bottom-color: #1d4ed8; color: #1d4ed8; font-weight: 700; }
+.auth-panel h1 { font-size: 26px; margin-bottom: 8px; font-family: var(--font-display); letter-spacing: -0.015em; color: #0f172a; }
+.auth-panel > p { font-size: 14.5px; color: #64748b; margin-bottom: 24px; }
 .auth-panel .inline-error { margin-bottom: 20px; }
 .account-form { display: grid; gap: var(--space-lg); }
 .account-form label, .prepare-form label { margin-bottom: var(--space-xs); }

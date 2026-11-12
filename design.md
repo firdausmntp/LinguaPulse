@@ -1,19 +1,32 @@
-# LinguaPulse TOEFL EPT design system
+# LinguaPulse TOEFL EPT Design System
 
-Hallmark v2.0.0, retained brand. Cobalt, Familjen Grotesk headings, IBM Plex Sans body. Consume tokens in frontend/css/tokens.css. No emojis, gamification, tracked capital labels, eyebrow labels, fake metrics, decorative gradients, or mock browser frames.
+Brand sendiri — bukan template pihak ketiga. Cobalt Modern, Familjen Grotesk headings, IBM Plex Sans body. Tokens di `frontend/css/tokens.css`. Tanpa emoji, tanpa gamifikasi, tanpa eyebrow labels, tanpa gradien dekoratif, tanpa fake metrics.
 
-2026-11-10 EPT revision: Listening, Structure and Reading are the three EPT modules. Writing and sentence rewriting support the research task; they do not produce an official TOEFL score.
+2026-11-10 EPT revision: Listening, Structure dan Reading adalah tiga modul EPT. Writing dan sentence rewriting mendukung tugas riset; bukan skor TOEFL resmi.
 
-Landing: Stage hero with large EPT heading on ink-blue surface, paired with a real screenshot of the listening workspace. White text uses hero tokens. A single random Structure sample is available without login, with green/red feedback and full-width explanation. Full exams remain on their own route. Three-module information switcher, learning modes, workflow, privacy, FAQ. Visual mass comes from the real product, type and material, not invented evidence. Keep route destinations and page IDs.
+## Arah Visual: Evolve Cobalt
 
-App pages: light neutral paper, white work surfaces, cobalt selected/action state, compact navy headers. Exam has four tab destinations (Listening, Structure, Reading, Writing riset), actual completion progress, question navigator and flag-for-review controls, audio in listening, per-passage reading, minimal task chrome. No decorative page-load animation in app views.
+- **Palet:** white work surfaces (#FFFFFF), crisp neutral paper (#F8FAFC, #F1F5F9), deep navy ink (#0A1322, #0F172A), vivid cobalt accent (#1D4ED8 / #2563EB).
+- **Tipografi:** Familjen Grotesk untuk display/heading dengan tracking ketat, IBM Plex Sans untuk body (measure 65–75ch), JetBrains Mono hanya untuk data/metrik/angka telemetri.
+- **Kedalaman:** shadow berlapis offset + blur lembut (bukan flat keras, bukan halo glow). Radius presisi: 6px kecil, 10px kontrol, 14px kartu.
+- **Form:** border input jelas, focus ring cobalt solid offset 2px, hover/active tegas, placeholder ≥4.5:1.
+- **Browser surfaces:** selection, caret, scrollbar, focus ring, underline offset, angka tabular — semua di-theme dari palet, bukan default browser.
+- **States:** hover, disabled, loading, error, empty wajib ada dan terlihat.
 
-Admin custom questions: master/detail bank and form, friendly module names, dynamic options and answer select, preview before saving, audio URL/upload, import/export JSON, active/inactive management, duplicate action. Existing proctor and users tabs remain. Error/loading/empty/full states and visible keyboard focus required. Audio upload is admin-only.
+## Halaman
 
-Palette tokens added by root: --color-hero-bg, --color-hero-ink, --color-hero-muted, --color-hero-rule. Use all other existing tokens. New stylesheets start with Hallmark stamp and critique. Max 350 lines per code file. Keep controls responsive at 320/375px, respect reduced motion. One primary button recipe (btn-primary); use existing SVG helper (aria-hidden); any icon-only button needs accessible name. Actual viewport panels must fit mobile, not merely hide overflow.
+- **Landing (`/`):** hero gelap dengan screenshot nyata workspace Listening, switcher tiga modul EPT, sampel Structure interaktif tanpa login, feedback hijau/merah dengan label teks.
+- **Ruang ujian (`/exam/session`):** empat tab (Listening, Structure, Reading, Writing riset), progres nyata, navigator soal, penanda ragu-ragu, audio Listening, Reading per wacana, timer sticky di mobile, minim chrome.
+- **Panel pengawas (`/admin`):** sidebar collapsible, ringkasan operasional dengan hierarchy jelas, detail inspeksi di tab Pengawasan (tanpa klaim live monitoring), editor soal master/detail dengan pratinjau, unggah audio, impor/ekspor.
+- **Hasil & riwayat (`/results`, `/history`):** breakdown akurasi per modul, pembahasan terstruktur, riwayat tanpa scroll samping di mobile.
+- **Dasbor peserta (`/dashboard`):** dua jalur jelas — latihan tanpa timer dan ujian berwaktu.
+- **Latihan bebas (`/practice`):** satu soal acak MC per giliran dari Listening/Structure/Reading; pilih, cek, baca pembahasan, lanjut. Tanpa timer, tanpa sensor, tanpa riwayat ujian. Parameter `module` bertahan saat refresh.
 
-Files: edit existing templates/CSS/JS in place; add modular helpers as needed; delete no routes. Preserve account sessions, draft restore, telemetry only while exam active, owner-only results. All saved question text must be escaped before rendering.
+## Aturan Teknis
 
-2026-11-11 workspace polish: Admin opens to an operational overview, with a white collapsible sidebar, actual counts, recent submissions, module readiness and task links. Detailed proctor inspection stays under Pengawasan; no live monitoring claim. Unsubmitted attempts count only while their deadline is valid and exclude completed submissions. User CRUD and question editor remain unchanged in capability.
-
-Participant dashboard leads with two clear paths: untimed practice and a timed exam session. `/practice` is participant-only and loads one random active multiple-choice question at a time from Listening, Structure or Reading. Select, check, read explanation, next. Green marks the correct option; red marks an incorrect selection, with text labels too. Practice never starts a timer, writes exam history or enables research sensors. Desktop keeps context beside answers; mobile stacks them. Query parameter `module` preserves the selected module on refresh.
+- Max 350 baris per berkas kode; refaktor modular bila mendekati.
+- Responsif di 320/375px; hormati `prefers-reduced-motion`; tanpa animasi page-load dekoratif di app views.
+- Satu resep tombol primer (`btn-primary`); ikon dari SVG helper `icons.js` dengan `aria-hidden="true"`; tombol ikon wajib nama aksesibel.
+- Panel harus muat di mobile viewport, bukan sekadar `overflow: hidden`.
+- Edit template/CSS/JS di tempat; tambah helper modular bila perlu; jangan hapus route.
+- Pertahankan: sesi akun, restore draf, telemetri hanya saat ujian aktif, hasil owner-only, escape semua teks soal saat render.

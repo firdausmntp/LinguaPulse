@@ -30,7 +30,7 @@ LinguaPulse adalah aplikasi web lengkap untuk latihan TOEFL EPT sekaligus instru
 | **Database** | SQLite tunggal dengan migrasi aditif yang aman terhadap data lama |
 | **Bank Soal** | JSON dua arah sinkron dengan editor admin (`questions/`) |
 | **ML Pipeline** | XGBoost, 1D-CNN, dan baseline rule-based (`ml_pipeline/`, `packages/proctor_telemetry/`) |
-| **Tema Visual** | *Hallmark Cobalt* — CSS tokens terpusat, tanpa emoji pada UI |
+| **Tema Visual** | *Cobalt Modern* — CSS tokens terpusat, tanpa emoji pada UI |
 
 ## Fitur Unggulan
 
@@ -50,7 +50,6 @@ LinguaPulse adalah aplikasi web lengkap untuk latihan TOEFL EPT sekaligus instru
 
 ### Privasi & Etika Riset
 - Tidak ada karakter ketikan mentah, isi clipboard, atau data biometrik yang disimpan.
-- Kolom gamifikasi lama (XP, streak, lencana, leaderboard) dipertahankan hanya demi kompatibilitas data historis dan tidak pernah digunakan.
 - Halaman `/privacy` dan `/terms` menjelaskan penggunaan data riset.
 
 ## Mulai Cepat
@@ -154,7 +153,7 @@ toefl/
 │   ├── index.html              # Shell SPA + fallback tanpa JS
 │   ├── pages/                  # Fragmen per route
 │   ├── js/                     # router, exam, telemetry, admin, security
-│   ├── css/                    # tokens.css (Hallmark Cobalt) + modul layout
+│   ├── css/                    # tokens.css (Cobalt Modern) + modul layout
 │   └── assets/logo/            # Paket ikon & favicon standar
 ├── questions/                  # Bank soal JSON per modul
 ├── packages/proctor_telemetry/ # Engine telemetri: fitur, model, aturan

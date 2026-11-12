@@ -28,7 +28,7 @@ Dokumen ini berisi konvensi, arsitektur, dan batasan teknis untuk agen pengemban
   * `/practice` merupakan latihan bebas peserta: soal aktif acak, pembahasan langsung, tanpa timer, tanpa pencatatan sensor, dan tidak menambah riwayat ujian. `/admin` dibuka pada ringkasan operasional; detail inspeksi tetap di tab Pengawasan.
   * Tidak ada gamifikasi: XP, level, streak, lencana prestasi, dan leaderboard dilarang. Kolom lama database dipertahankan hanya demi kompatibilitas data; jangan aktifkan kembali.
   * Identitas akun divalidasi melalui cookie sesi `HttpOnly` dan API server; jangan percaya role/identitas dari localStorage atau cookie yang ditulis JavaScript.
-  * Desain sistem menggunakan CSS tokens di `frontend/css/tokens.css` dengan tema *Hallmark Cobalt*.
+  * Desain sistem menggunakan CSS tokens di `frontend/css/tokens.css` dengan tema *Cobalt Modern*.
 * **Machine Learning (`ml_pipeline/`):**
   * Model klasifikasi integritas pengerjaan: XGBoost, 1D-CNN, dan baseline rule-based.
 

@@ -1,5 +1,3 @@
-/* Hallmark · shape: app screen · genre: modern-minimal · theme: brand · v2.0.0 */
-/* Hallmark · pre-emit critique: distinguish practice from timed exams; keep each question, its context and feedback together. */
 .participant-nav { display: flex; gap: 28px; border-bottom: 1px solid var(--color-rule); margin-bottom: 32px; overflow-x: auto; }
 .participant-nav a { padding-block: var(--space-md); text-decoration: none; color: var(--color-muted); border-bottom: 2px solid transparent; white-space: nowrap; font-size: 14px; }
 .participant-nav a[aria-current="page"] { color: var(--color-accent); border-color: var(--color-accent); }
@@ -75,16 +73,69 @@
 .practice-question-meta > span:first-child { color: var(--color-accent); font-weight: 500; }
 .practice-question > h2 { font-size: 23px; line-height: 1.5; margin-bottom: 28px; }
 .practice-options { display: grid; gap: var(--space-sm); padding: 0; margin: 0; border: 0; }
-.practice-option { position: relative; display: flex; align-items: center; gap: var(--space-sm); min-height: 60px; padding: var(--space-md); border: 1px solid var(--color-rule-2); border-radius: var(--radius-sm); cursor: pointer; color: var(--color-ink); font-size: 14px; font-weight: 400; line-height: 1.55; }
-.practice-option:hover { background: var(--color-paper-3); }
+.practice-option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 14px 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  color: var(--color-ink);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.55;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+  transition: all 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.practice-option:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px -2px rgba(15, 23, 42, 0.06);
+}
 .practice-option input { position: absolute; left: 16px; top: 16px; width: 24px; height: 24px; opacity: 0; }
 .practice-option:has(input:focus-visible) { outline: 3px solid var(--color-focus); outline-offset: 3px; }
-.practice-letter { display: grid; place-items: center; width: 32px; height: 32px; flex-shrink: 0; border: 1px solid var(--color-rule-2); border-radius: var(--radius-sm); font-size: 12px; }
-.practice-option.is-selected { background: var(--color-accent-soft); border-color: var(--color-accent); }
-.practice-option.is-correct { background: var(--color-ok-soft); border-color: var(--color-ok); }
-.practice-option.is-incorrect { background: var(--color-bad-soft); border-color: var(--color-bad); }
-.practice-option.is-correct .practice-letter { color: var(--color-ok); border-color: var(--color-ok); }
-.practice-option.is-incorrect .practice-letter { color: var(--color-bad); border-color: var(--color-bad); }
+.practice-letter {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border: 1px solid #e2e8f0;
+  border-radius: 7px;
+  background: #f1f5f9;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #475569;
+  transition: all 0.15s ease;
+}
+.practice-option.is-selected {
+  background: #eff6ff;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1px #3b82f6, 0 4px 12px -2px rgba(29, 78, 216, 0.12);
+  font-weight: 500;
+}
+.practice-option.is-selected .practice-letter {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+  color: #ffffff;
+}
+.practice-option.is-correct {
+  background: #ecfdf5;
+  border-color: #10b981;
+  box-shadow: 0 0 0 1px #10b981;
+}
+.practice-option.is-incorrect {
+  background: #fef2f2;
+  border-color: #ef4444;
+  box-shadow: 0 0 0 1px #ef4444;
+}
+.practice-option.is-correct .practice-letter { color: #ffffff; background: #059669; border-color: #059669; }
+.practice-option.is-incorrect .practice-letter { color: #ffffff; background: #dc2626; border-color: #dc2626; }
 .practice-option-status { margin-left: auto; font-size: 12px; font-weight: 500; flex-shrink: 0; }
 .practice-feedback { border-top: 1px solid var(--color-rule); margin-top: 28px; padding-top: var(--space-lg); line-height: 1.8; font-size: 14px; width: 100%; }
 .practice-feedback > strong { display: flex; align-items: center; gap: var(--space-xs); font-size: 16px; font-weight: 500; }

@@ -1,15 +1,14 @@
-/* Hallmark · shape: assessment index · genre: modern-minimal · theme: brand · redesign: full
- * paper: cobalt light · accent: cobalt · display: Familjen Grotesk · body: IBM Plex Sans
- * axes: light/grotesk-sans/cool · posture: restrained · v2.0.0 */
+/* Cobalt Modern - LinguaPulse TOEFL EPT */
 /* ADMIN & PROCTOR MONITORING STYLES — YULIA APP SaaS Clean Style */
 
+/* Admin top bar polish: clean hierarchy, subtle separator, integrated actions */
 .admin-top-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: var(--space-md);
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-xl);
   padding-bottom: var(--space-md);
   border-bottom: 1px solid #e2e8f0;
 }
@@ -17,16 +16,42 @@
 .admin-top-left {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
+}
+
+.admin-menu-toggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #475569;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.admin-menu-toggle:hover {
+  background: #f8fafc;
+  color: #0f172a;
+  border-color: #cbd5e1;
+}
+
+.admin-context {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .admin-breadcrumbs {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 13px;
+  gap: 6px;
+  font-size: 12px;
   color: #64748b;
-  margin-bottom: 4px;
+  margin-bottom: 0;
 }
 
 .admin-breadcrumbs a {
@@ -41,8 +66,8 @@
 }
 
 .admin-breadcrumbs .breadcrumb-sep {
-  color: #94a3b8;
-  font-size: 12px;
+  color: #cbd5e1;
+  font-size: 11px;
 }
 
 .admin-breadcrumbs .breadcrumb-current {
@@ -51,13 +76,13 @@
 }
 
 .admin-top-bar h1, .admin-top-bar h2 {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 700;
   color: #0f172a;
   margin: 0;
-  line-height: 1.2;
+  line-height: 1.25;
   font-family: var(--font-display);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
 }
 
 .admin-top-actions {
@@ -72,20 +97,21 @@
   align-items: center;
   gap: 6px;
   font-size: 13px;
-  font-weight: 500;
-  color: #64748b;
+  font-weight: 600;
+  color: #334155;
   text-decoration: none;
-  padding: 6px 14px;
-  border-radius: 8px;
+  padding: 8px 14px;
+  border-radius: 9px;
   background: #ffffff;
   border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
   transition: all 0.15s ease;
 }
 
 .admin-home-link:hover {
-  color: #2563eb;
-  border-color: #cbd5e1;
-  background: #f8fafc;
+  color: #1d4ed8;
+  border-color: #bfdbfe;
+  background: #eff6ff;
 }
 
 .admin-home-link .svg-icon {
@@ -98,22 +124,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  background: #eff6ff;
-  color: #2563eb;
+  background: linear-gradient(135deg, #1d4ed8, #2563eb);
+  color: #ffffff;
   font-weight: 700;
   font-size: 13px;
-  border: 1px solid #bfdbfe;
+  border: 1px solid #1e40af;
+  box-shadow: 0 2px 6px rgba(29, 78, 216, 0.28);
 }
 
 .admin-status-dot {
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 9px;
-  height: 9px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: #22c55e;
   border: 2px solid #ffffff;

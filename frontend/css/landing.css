@@ -1,5 +1,3 @@
-/* Hallmark · shape: product-led assessment · genre: modern-minimal · theme: brand · redesign: full · v2.0.0 */
-/* Hallmark · pre-emit critique: enlarge the real question workspace and vary section density around an actual learning task. */
 .landing { background: var(--color-paper-2); }
 .ept-hero { background: var(--color-hero-bg); color: var(--color-hero-ink); }
 .ept-hero-layout { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); gap: 64px; padding-block: var(--space-2xl); min-height: 620px; align-items: center; }

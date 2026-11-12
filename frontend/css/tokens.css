@@ -1,8 +1,4 @@
-/* Hallmark · shape: assessment index · genre: modern-minimal · theme: brand · redesign: full
- * paper: cobalt light · accent: cobalt · display: Familjen Grotesk · body: IBM Plex Sans
- * hero: Banner · nav: edge-aligned · footer: mast · signature: three assessment rows
- * axes: light/grotesk-sans/cool · posture: restrained · v2.0.0 */
-/* Hallmark · pre-emit critique: keep the real assessment outline; remove ornamental claims and all reward mechanics. */
+/* Cobalt Modern - LinguaPulse TOEFL EPT */
 :root {
   --color-hero-bg: #0A1322;
   --color-hero-ink: #F8FAFC;
@@ -55,17 +51,17 @@
   --space-3xl: 80px;
 
   /* Elevation & Borders */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-card: 14px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-card: 16px;
   --radius-pill: 999px;
   --rule-hair: 1px;
 
-  --shadow-sm: 0 1px 2px oklch(20% 0.02 260 / 0.05);
-  --shadow-card: 0 1px 3px oklch(20% 0.02 260 / 0.04), 0 8px 24px -4px oklch(20% 0.02 260 / 0.06);
-  --shadow-md: 0 4px 14px -2px oklch(20% 0.02 260 / 0.08);
-  --shadow-lg: 0 12px 32px -6px oklch(20% 0.02 260 / 0.14);
+  --shadow-sm: 0 1px 2px 0 rgb(15 23 42 / 0.05);
+  --shadow-card: 0 1px 3px 0 rgb(15 23 42 / 0.05), 0 6px 16px -2px rgb(15 23 42 / 0.04);
+  --shadow-md: 0 4px 6px -1px rgb(15 23 42 / 0.07), 0 10px 24px -3px rgb(15 23 42 / 0.06);
+  --shadow-lg: 0 10px 15px -3px rgb(15 23 42 / 0.08), 0 20px 32px -4px rgb(15 23 42 / 0.08);
 
   /* Color Palette — Prestige Oxford Cobalt Editorial Theme */
   --color-paper: #F8FAFC;
