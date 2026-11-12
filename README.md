@@ -11,7 +11,7 @@
 
 Listening · Structure · Reading — plus telemetri perilaku (keystroke dynamics, fokus, pointer) yang dinilai model XGBoost dan 1D-CNN untuk riset integritas pengerjaan.
 
-[Fitur](#-fitur-unggulan) · [Mulai Cepat](#-mulai-cepat) · [Arsitektur](#-arsitektur) · [API](#-ringkasan-api) · [Struktur Proyek](#-struktur-proyek) · [Pengujian](#-pengujian) · [Lisensi](#-lisensi)
+[Fitur](#-fitur-unggulan) · [Mulai Cepat](#-mulai-cepat) · [Arsitektur](#-arsitektur) · [API](#-ringkasan-api) · [Struktur Proyek](#-struktur-proyek) · [Pengujian](#-pengujian) · [Sitasi](#-sitasi-akademik) · [Lisensi](#-lisensi)
 
 </div>
 
@@ -29,7 +29,7 @@ LinguaPulse adalah aplikasi web lengkap untuk latihan TOEFL EPT sekaligus instru
 | **Frontend** | SPA Vanilla JavaScript, tanpa bundler, tanpa dependensi eksternal |
 | **Database** | SQLite tunggal dengan migrasi aditif yang aman terhadap data lama |
 | **Bank Soal** | JSON dua arah sinkron dengan editor admin (`questions/`) |
-| **ML Pipeline** | XGBoost, 1D-CNN, dan baseline rule-based (`ml_pipeline/`, `packages/proctor_telemetry/`) |
+| **ML Pipeline** | XGBoost, 1D-CNN, dan baseline rule-based — via paket terpisah [`proctor_telemetry`](https://github.com/firdausmntp/proctor_telemetry) (lokal: `packages/`, diabaikan git) + `ml_pipeline/` |
 | **Tema Visual** | *Cobalt Modern* — CSS tokens terpusat, tanpa emoji pada UI |
 
 ## Fitur Unggulan
@@ -156,11 +156,22 @@ toefl/
 │   ├── css/                    # tokens.css (Cobalt Modern) + modul layout
 │   └── assets/logo/            # Paket ikon & favicon standar
 ├── questions/                  # Bank soal JSON per modul
-├── packages/proctor_telemetry/ # Engine telemetri: fitur, model, aturan
+├── packages/                   # (gitignored) proctor_telemetry — repo terpisah
 ├── ml_pipeline/                # Evaluasi model klasifikasi integritas
 ├── tests/                      # HTTP, headless browser, audit halaman
 └── docs/qa/                    # Screenshot verifikasi & catatan QA
 ```
+
+> **Catatan `packages/`** — direktori ini berisi repo git terpisah
+> ([`proctor_telemetry`](https://github.com/firdausmntp/proctor_telemetry)) dan sengaja
+> diabaikan oleh `.gitignore`. Clone repo ini tidak menyertakannya; ambil manual:
+
+```bash
+git clone https://github.com/firdausmntp/proctor_telemetry.git packages/proctor_telemetry
+```
+
+Tanpa direktori itu, `backend/telemetry_engine.py` otomatis memakai fallback engine lokal
+(ekstraksi fitur + skor heuristik) sehingga aplikasi tetap berjalan.
 
 ## Pengujian
 
@@ -178,6 +189,27 @@ Screenshot QA tersimpan di `docs/qa/` (desktop 1440px, tablet 375px, mobile 320p
 - **`TOEFL_AI_API_KEY`** — jika diatur, layanan AI menghasilkan umpan balik esai; tanpa kunci, evaluasi lokal dipakai.
 - **Turnstile** berjalan mode pengembangan; konfigurasi widget produksi dan HTTPS sebelum deploy publik.
 - **Model ML** — prediksi riset bersifat indikatif, bukan penetapan pelanggaran otomatis.
+
+## Sitasi Akademik
+
+Jika proyek ini — atau metodologi telemetri multimodal dan fusi perilaku pengerjaannya —
+digunakan dalam skripsi, tesis, makalah, atau publikasi riset, silakan sitasi:
+
+```bibtex
+@software{utomo2026linguapulse,
+  author  = {Utomo, Firdaus Satrio},
+  title   = {LinguaPulse TOEFL EPT: Web-Based TOEFL EPT Simulation Platform
+             with Machine Learning-Based Work Integrity Telemetry},
+  year    = {2026},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  howpublished = {\url{https://github.com/firdausmntp/LinguaPulse}},
+  note    = {Engine telemetri: ProctorTelemetry (\url{https://github.com/firdausmntp/proctor_telemetry})}
+}
+```
+
+> Engine telemetri [`proctor_telemetry`](https://github.com/firdausmntp/proctor_telemetry)
+> punya entri sitasi tersendiri di README paket tersebut.
 
 ## Lisensi
 
