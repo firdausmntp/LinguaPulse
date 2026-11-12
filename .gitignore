@@ -39,3 +39,6 @@ Thumbs.db
 *.swo
 .vscode/
 .idea/
+
+# QA render artifacts
+docs/qa/polish-*/
