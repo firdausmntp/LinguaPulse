@@ -1,0 +1,151 @@
+/* Hallmark · shape: assessment index · genre: modern-minimal · theme: brand · redesign: full
+ * paper: cobalt light · accent: cobalt · display: Familjen Grotesk · body: IBM Plex Sans
+ * hero: Banner · nav: edge-aligned · footer: mast · signature: three assessment rows
+ * axes: light/grotesk-sans/cool · posture: restrained · v2.0.0 */
+/* Hallmark · pre-emit critique: keep the real assessment outline; remove ornamental claims and all reward mechanics. */
+/* ============================================================================
+ * EXAM.CSS — TOEFL Exam Arena, Control Bar, & Split Workspace
+ * ============================================================================ */
+
+/* ==================== EXAM CONTROL BAR ==================== */
+.exam-control-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  margin-bottom: var(--space-lg);
+  background: var(--color-paper-2);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.section-stepper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.step-btn {
+  min-height: 42px;
+  padding: 0 var(--space-md);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  background: var(--color-paper);
+  color: var(--color-ink-2);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color var(--dur-short) var(--ease-out);
+}
+
+.step-btn:hover {
+  background: var(--color-paper-3);
+  color: var(--color-ink);
+}
+
+.step-btn.active {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  box-shadow: 0 2px 8px color-mix(in oklab, var(--color-accent) 20%, transparent);
+}
+
+.experiment-selectors {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.sel-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+  color: var(--color-muted);
+  font-size: 0.74rem;
+  font-weight: 600;
+}
+
+.sel-group select {
+  width: auto;
+  min-height: 36px;
+  padding: var(--space-2xs) var(--space-sm);
+  font-size: 0.82rem;
+  border-radius: var(--radius-sm);
+}
+
+.timer-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  padding: 0.45rem var(--space-md);
+  border-radius: var(--radius-md);
+  background: var(--color-ink);
+  color: var(--color-paper-2);
+  font: 700 1.1rem/1.2 var(--font-outlier);
+  box-shadow: var(--shadow-sm);
+  letter-spacing: normal;
+}
+
+/* ==================== SPLIT WORKSPACE ==================== */
+.exam-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+.pane {
+  min-width: 0;
+  padding: var(--space-xl);
+  background: var(--color-paper-2);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.zone-header {
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.zone-tag {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-paper-3);
+  color: var(--color-ink-2);
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.zone-tag-answer {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+.pane h2 {
+  margin-bottom: var(--space-sm);
+  font-size: 1.35rem;
+  line-height: 1.25;
+}
+
+.section-subhead {
+  margin-bottom: var(--space-sm);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.lead-text {
+  margin-bottom: var(--space-md);
+  font-size: 0.94rem;
+  line-height: 1.65;
+  color: var(--color-ink-2);
+}

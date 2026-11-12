@@ -1,0 +1,3 @@
+[submodule "packages/proctor_telemetry"]
+	path = packages/proctor_telemetry
+	url = https://github.com/firdausmntp/proctor_telemetry.git

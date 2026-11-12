@@ -1,0 +1,151 @@
+  <main id="viewAdmin" class="view-container admin-console">
+    <button type="button" class="admin-menu-shade hidden" id="adminMenuShade" aria-label="Tutup menu admin" onclick="closeAdminMenu()"></button>
+    <aside class="admin-sidebar" id="adminSidebar" aria-label="Navigasi admin">
+      <button type="button" class="admin-drawer-close" onclick="closeAdminMenu(true)" aria-label="Tutup navigasi">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m6 6 12 12M6 18 18 6"/></svg>
+      </button>
+      <div class="sidebar-brand-wrapper">
+        <a href="/admin/overview" class="admin-console-brand">
+          <span class="brand-logo-box"><img src="/assets/logo/linguapulse-master-app-icon.svg" width="22" height="22" alt=""></span>
+          <span class="sidebar-label brand-title">LinguaPulse</span>
+        </a>
+        <button type="button" class="admin-collapse-toggle" onclick="toggleAdminSidebar()" aria-label="Ciutkan sidebar">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+      </div>
+      <p class="admin-role sidebar-label">Administrasi EPT</p>
+      <div class="admin-subtabs">
+        <button class="subtab-btn active" id="subtabOverview" onclick="switchAdminTab('overview')" aria-label="Ringkasan" title="Ringkasan"><span data-icon="home"></span><span class="sidebar-label">Ringkasan</span></button>
+        <button class="subtab-btn" id="subtabProctor" onclick="switchAdminTab('proctor')" aria-label="Pengawasan" title="Pengawasan"><span data-icon="shield"></span><span class="sidebar-label">Pengawasan</span></button>
+        <button class="subtab-btn" id="subtabQuestions" onclick="switchAdminTab('questions')" aria-label="Bank soal" title="Bank soal"><span data-icon="book"></span><span class="sidebar-label">Bank soal</span></button>
+        <button class="subtab-btn" id="subtabUsers" onclick="switchAdminTab('users')" aria-label="Akun pengguna" title="Akun pengguna"><span data-icon="settings"></span><span class="sidebar-label">Akun pengguna</span></button>
+        <a data-download class="btn-export-csv" href="/api/export/csv" download="dataset_telemetri_toefl.csv" aria-label="Ekspor CSV" title="Ekspor CSV"><span data-icon="download"></span><span class="sidebar-label">Ekspor CSV</span></a>
+      </div>
+      <div class="sidebar-account">
+        <span class="avatar" id="adminAvatar" aria-hidden="true"></span>
+        <div class="sidebar-label"><strong id="adminName"></strong><small>Administrator</small></div>
+      </div>
+      <button type="button" class="admin-logout" onclick="handleLogout()" aria-label="Keluar akun" title="Keluar akun"><span data-icon="arrowUpRight"></span><span class="sidebar-label">Keluar akun</span></button>
+    </aside>
+    <div class="admin-content">
+      <div class="admin-top-bar">
+        <div class="admin-top-left">
+          <button type="button" id="adminSidebarToggle" class="admin-menu-toggle" onclick="toggleAdminSidebar()" aria-controls="adminSidebar" aria-expanded="true" aria-label="Ciutkan sidebar"><span data-icon="list"></span></button>
+          <div class="admin-context">
+            <nav class="admin-breadcrumbs" aria-label="Navigasi rekam jejak">
+              <a href="/dashboard">Beranda</a>
+              <span class="breadcrumb-sep">&gt;</span>
+              <a href="/admin/overview">Administrasi</a>
+              <span class="breadcrumb-sep">&gt;</span>
+              <span id="adminBreadcrumb" class="breadcrumb-current">Ringkasan</span>
+            </nav>
+            <h1 id="adminPageTitle">Ringkasan</h1>
+          </div>
+        </div>
+        <div class="admin-top-actions">
+          <a href="/" class="admin-home-link"><span data-icon="arrowUpRight"></span>Lihat situs</a>
+          <div class="admin-user-pill" title="Administrator">
+            <span class="admin-avatar-circle" id="adminTopAvatar" aria-hidden="true">AD</span>
+            <span class="admin-status-dot" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+      <section id="adminTabOverview" aria-label="Ringkasan administrasi">
+        <div class="overview-heading">
+          <div><h2>Status Operasional TOEFL EPT</h2><p>Ringkasan kesiapan materi, sesi ujian aktif, dan telemetri pengawasan peserta.</p></div>
+          <button class="btn-secondary" type="button" onclick="loadAdminOverview()"><span data-icon="clock"></span>Segarkan</button>
+        </div>
+        <div id="adminOverviewContent" role="status">Memuat ringkasan…</div>
+      </section>
+      <section id="adminTabProctor" class="hidden">
+        <div class="workspace-heading">
+          <div><h2>Tinjau sesi peserta</h2><p>Temukan sesi, baca indikator, lalu lakukan peninjauan dengan konteks.</p></div>
+          <button type="button" class="btn-secondary" onclick="loadProctorSessions()">Segarkan sesi</button>
+        </div>
+        <div class="kpi-grid" id="proctorKpiGrid"></div>
+        <div class="monitor-workspace">
+          <section class="admin-card monitor-list" aria-label="Daftar sesi peserta">
+            <div class="card-head flex-between"><h3>Sesi terkirim</h3><span id="proctorListCount" role="status"></span></div>
+            <div class="monitor-toolbar">
+              <div><label for="proctorSearch">Cari peserta atau kode sesi</label><input id="proctorSearch" type="search" placeholder="Kode peserta atau sesi" oninput="renderProctorList()"></div>
+              <div><label for="proctorFilter">Indikator rule</label><select id="proctorFilter" onchange="renderProctorList()"><option value="">Semua sesi</option><option value="flagged">Terpicu</option><option value="clear">Tidak terpicu</option></select></div>
+            </div>
+            <div class="table-scroll monitor-table-scroll"><table class="admin-table monitor-table"><caption class="sr-only">Sesi peserta untuk peninjauan pengawas</caption><thead><tr><th>Peserta</th><th>Perangkat</th><th>Skenario peserta</th><th>Indikator rule</th><th>Label riset</th><th>Tindakan</th></tr></thead><tbody id="proctorSessionsBody"></tbody></table></div>
+            <p class="monitor-caveat">Indikator model dan rule membantu peninjauan. Hasilnya bukan penetapan pelanggaran atau bukti bahwa suatu sesi bebas masalah.</p>
+          </section>
+          <section class="admin-card monitor-detail hidden" id="proctorDetailPanel" aria-label="Detail sesi terpilih">
+            <div class="monitor-detail-heading"><div><p>Detail sesi terpilih</p><h3 id="inspectTitle" tabindex="-1">Pilih sesi untuk ditinjau</h3></div><button type="button" class="btn-secondary monitor-back" onclick="closeProctorDetail()">Kembali ke daftar</button></div>
+            <div id="inspectSummary"></div><dl id="inspectFacts" class="monitor-facts"></dl>
+            <details class="monitor-analysis"><summary>Indikator model dan skema interaksi</summary><p class="monitor-caveat">Skor berikut merupakan keluaran model penelitian, bukan persentase kepastian pelanggaran. Baca bersama konteks sesi dan catatan peserta.</p><div id="inspectModelScores" class="monitor-model-scores"></div>
+              <h4 class="subhead-label">Sebaran interaksi pointer</h4><canvas aria-label="Skema tiga zona interaksi pointer; rincian persentase tersedia di bawah" id="heatmapCanvas" width="720" height="360"></canvas><div id="heatmapLegend" class="canvas-legend"></div><p class="monitor-caveat">Skema zona, bukan rekaman layar. Titik menunjukkan interaksi yang dinormalisasi.</p>
+              <h4 class="subhead-label">Perbandingan kombinasi fitur</h4><div id="ablationContainer" class="ablation-list"></div>
+              <h4 class="subhead-label">Catatan peristiwa</h4><ul id="timelineContainer" class="event-log-list"></ul>
+            </details>
+          </section>
+        </div>
+      </section>
+      <section id="adminTabQuestions" class="hidden">
+        <div class="question-bank-heading">
+          <div><h2>Bank soal TOEFL EPT</h2><p>Atur materi, audio, jawaban, dan pembahasan dalam satu tempat.</p></div>
+          <button type="button" class="btn-primary" onclick="requestNewQuestion()">Tambah soal</button>
+        </div>
+        <div class="kpi-grid bank-kpi-grid" id="bankKpiGrid"></div>
+        <div id="questionEditorStatus" class="editor-status" role="status" aria-live="polite"></div>
+        <div class="question-bank-layout">
+          <section class="bank-master" aria-label="Daftar bank soal">
+            <div class="bank-search">
+              <div class="bank-filter-field bank-filter-query"><label for="questionSearch">Cari soal</label><input type="search" id="questionSearch" placeholder="Kode, topik, atau pertanyaan"></div>
+              <div class="bank-filter-field"><label for="questionSectionFilter">Modul</label><select id="questionSectionFilter"><option value="">Semua modul</option><option value="listening">Listening</option><option value="grammar">Structure</option><option value="reading">Reading</option><option value="writing">Writing riset</option></select></div>
+              <div class="bank-filter-field"><label for="questionStatusFilter">Status</label><select id="questionStatusFilter"><option value="">Semua status</option><option value="active">Aktif saja</option><option value="inactive">Nonaktif</option></select></div>
+              <div class="bank-filter-field"><label for="questionTypeFilter">Bentuk tugas</label><select id="questionTypeFilter"><option value="">Semua bentuk</option><option value="multiple_choice">Pilihan ganda</option><option value="rewrite">Perbaikan kalimat</option><option value="essay">Esai riset</option></select></div>
+            </div>
+            <div class="bank-module-pills" role="group" aria-label="Filter cepat modul">
+              <button type="button" class="q-pill active" onclick="filterByModule('')">Semua</button>
+              <button type="button" class="q-pill" onclick="filterByModule('listening')"><span class="q-pill-dot dot-listening" aria-hidden="true"></span>Listening</button>
+              <button type="button" class="q-pill" onclick="filterByModule('grammar')"><span class="q-pill-dot dot-grammar" aria-hidden="true"></span>Structure</button>
+              <button type="button" class="q-pill" onclick="filterByModule('reading')"><span class="q-pill-dot dot-reading" aria-hidden="true"></span>Reading</button>
+              <button type="button" class="q-pill" onclick="filterByModule('writing')"><span class="q-pill-dot dot-writing" aria-hidden="true"></span>Writing</button>
+            </div>
+            <div class="bank-toolbar-actions">
+              <div class="bank-file-actions"><button type="button" class="btn-secondary" onclick="document.getElementById('questionImportFile').click()"><span data-icon="upload"></span>Impor JSON</button><button type="button" class="btn-secondary" onclick="exportQuestionBank()"><span data-icon="download"></span>Ekspor JSON</button><input type="file" id="questionImportFile" accept="application/json,.json" class="hidden" aria-label="Pilih berkas soal JSON"><button type="button" class="btn-subtle" onclick="loadAdminQuestionsTable()"><span data-icon="clock"></span>Segarkan</button></div>
+              <button type="button" class="btn-subtle" id="qResetFilterBtn" onclick="resetQuestionFilters()">Reset filter</button>
+            </div>
+            <p id="questionBankCount" class="bank-count" role="status">Memuat bank soal.</p>
+            <div class="table-scroll bank-table-scroll"><table class="admin-table question-bank-table"><thead><tr><th>Soal</th><th>Modul</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="adminQuestionsBody"></tbody></table></div>
+            <div class="bank-pagination" id="questionPagination" aria-label="Navigasi halaman bank soal">
+              <div class="pagination-size-wrap"><label for="questionPageSize">Tampilkan:</label><select id="questionPageSize" onchange="changeQuestionPageSize(this.value)"><option value="15">15 soal</option><option value="30">30 soal</option><option value="50">50 soal</option><option value="100">100 soal</option></select></div>
+              <div class="pagination-nav"><button type="button" class="btn-secondary pagination-btn" id="qPrevPage" onclick="changeQuestionPage(-1)" aria-label="Halaman sebelumnya">Sebelumnya</button><span id="qPageInfo" class="page-indicator">Halaman 1</span><button type="button" class="btn-secondary pagination-btn" id="qNextPage" onclick="changeQuestionPage(1)" aria-label="Halaman berikutnya">Berikutnya</button></div>
+            </div>
+            <p class="bank-help">Impor menggabungkan soal berdasarkan kode. Kode yang sama akan diperbarui setelah konfirmasi.</p>
+          </section>
+          <section class="bank-detail" aria-label="Editor dan pratinjau soal">
+            <button type="button" class="btn-secondary bank-back" onclick="closeQuestionEditor()">Kembali ke daftar soal</button>
+            <div class="editor-heading"><h2 id="questionEditorTitle">Soal baru</h2><div class="bank-editor-tools"><button type="button" class="btn-secondary" onclick="previewQuestion()">Pratinjau</button><button type="submit" form="questionForm" class="btn-primary" id="saveQuestionButton">Simpan soal</button></div></div>
+            <div id="questionFormError" class="inline-error hidden" role="alert"></div>
+            <form id="questionForm" onsubmit="saveQuestionCrud(event)" class="question-editor-form">
+              <div class="form-row-2"><div><label for="qFormId">Kode soal</label><input type="text" id="qFormId" pattern="[A-Za-z0-9_-]{1,40}" maxlength="40" required placeholder="G5"></div><div><label for="qFormSection">Modul</label><select id="qFormSection"><option value="grammar">Structure</option><option value="listening">Listening</option><option value="reading">Reading</option><option value="writing">Writing riset</option></select></div></div>
+              <div class="form-row-2"><div><label for="qFormType">Bentuk tugas</label><select id="qFormType"><option value="multiple_choice">Pilihan ganda</option><option value="rewrite">Perbaikan kalimat</option><option value="essay">Esai riset</option></select></div><div><label for="qFormTitle">Topik soal</label><input type="text" id="qFormTitle" maxlength="160" placeholder="Contoh: Campus announcement"></div></div>
+              <div id="questionAudioFields" class="hidden"><label for="qFormAudio">Audio Listening</label><input type="text" inputmode="url" id="qFormAudio" placeholder="URL HTTPS atau hasil unggahan lokal"><div class="audio-upload-row"><label for="qFormAudioFile">Unggah audio</label><input type="file" id="qFormAudioFile" accept="audio/wav,audio/mpeg,audio/ogg,audio/mp4,.wav,.mp3,.ogg,.m4a"></div><small>WAV, MP3, OGG, atau M4A. Maksimal 8 MB.</small><audio id="questionAudioPreview" controls preload="none" class="hidden" aria-label="Pratinjau audio Listening"></audio></div>
+              <div id="questionPassageFields" class="hidden"><label for="qFormPassage" id="questionPassageLabel">Wacana bacaan</label><textarea id="qFormPassage" rows="5" maxlength="20000"></textarea><small id="questionPassageHelp">Wacana ini ditampilkan bersama pertanyaan Reading.</small></div>
+              <div><label for="qFormPrompt">Pertanyaan atau instruksi</label><textarea id="qFormPrompt" rows="4" required maxlength="20000" placeholder="Tulis pertanyaan yang akan dilihat peserta."></textarea></div>
+              <fieldset id="questionOptionFields"><legend>Pilihan jawaban</legend><div id="questionOptionsEditor"></div><textarea id="qFormOptions" class="hidden" aria-hidden="true" tabindex="-1"></textarea><button type="button" class="btn-subtle" id="addQuestionOption" onclick="window.addQuestionOption()">Tambah opsi</button><label for="qFormCorrect">Jawaban benar</label><select id="qFormCorrect"></select></fieldset>
+              <div id="questionTextAnswerFields" class="hidden"><label for="qFormTextCorrect">Contoh jawaban / panduan peninjauan (opsional)</label><textarea id="qFormTextCorrect" rows="3" maxlength="20000"></textarea><p>Perbaikan kalimat dan esai dicatat sebagai tugas riset. Contoh jawaban membantu peninjauan dan tidak menjadi nilai otomatis.</p></div>
+              <div><label for="qFormExplanation">Pembahasan</label><textarea id="qFormExplanation" rows="3" maxlength="20000" placeholder="Jelaskan alasan jawaban atau panduan peninjauan."></textarea></div>
+              <div id="questionSampleFields" class="hidden"><label for="qFormSample">Referensi skenario simulasi</label><textarea id="qFormSample" rows="3" maxlength="20000"></textarea><small>Digunakan pada skenario menyalin atau parafrase untuk penelitian.</small></div>
+              <label class="question-active"><input type="checkbox" id="qFormActive" checked><span>Aktif dan tersedia untuk sesi baru</span></label>
+              <div class="editor-actions"><button type="button" class="btn-secondary" onclick="closeQuestionEditor()">Kembali ke daftar</button></div>
+            </form>
+            <section id="questionPreview" class="question-preview hidden" aria-label="Pratinjau soal"><div class="editor-heading"><h3>Pratinjau peserta</h3><button type="button" class="btn-subtle" onclick="document.getElementById('questionPreview').classList.add('hidden')">Tutup</button></div><div id="questionPreviewBody"></div></section>
+          </section>
+        </div>
+      </section>
+      <section id="adminTabUsers" class="hidden">
+        <div class="users-heading"><div><h2>Akun pengguna</h2><p>Kelola identitas, peran, dan akses akun.</p></div><button type="button" class="btn-primary" onclick="openUserEditor()">Tambah akun</button></div>
+        <div class="users-summary" id="usersSummary"></div>
+        <div class="admin-card users-workspace"><div class="users-toolbar"><div><label for="userSearch">Cari akun</label><input type="search" id="userSearch" placeholder="Nama, username, atau email"></div><div><label for="userRoleFilter">Peran</label><select id="userRoleFilter"><option value="">Semua peran</option><option value="admin">Admin</option><option value="student">Peserta</option></select></div><button type="button" class="btn-secondary" onclick="loadAdminUsersTable()">Segarkan</button></div><p id="userListStatus" role="status"></p><div class="table-scroll"><table class="admin-table users-table"><thead><tr><th>Pengguna</th><th>Kontak</th><th>Peran</th><th>Dibuat</th><th>Aksi</th></tr></thead><tbody id="adminUsersBody"></tbody></table></div></div>
+        <dialog id="userEditorDialog" class="user-editor-dialog" aria-labelledby="userEditorTitle"><div class="user-dialog-heading"><h2 id="userEditorTitle">Tambah akun</h2><button type="button" class="btn-secondary" onclick="closeUserEditor()" aria-label="Tutup editor akun">Tutup</button></div><form id="userEditorForm" onsubmit="saveAdminUser(event)"><div id="userEditorError" class="inline-error hidden" role="alert"></div><label for="editUserName">Nama lengkap</label><input id="editUserName" type="text" required minlength="2" maxlength="80" autocomplete="off"><label for="editUserUsername">Username</label><input id="editUserUsername" type="text" required pattern="[a-zA-Z0-9_]{3,30}" maxlength="30" autocomplete="off"><label for="editUserEmail">Email</label><input id="editUserEmail" type="email" required maxlength="254"><label for="editUserRole">Peran akun</label><select id="editUserRole"><option value="student">Peserta</option><option value="admin">Admin</option></select><label for="editUserPassword">Kata sandi</label><input id="editUserPassword" type="password" minlength="8" maxlength="128" autocomplete="new-password"><small id="editPasswordHelp">Minimal 8 karakter.</small><div class="user-dialog-actions"><button type="button" class="btn-secondary" onclick="closeUserEditor()">Batal</button><button type="submit" class="btn-primary" id="saveUserButton">Simpan akun</button></div></form></dialog>
+      </section>
+      <dialog id="adminConfirmDialog" class="user-editor-dialog admin-confirm-dialog" aria-labelledby="adminConfirmTitle" aria-describedby="adminConfirmMessage"><form method="dialog"><h2 id="adminConfirmTitle">Konfirmasi perubahan</h2><p id="adminConfirmMessage"></p><div class="user-dialog-actions"><button type="submit" class="btn-secondary" value="cancel" autofocus>Batal</button><button type="submit" id="adminConfirmAccept" class="btn-primary" value="confirm">Lanjutkan</button></div></form></dialog>
+    </div>
+  </main>
+

@@ -1,0 +1,28 @@
+{
+  "name": "LinguaPulse TOEFL EPT",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "theme_color": "#2563EB",
+  "background_color": "#f8fafc",
+  "display": "standalone",
+  "short_name": "LinguaPulse",
+  "start_url": "/",
+  "lang": "id",
+  "description": "Persiapan TOEFL EPT: Listening, Structure, dan Reading, dengan Writing tambahan untuk riset."
+}

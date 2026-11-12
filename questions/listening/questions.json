@@ -1,0 +1,38 @@
+[
+  {
+    "section": "listening",
+    "question_type": "multiple_choice",
+    "title": "Campus library announcement (contoh sintetis)",
+    "passage": "Attention students. The university library will close at six p.m. this Friday for scheduled maintenance. If you need to borrow a book, please visit the circulation desk before five thirty. The library will reopen at nine a.m. on Saturday. Study rooms in the student center will remain available during the closure.",
+    "audio_url": "/media/listening/library-announcement.wav",
+    "sample_ai_reference": "",
+    "question_id": "L1",
+    "prompt": "Why will the university library close early on Friday?",
+    "options": [
+      "A public holiday is being observed.",
+      "Scheduled maintenance will take place.",
+      "The staff will attend a training session.",
+      "All study rooms have been reserved."
+    ],
+    "correct_answer": "1",
+    "explanation": "The announcement states that the library will close early for scheduled maintenance."
+  },
+  {
+    "section": "listening",
+    "question_type": "multiple_choice",
+    "title": "Campus library announcement (contoh sintetis)",
+    "passage": "Attention students. The university library will close at six p.m. this Friday for scheduled maintenance. If you need to borrow a book, please visit the circulation desk before five thirty. The library will reopen at nine a.m. on Saturday. Study rooms in the student center will remain available during the closure.",
+    "audio_url": "/media/listening/library-announcement.wav",
+    "sample_ai_reference": "",
+    "question_id": "L2",
+    "prompt": "By what time should students visit the circulation desk to borrow a book?",
+    "options": [
+      "Before 5:30 p.m. on Friday.",
+      "After 6:00 p.m. on Friday.",
+      "Before 9:00 a.m. on Saturday.",
+      "After 9:00 a.m. on Saturday."
+    ],
+    "correct_answer": "0",
+    "explanation": "Students are asked to visit the circulation desk before five thirty."
+  }
+]

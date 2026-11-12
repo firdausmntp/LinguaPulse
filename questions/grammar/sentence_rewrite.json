@@ -1,0 +1,29 @@
+[
+  {
+    "question_id": "GR1",
+    "section": "grammar",
+    "question_type": "rewrite",
+    "title": "Written Expression — Preposition & Collective Noun Fix",
+    "passage": "",
+    "prompt": "Perbaiki kesalahan grammar pada kalimat berikut dengan mengetik ulang kalimat yang benar secara utuh:\n\"Despite of the heavy rain, the archaeological team were able to completing the excavation on time.\"",
+    "options": [],
+    "correct_answer": "Despite the heavy rain, the archaeological team was able to complete the excavation on time.",
+    "explanation": "Hapus 'of' setelah 'Despite', gunakan 'was' untuk collective noun tunggal, dan 'to complete' (to-infinitive).",
+    "sample_ai_reference": "",
+    "points_xp": 45
+  },
+  {
+    "question_id": "GR2",
+    "section": "grammar",
+    "question_type": "rewrite",
+    "title": "Sentence Transformation — Correlative Inversion",
+    "passage": "",
+    "prompt": "Tulis ulang kalimat berikut agar diawali dengan struktur inversi 'Not only...':\n\"Solar energy reduces carbon emissions, and it also lowers long-term electricity costs for households.\"",
+    "options": [],
+    "correct_answer": "Not only does solar energy reduce carbon emissions, but it also lowers long-term electricity costs for households.",
+    "explanation": "Setelah 'Not only' di awal kalimat, gunakan auxiliary 'does' + subject 'solar energy' + bare infinitive 'reduce'.",
+    "sample_ai_reference": "",
+    "points_xp": 45
+  }
+]
+

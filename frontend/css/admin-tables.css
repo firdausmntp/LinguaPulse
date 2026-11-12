@@ -1,0 +1,236 @@
+/* Hallmark · shape: assessment index · genre: modern-minimal · theme: brand · redesign: full
+ * paper: cobalt light · accent: cobalt · display: Familjen Grotesk · body: IBM Plex Sans
+ * hero: Banner · nav: edge-aligned · footer: mast · signature: three assessment rows
+ * axes: light/grotesk-sans/cool · posture: restrained · v2.0.0 */
+.subhead-label {
+  margin: var(--space-lg) 0 var(--space-xs);
+  color: var(--color-ink);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+/* ==================== TABLE STYLING ==================== */
+.table-scroll {
+  max-width: 100%;
+  margin-top: var(--space-sm);
+  overflow-x: auto;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  text-align: left;
+}
+
+.admin-table th {
+  padding: var(--space-xs) var(--space-sm);
+  border-bottom: 1px solid var(--color-rule);
+  background: var(--color-paper-3);
+  color: var(--color-ink-2);
+  font-size: 0.76rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.admin-table td {
+  padding: var(--space-xs) var(--space-sm);
+  border-bottom: 1px solid var(--color-rule);
+  color: var(--color-ink-2);
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.admin-table td strong {
+  color: var(--color-ink);
+  font-family: var(--font-outlier);
+}
+
+.admin-table tbody tr {
+  cursor: pointer;
+  transition: background-color var(--dur-micro) var(--ease-out);
+}
+
+.admin-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.admin-table tbody tr:hover {
+  background: var(--color-paper-3);
+}
+
+.admin-table tbody tr.selected-row {
+  background: var(--color-accent-soft);
+}
+
+.admin-table tbody tr.selected-row td {
+  color: var(--color-ink);
+}
+
+/* Risk classification badges */
+.risk-badge {
+  display: inline-block;
+  padding: var(--space-3xs) var(--space-xs);
+  border-radius: var(--radius-pill);
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.risk-high {
+  background: var(--color-bad-soft);
+  color: var(--color-bad);
+  border: 1px solid color-mix(in oklab, var(--color-bad) 25%, transparent);
+}
+
+.risk-mid {
+  background: var(--color-warm-soft);
+  color: var(--color-warm);
+  border: 1px solid color-mix(in oklab, var(--color-warm) 25%, transparent);
+}
+
+.risk-low {
+  background: var(--color-ok-soft);
+  color: var(--color-ok);
+  border: 1px solid color-mix(in oklab, var(--color-ok) 25%, transparent);
+}
+
+/* Heatmap Canvas */
+#heatmapCanvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: var(--space-sm);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  background: var(--color-ink);
+}
+
+.canvas-legend {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin: var(--space-xs) 0 var(--space-md);
+  color: var(--color-muted);
+  font-size: 0.72rem;
+}
+
+/* Ablation progress list */
+.ablation-list {
+  display: grid;
+  gap: var(--space-xs);
+  margin-top: var(--space-xs);
+}
+
+.abl-row {
+  display: grid;
+  grid-template-columns: minmax(110px, 160px) minmax(50px, 1fr) 3.5rem;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--color-ink-2);
+  font-size: 0.78rem;
+}
+
+.abl-row strong {
+  color: var(--color-ink);
+  font-family: var(--font-outlier);
+  text-align: right;
+  font-size: 0.76rem;
+}
+
+.abl-track {
+  height: 7px;
+  overflow: clip;
+  border-radius: var(--radius-pill);
+  background: var(--color-paper-3);
+  border: 1px solid var(--color-rule);
+}
+
+.abl-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--color-accent);
+}
+
+/* Timeline event log */
+.event-log-list {
+  max-height: 160px;
+  margin-top: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  overflow-y: auto;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  background: var(--color-paper-3);
+  color: var(--color-ink-2);
+  font: 0.76rem/1.6 var(--font-outlier);
+  list-style: none;
+}
+
+.event-log-list li {
+  padding: var(--space-2xs) 0;
+  border-bottom: 1px solid var(--color-rule);
+  overflow-wrap: anywhere;
+}
+
+.event-log-list li strong {
+  color: var(--color-accent);
+}
+
+.event-log-list li:last-child {
+  border-bottom: 0;
+}
+
+/* CRUD Question Form */
+.crud-form {
+  display: grid;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+}
+
+.form-row-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-sm);
+}
+
+.crud-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: var(--space-xs);
+}
+
+@media (max-width: 1024px) {
+  .admin-split-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-top-bar {
+    gap: var(--space-sm);
+  }
+  .admin-subtabs {
+    width: 100%;
+  }
+  .subtab-btn {
+    flex: 1 1 auto;
+  }
+  .btn-export-csv {
+    width: 100%;
+  }
+  .form-row-2 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .subtab-btn,
+  .btn-export-csv,
+  .admin-table tbody tr {
+    transition: none !important;
+  }
+}

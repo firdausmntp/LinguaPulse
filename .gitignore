@@ -1,0 +1,38 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# SQLite Database & Local Data
+data/*.db
+data/*.sqlite3
+data/*.db-journal
+data/*.db-wal
+data/*.db-shm
+
+# Audio uploads & local test assets
+frontend/media/listening/uploads/
+
+# Backups & workspace snapshots
+.workspace-backups/
+.hallmark/
+.playwright-mcp/
+
+# Testing, audits & temporary reports
+tests/test_temp_*/
+docs/qa/test_temp_*/
+*.log
+
+# Environments & virtualenvs
+.env
+.venv/
+venv/
+ENV/
+
+# OS and Editor metadata
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/

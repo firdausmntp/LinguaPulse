@@ -1,0 +1,39 @@
+[
+  {
+    "question_id": "R1",
+    "section": "reading",
+    "question_type": "multiple_choice",
+    "title": "Bioluminescence in Deep-Sea Organisms",
+    "passage": "In the abyssal zone of the ocean, where sunlight cannot penetrate below 1,000 meters, bioluminescence serves as a vital evolutionary adaptation. Unlike fluorescence, which requires the absorption and re-emission of external light, bioluminescence is a chemiluminescent reaction occurring within specialized cells called photophores. The reaction typically involves a light-emitting molecule known as luciferin and an enzyme called luciferase. When luciferin is oxidized in the presence of luciferase, energy is released almost entirely as visible light, mostly in the blue-green spectrum (450–490 nanometers), which travels farthest through seawater.\n\nMarine biologists classify deep-sea bioluminescence into three primary ecological functions: predation, defense, and intraspecific communication. Predators such as the anglerfish utilize a glowing esca (lure) suspended near their jaws to attract curious prey in pitch-black waters. Conversely, many mesopelagic squid and shrimp employ counterillumination—emitting light from their ventral surfaces to match the dim downwelling light from above, thereby cloaking their silhouettes from predators lurking below.",
+    "prompt": "According to the passage, why is deep-sea bioluminescence predominantly in the blue-green spectrum?",
+    "options": [
+      "A. It requires less luciferin to produce than red light.",
+      "B. Blue-green wavelengths transmit most effectively through seawater.",
+      "C. Deep-sea prey cannot perceive blue-green wavelengths.",
+      "D. Photophores can only reflect blue-green external light."
+    ],
+    "correct_answer": "1",
+    "explanation": "Paragraf 1 menyebutkan bahwa spektrum biru-hijau (450–490 nm) merambat paling jauh di dalam air laut ('travels farthest through seawater').",
+    "sample_ai_reference": "",
+    "points_xp": 35
+  },
+  {
+    "question_id": "R2",
+    "section": "reading",
+    "question_type": "multiple_choice",
+    "title": "Bioluminescence in Deep-Sea Organisms",
+    "passage": "",
+    "prompt": "How does 'counterillumination' protect mesopelagic squid and shrimp from predators?",
+    "options": [
+      "A. By temporarily blinding approaching predators with a bright flash.",
+      "B. By mimicking the bioluminescent lure of larger apex predators.",
+      "C. By concealing their underside shadow against faint light coming from above.",
+      "D. By signaling nearby members of the same species to form a defensive school."
+    ],
+    "correct_answer": "2",
+    "explanation": "Paragraf 2 menjelaskan bahwa counterillumination memancarkan cahaya dari sisi perut (ventral) agar menyatu dengan cahaya redup dari atas sehingga menyamarkan siluet tubuh mereka.",
+    "sample_ai_reference": "",
+    "points_xp": 35
+  }
+]
+

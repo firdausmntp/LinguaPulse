@@ -1,0 +1,207 @@
+/* Hallmark · shape: assessment index · genre: modern-minimal · theme: brand · redesign: full
+ * paper: cobalt light · accent: cobalt · display: Familjen Grotesk · body: IBM Plex Sans
+ * hero: Banner · nav: edge-aligned · footer: mast · signature: three assessment rows
+ * axes: light/grotesk-sans/cool · posture: restrained · v2.0.0 */
+.instruction-callout,
+.scenario-callout {
+  padding: var(--space-md);
+  margin-top: var(--space-md);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  background: var(--color-paper-3);
+  color: var(--color-ink-2);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+.instruction-callout h3,
+.scenario-callout h3 {
+  margin-bottom: var(--space-xs);
+  font-size: 0.94rem;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.instruction-callout ul {
+  padding-left: var(--space-lg);
+}
+
+.passage-scroll-box {
+  margin-top: var(--space-sm);
+  padding: var(--space-md);
+  background: var(--color-paper);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  max-height: 520px;
+  overflow-y: auto;
+  white-space: pre-line;
+  font-size: 0.98rem;
+  line-height: 1.85;
+  color: var(--color-ink);
+}
+
+/* ==================== QUESTION & INPUT CARDS ==================== */
+.q-card {
+  margin-bottom: var(--space-md);
+  padding: var(--space-md);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  background: var(--color-paper);
+  box-shadow: var(--shadow-sm);
+}
+
+.q-title-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3xs);
+  margin-bottom: var(--space-xs);
+  color: var(--color-accent);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.q-prompt {
+  margin-bottom: var(--space-sm);
+  color: var(--color-ink);
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  white-space: pre-line;
+}
+
+.q-options {
+  display: grid;
+  gap: var(--space-xs);
+}
+
+.q-option-label {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: 0.65rem var(--space-sm);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  background: var(--color-paper-2);
+  color: var(--color-ink-2);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color var(--dur-micro) var(--ease-out);
+}
+
+.q-option-label:hover {
+  background: var(--color-paper-3);
+  border-color: var(--color-rule-2);
+}
+
+.q-option-label:has(input:checked) {
+  background: var(--color-accent-soft);
+  border-color: var(--color-accent);
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.essay-box {
+  min-height: 260px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.editor-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xs);
+}
+
+.word-badge {
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-rule);
+  background: var(--color-paper-3);
+  color: var(--color-ink-2);
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-family: var(--font-outlier);
+}
+
+.live-meters-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-sm);
+  margin: var(--space-md) 0;
+}
+
+.meter-card {
+  padding: var(--space-sm);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  background: var(--color-paper);
+  text-align: center;
+}
+
+.meter-label {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--color-muted);
+  margin-bottom: var(--space-3xs);
+}
+
+.meter-value {
+  font-family: var(--font-outlier);
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+.cf-security-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xs) var(--space-md);
+  margin-top: var(--space-md);
+  background: var(--color-paper-3);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  font-size: 0.78rem;
+  color: var(--color-ink-2);
+}
+
+.pane-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-rule);
+}
+
+.btn-submit-exam {
+  padding: var(--space-sm) 1.45rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--legacy-color-1);
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-hover));
+  border: 0;
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 14px color-mix(in oklab, var(--color-accent) 30%, transparent);
+  cursor: pointer;
+  transition: background-color var(--dur-short) var(--ease-out);
+}
+
+.btn-submit-exam:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px color-mix(in oklab, var(--color-accent) 40%, transparent);
+}
+
+@media (max-width: 992px) {
+  .exam-workspace {
+    grid-template-columns: 1fr;
+  }
+  .live-meters-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

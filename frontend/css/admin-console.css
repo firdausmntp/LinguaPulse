@@ -1,0 +1,78 @@
+/* Hallmark · shape: app screen · genre: modern-minimal · theme: brand · v2.1.0 */
+/* Admin console shell & navigation styles inspired by modern SaaS dashboard */
+.is-admin { background: #f8fafc; }
+.is-admin #app { min-height: 100dvh; background: #f8fafc; }
+.is-admin .admin-console { max-width: none; padding: 0; min-height: 100dvh; grid-template-columns: 256px minmax(0, 1fr); gap: 0; }
+.is-admin .admin-sidebar {
+  background: #ffffff; color: #0f172a; border-right: 1px solid #e2e8f0;
+  box-shadow: 1px 0 3px rgba(15, 23, 42, 0.02); padding: 24px 16px; position: fixed;
+  inset-block: 0; left: 0; width: 256px; overflow-y: auto; min-height: 100dvh;
+  display: flex; flex-direction: column; z-index: var(--z-sticky);
+}
+.sidebar-brand-wrapper { display: flex; align-items: center; justify-content: space-between; padding-bottom: 18px; margin-bottom: 12px; border-bottom: 1px solid #f1f5f9; }
+.is-admin .admin-console-brand { color: #0f172a; font-size: 17px; font-weight: 700; display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--font-display); }
+.brand-logo-box { width: 34px; height: 34px; border-radius: 9px; background: #1d4ed8; display: grid; place-items: center; flex-shrink: 0; box-shadow: 0 2px 6px rgba(29, 78, 216, 0.25); }
+.brand-title { letter-spacing: -0.01em; color: #0f172a; font-weight: 700; }
+.admin-collapse-toggle { width: 28px; height: 28px; border-radius: 8px; border: 1px solid #e2e8f0; background: #ffffff; color: #64748b; display: grid; place-items: center; cursor: pointer; transition: all 0.15s ease; }
+.admin-collapse-toggle:hover { background: #f1f5f9; color: #0f172a; border-color: #cbd5e1; }
+.admin-role { color: #94a3b8; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px; padding-left: 8px; }
+.admin-subtabs { display: flex; flex-direction: column; gap: 4px; }
+.is-admin .admin-sidebar .subtab-btn {
+  color: #475569; padding: 10px 14px; border-radius: 10px; font-size: 13.5px; font-weight: 500;
+  display: flex; align-items: center; gap: 12px; border: 1px solid transparent; background: transparent;
+  text-align: left; cursor: pointer; transition: all 0.15s ease;
+}
+.is-admin .admin-sidebar .subtab-btn .svg-icon { width: 17px; height: 17px; color: #94a3b8; flex-shrink: 0; transition: color 0.15s ease; }
+.is-admin .admin-sidebar .subtab-btn:hover { color: #0f172a; background: #f1f5f9; }
+.is-admin .admin-sidebar .subtab-btn:hover .svg-icon { color: #475569; }
+.is-admin .admin-sidebar .subtab-btn.active { color: #1d4ed8; background: #eff6ff; font-weight: 600; border-color: #dbeafe; }
+.is-admin .admin-sidebar .subtab-btn.active .svg-icon { color: #1d4ed8; }
+.is-admin .admin-sidebar .btn-export-csv {
+  color: #475569; background: transparent; border: 1px solid transparent; border-radius: 10px;
+  padding: 10px 14px; font-size: 13.5px; font-weight: 500; display: flex; align-items: center;
+  gap: 12px; text-decoration: none; margin-top: 4px; transition: all 0.15s ease;
+}
+.is-admin .admin-sidebar .btn-export-csv .svg-icon { width: 17px; height: 17px; color: #94a3b8; flex-shrink: 0; }
+.is-admin .admin-sidebar .btn-export-csv:hover { color: #0f172a; background: #f1f5f9; }
+.sidebar-account {
+  display: flex; align-items: center; gap: 10px; background: #f8fafc; border: 1px solid #e2e8f0;
+  border-radius: 12px; padding: 10px 12px; margin-top: auto; margin-bottom: 8px;
+}
+.sidebar-account .avatar {
+  width: 32px; height: 32px; border-radius: 50%; background: #eff6ff; color: #1d4ed8;
+  border: 1px solid #bfdbfe; font-size: 12px; font-weight: 700; display: grid; place-items: center; flex-shrink: 0;
+}
+.sidebar-account strong { display: block; font-size: 13px; font-weight: 600; color: #0f172a; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sidebar-account small { display: block; font-size: 11px; color: #64748b; font-weight: 500; }
+.admin-logout {
+  min-height: 38px; display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: #ffffff;
+  color: #64748b; border: 1px solid #e2e8f0; border-radius: 10px; cursor: pointer; font-size: 12.5px;
+  font-weight: 500; transition: all 0.15s ease;
+}
+.admin-logout:hover { background: #fef2f2; border-color: #fecaca; color: #dc2626; }
+.is-admin .admin-content { grid-column: 2; padding: 28px 36px 48px; width: 100%; max-width: 1440px; margin-inline: auto; min-width: 0; }
+.admin-combobox { position: relative; min-width: 0; }
+.admin-combobox input { width: 100%; padding-right: 32px; cursor: pointer; }
+.admin-combobox::after { content: '⌄'; position: absolute; top: 12px; right: 12px; pointer-events: none; color: var(--color-muted); }
+.combo-source { display: none !important; }
+.combo-list {
+  position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: var(--z-sticky);
+  background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08); max-height: 240px; overflow-y: auto; padding: 4px;
+}
+.combo-list [role="option"] { padding: 8px 12px; cursor: pointer; font-size: 13px; border-radius: 6px; color: #334155; }
+.combo-list [role="option"]:hover, .combo-list .is-highlighted, .combo-list [aria-selected="true"] { background: #eff6ff; color: #2563eb; }
+.combo-list p { padding: 8px 12px; font-size: 13px; color: #64748b; }
+@media (max-width: 1000px) {
+  .is-admin .admin-console { grid-template-columns: 200px minmax(0, 1fr); }
+  .is-admin .admin-content { padding: 20px 24px; }
+  .is-admin .admin-sidebar { width: 200px; padding: 20px 12px; }
+}
+@media (max-width: 700px) {
+  .is-admin .admin-console { grid-template-columns: minmax(0, 1fr); }
+  .is-admin .admin-sidebar { width: auto; position: static; min-height: auto; padding: 16px; }
+  .admin-role { margin-bottom: 16px; }
+  .admin-logout { margin-top: 16px; }
+  .is-admin .admin-content { grid-column: 1; padding: 16px; }
+}
+@media (prefers-reduced-motion: reduce) { .is-admin * { transition: none; } }

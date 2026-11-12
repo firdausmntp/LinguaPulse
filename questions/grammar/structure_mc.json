@@ -1,0 +1,75 @@
+[
+  {
+    "question_id": "G1",
+    "section": "grammar",
+    "question_type": "multiple_choice",
+    "title": "Negative Adverbial Inversion",
+    "passage": "",
+    "prompt": "Rarely ________ located near city lights or at lower elevations because light pollution interferes with astronomical observations.",
+    "options": [
+      "A. observatories are",
+      "B. are",
+      "C. in the observatories",
+      "D. are observatories"
+    ],
+    "correct_answer": "3",
+    "explanation": "Ketika kalimat diawali adverbia negatif ('Rarely', 'Never', 'Seldom'), subjek dan auxiliary verb wajib mengalami inversi menjadi 'are observatories'.",
+    "sample_ai_reference": "",
+    "points_xp": 30
+  },
+  {
+    "question_id": "G2",
+    "section": "grammar",
+    "question_type": "multiple_choice",
+    "title": "Reduced & Non-Restrictive Relative Clauses",
+    "passage": "",
+    "prompt": "The outer ear, ________ the fleshy pinna and the auditory canal, picks up and funnels sound waves toward the eardrum.",
+    "options": [
+      "A. includes",
+      "B. which it includes",
+      "C. which includes",
+      "D. of which includes"
+    ],
+    "correct_answer": "2",
+    "explanation": "Klausa apositif penjelas di antara dua koma memerlukan relative pronoun 'which' diikuti kata kerja tunggal 'includes'.",
+    "sample_ai_reference": "",
+    "points_xp": 30
+  },
+  {
+    "question_id": "G3",
+    "section": "grammar",
+    "question_type": "multiple_choice",
+    "title": "Subjunctive Mood in Academic English",
+    "passage": "",
+    "prompt": "The university senate recommended that every international applicant ________ an English proficiency assessment prior to enrollment.",
+    "options": [
+      "A. completes",
+      "B. complete",
+      "C. completed",
+      "D. will complete"
+    ],
+    "correct_answer": "1",
+    "explanation": "Kata kerja subjunctive ('recommend', 'suggest', 'insist') diikuti 'that + subject + bare infinitive' (tanpa -s/es), yaitu 'complete'.",
+    "sample_ai_reference": "",
+    "points_xp": 30
+  },
+  {
+    "question_id": "G4",
+    "section": "grammar",
+    "question_type": "multiple_choice",
+    "title": "Parallel Structure in Written Expression",
+    "passage": "",
+    "prompt": "Pilih bagian kata/frasa yang SALAH secara grammar:\n\"The new superconducting material is prized for [A] its high tensile strength, [B] resistance to corrosion, and [C] it conducts electricity [D] efficiently.\"",
+    "options": [
+      "A. its high tensile strength",
+      "B. resistance to corrosion",
+      "C. it conducts electricity",
+      "D. efficiently"
+    ],
+    "correct_answer": "2",
+    "explanation": "Struktur paralel harus setara berupa Noun Phrase ('its high tensile strength', 'resistance to corrosion', dan seharusnya 'efficient electrical conductivity'), bukan klausa 'it conducts electricity'.",
+    "sample_ai_reference": "",
+    "points_xp": 35
+  }
+]
+

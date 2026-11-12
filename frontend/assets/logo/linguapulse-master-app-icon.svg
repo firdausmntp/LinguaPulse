@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="LinguaPulse Logo">
+  <defs>
+    <linearGradient id="lpTileGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#090E1A"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Deep Oxford Night Squircle Tile -->
+  <rect width="256" height="256" rx="54" fill="url(#lpTileGrad)"/>
+
+  <!-- Left Foundation Stem: Monogram 'L' Spine -->
+  <rect x="52" y="48" width="26" height="156" rx="7" fill="#FFFFFF"/>
+
+  <!-- Base Shelf of 'L' -->
+  <path d="M 52 176
+           L 182 176
+           C 190 176, 196 182, 196 190
+           L 196 197
+           C 196 201, 192 204, 188 204
+           L 59 204
+           C 55 204, 52 201, 52 197 Z"
+        fill="#FFFFFF"/>
+
+  <!-- Geometric Upper Loop of 'P' (Precision Language Arc) -->
+  <path d="M 78 52
+           L 144 52
+           C 174 52, 194 68, 194 94
+           C 194 120, 174 136, 144 136
+           L 78 136 Z"
+        fill="#2563EB"/>
+
+  <!-- Inner Architectural Cutout of 'P' -->
+  <path d="M 104 74
+           L 138 74
+           C 152 74, 166 82, 166 94
+           C 166 106, 152 114, 138 114
+           L 104 114 Z"
+        fill="#0F172A"/>
+
+  <!-- Precision Cadence Bar (The 'Pulse' of Fluency & Telemetry) -->
+  <rect x="104" y="89" width="46" height="10" rx="5" fill="#60A5FA"/>
+
+  <!-- Dynamic Intermediate Fluency Notch -->
+  <circle cx="104" cy="156" r="8" fill="#3B82F6"/>
+  <rect x="122" y="152" width="60" height="8" rx="4" fill="#94A3B8"/>
+</svg>

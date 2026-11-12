@@ -1,0 +1,137 @@
+/* Hallmark · shape: assessment index · genre: modern-minimal · theme: brand · redesign: full
+ * paper: cobalt light · accent: cobalt · display: Familjen Grotesk · body: IBM Plex Sans
+ * hero: Banner · nav: edge-aligned · footer: mast · signature: three assessment rows
+ * axes: light/grotesk-sans/cool · posture: restrained · v2.0.0 */
+/* Hallmark · pre-emit critique: keep the real assessment outline; remove ornamental claims and all reward mechanics. */
+:root {
+  --color-hero-bg: #0A1322;
+  --color-hero-ink: #F8FAFC;
+  --color-hero-muted: #94A3B8;
+  --color-hero-rule: #1E293B;
+  --color-neutral-soft: #F1F5F9;
+  --color-preview-shadow: rgba(10, 19, 34, 0.28);
+
+  --legacy-color-1: #ffffff;
+
+  --color-input-border: #94A3B8;
+  --color-index-rule: #CBD5E1;
+  --color-ink: #0F172A;
+  color-scheme: light;
+
+  /* Typography scale */
+  --font-display: "Familjen Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-body: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-outlier: "JetBrains Mono", ui-monospace, monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.84rem;
+  --text-md: 0.95rem;
+  --text-lg: 1.15rem;
+  --text-xl: 1.45rem;
+  --text-2xl: 1.85rem;
+  --text-3xl: 2.35rem;
+  --text-display: clamp(2.2rem, 3.8vw, 3.25rem);
+  --text-section: clamp(1.4rem, 2vw, 1.85rem);
+  --text-title: 1.15rem;
+
+  --tracking-display: -0.025em;
+  --display-weight: 600;
+
+  /* Layout & Rhythm */
+  --container: 1280px;
+  --gutter: 32px;
+  --gap-columns: 24px;
+  --section-gap-s: 48px;
+
+  /* Spacing Scale */
+  --space-3xs: 2px;
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 36px;
+  --space-2xl: 56px;
+  --space-3xl: 80px;
+
+  /* Elevation & Borders */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-card: 14px;
+  --radius-pill: 999px;
+  --rule-hair: 1px;
+
+  --shadow-sm: 0 1px 2px oklch(20% 0.02 260 / 0.05);
+  --shadow-card: 0 1px 3px oklch(20% 0.02 260 / 0.04), 0 8px 24px -4px oklch(20% 0.02 260 / 0.06);
+  --shadow-md: 0 4px 14px -2px oklch(20% 0.02 260 / 0.08);
+  --shadow-lg: 0 12px 32px -6px oklch(20% 0.02 260 / 0.14);
+
+  /* Color Palette — Prestige Oxford Cobalt Editorial Theme */
+  --color-paper: #F8FAFC;
+  --color-paper-2: #FFFFFF;
+  --color-paper-3: #F1F5F9;
+
+  --color-ink: #0F172A;
+  --color-ink-2: #334155;
+  --color-muted: #64748B;
+
+  --color-rule: #E2E8F0;
+  --color-rule-2: #CBD5E1;
+
+  --color-accent: #1D4ED8;
+  --color-accent-hover: #1E40AF;
+  --color-accent-ink: #FFFFFF;
+  --color-accent-soft: #EFF6FF;
+
+  --color-focus: #1D4ED8;
+
+  --color-cool: #2563EB;
+  --color-cool-soft: #F0F7FF;
+
+  --color-ok: #059669;
+  --color-ok-soft: #ECFDF5;
+
+  --color-bad: #DC2626;
+  --color-bad-soft: #FEF2F2;
+
+  --color-warm: #D97706;
+  --color-warm-soft: #FFFBEB;
+
+  --color-overlay: rgba(15, 23, 42, 0.5);
+
+  /* Aliases for legacy hooks */
+  --bg: var(--color-paper);
+  --surface: var(--color-paper-2);
+  --surface-subtle: var(--color-paper-3);
+  --primary: var(--color-accent);
+  --primary-hover: var(--color-accent-hover);
+  --primary-subtle: var(--color-accent-soft);
+  --accent: var(--color-cool);
+  --accent-hover: var(--color-accent-hover);
+  --accent-subtle: var(--color-cool-soft);
+  --text: var(--color-ink);
+  --text-secondary: var(--color-ink-2);
+  --muted: var(--color-muted);
+  --border: var(--color-rule);
+  --border-strong: var(--color-rule-2);
+  --gold: var(--color-warm);
+  --gold-subtle: var(--color-warm-soft);
+  --danger: var(--color-bad);
+  --danger-subtle: var(--color-bad-soft);
+  --success: var(--color-ok);
+  --success-subtle: var(--color-ok-soft);
+
+  /* Motion */
+  --dur-micro: 120ms;
+  --dur-short: 180ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Z-index */
+  --z-base: 1;
+  --z-raised: 10;
+  --z-sticky: 200;
+  --z-sticky-nav: 300;
+  --z-modal: 400;
+  --z-toast: 1000;
+}

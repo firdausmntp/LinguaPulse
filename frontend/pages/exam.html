@@ -1,0 +1,42 @@
+<main id="viewExam" class="view-container ept-exam">
+  <div class="exam-heading">
+    <div><h1>Ruang ujian EPT</h1><p>Listening, Structure, dan Reading. Writing untuk riset.</p></div>
+  </div>
+  <div id="examSubmitError" class="inline-error hidden" role="alert"><p id="examSubmitErrorText"></p><button type="button" class="btn-secondary" id="retryExamButton" onclick="submitExamSession(true)">Coba kirim kembali</button></div>
+  <section class="exam-session-header" aria-label="Status sesi" data-zone="navigation">
+    <div class="exam-progress-summary"><label for="examProgress" id="examProgressText">Memuat jumlah jawaban</label><progress id="examProgress" value="0" max="1">0%</progress><p>Jawaban disimpan di perangkat ini.</p></div>
+    <div class="exam-time-block"><span>Sisa waktu</span><div class="timer-pill" id="examTimer" role="timer" aria-label="Sisa waktu">25:00</div></div>
+  </section>
+  <nav class="exam-control-bar" aria-label="Bagian ujian" data-zone="navigation">
+    <div class="section-stepper">
+      <button type="button" class="step-btn active" id="tabSec0" onclick="showExamSection(0)">Listening</button>
+      <button type="button" class="step-btn" id="tabSec1" onclick="showExamSection(1)">Structure</button>
+      <button type="button" class="step-btn" id="tabSec2" onclick="showExamSection(2)">Reading</button>
+      <button type="button" class="step-btn" id="tabSec3" onclick="showExamSection(3)">Writing riset</button>
+    </div>
+    <span id="examSectionCount" class="exam-section-count"></span>
+  </nav>
+  <details class="question-navigation" open data-zone="navigation"><summary>Navigasi soal <span id="markedQuestionCount"></span></summary><div id="questionNavigator" class="question-number-list" aria-label="Pilih nomor soal"></div><div class="question-legend"><span>Terisi: latar biru</span><span>Ditandai: garis tepi kuning</span></div></details>
+  <nav class="exam-pane-switch" aria-label="Materi dan jawaban"><button type="button" id="examPaneAnswers" aria-pressed="true" onclick="showExamPane('answers', true)">Soal &amp; jawaban</button><button type="button" id="examPaneContext" aria-pressed="false" onclick="showExamPane('context', true)">Audio</button></nav>
+  <div class="exam-workspace" data-pane="answers">
+    <section tabindex="-1" class="pane pane-left" data-zone="passage" aria-label="Materi soal">
+      <div id="leftSec0">
+        <div class="listening-symbol" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 14v-3a8 8 0 0 1 16 0v3"/><rect x="2" y="12" width="5" height="9" rx="2"/><rect x="17" y="12" width="5" height="9" rx="2"/></svg></div>
+        <h2>Listening comprehension</h2><p class="lead-text">Dengarkan rekaman, lalu pilih jawaban berdasarkan informasi yang Anda dengar.</p>
+        <label for="listeningGroupSelect">Pilih rekaman</label><select id="listeningGroupSelect" onchange="switchListeningGroup(Number(this.value))"></select>
+        <div class="listening-player"><audio id="listeningAudio" controls preload="metadata" aria-label="Rekaman soal Listening"></audio><p id="listeningAudioStatus" role="status">Tekan putar untuk mulai mendengarkan.</p></div>
+        <p class="exam-context-note">Gunakan headphone bila tersedia. Audio tidak diputar otomatis.</p>
+      </div>
+      <div id="leftSec1" class="hidden"><details class="structure-guide"><summary>Petunjuk Structure &amp; tugas riset</summary><div><h2>Structure &amp; written expression</h2><p class="lead-text">Pilih susunan yang melengkapi kalimat dengan tepat.</p><dl class="exam-instructions"><div><dt>Pilihan ganda</dt><dd>Baca seluruh kalimat sebelum memilih jawaban.</dd></div><div><dt>Perbaikan kalimat</dt><dd>Tugas tambahan untuk mengamati proses penulisan. Ketik kalimat perbaikan dengan kata-kata Anda.</dd></div><div><dt>Perlu ditinjau?</dt><dd>Gunakan tombol tandai. Anda bisa kembali melalui nomor soal sebelum mengirim.</dd></div></dl></div></details></div>
+      <div id="leftSec2" class="hidden"><label for="readingGroupSelect">Pilih bacaan</label><select id="readingGroupSelect" onchange="switchReadingGroup(Number(this.value))"></select><h2 id="readingTitle">Reading passage</h2><div class="passage-scroll-box" id="readingPassageText"></div></div>
+      <div id="leftSec3" class="hidden"><h2>Writing untuk riset</h2><p class="lead-text">Tugas ini melengkapi penelitian dan terpisah dari hasil pilihan ganda EPT.</p><div class="passage-scroll-box" id="writingPromptText"></div><div class="scenario-callout hidden" id="scenarioReference"><h3>Referensi skenario simulasi</h3><p>Gunakan hanya sesuai skenario partisipasi yang dipilih.</p><div class="reference-quote" id="sampleAiText"></div></div></div>
+    </section>
+    <section tabindex="-1" class="pane pane-right" data-zone="answer" aria-label="Lembar jawaban">
+      <div id="rightSec0"><h2 class="answer-pane-title">Jawaban Listening</h2><div id="listeningMcContainer"></div><div class="section-actions"><button type="button" class="btn-secondary" onclick="showExamSection(1)">Lanjut ke Structure</button></div></div>
+      <div id="rightSec1" class="hidden"><h2 class="answer-pane-title">Jawaban Structure</h2><div id="grammarMcContainer"></div><h3 class="rewrite-heading">Perbaikan kalimat untuk riset</h3><div id="grammarRewriteContainer"></div><div class="section-actions"><button type="button" class="btn-secondary" onclick="showExamSection(0)">Ke Listening</button><button type="button" class="btn-secondary" onclick="showExamSection(2)">Ke Reading</button></div></div>
+      <div id="rightSec2" class="hidden"><h2 class="answer-pane-title">Jawaban Reading</h2><div id="readingMcContainer"></div><div class="section-actions"><button type="button" class="btn-secondary" onclick="showExamSection(1)">Ke Structure</button><button type="button" class="btn-secondary" onclick="showExamSection(3)">Ke Writing</button></div></div>
+      <div id="rightSec3" class="hidden"><div class="editor-top-row"><h2 class="answer-pane-title">Esai akademik</h2><span class="word-badge" id="essayWordCounter">0 kata</span></div><div id="writingFlagControl"></div><label class="sr-only" for="essayEditor">Jawaban esai akademik</label><textarea id="essayEditor" class="telemetry-input essay-box" rows="12" placeholder="Tulis esai Anda di sini."></textarea><details class="writing-metrics"><summary>Metrik penulisan sesi ini</summary><div class="live-meters-grid"><div class="meter-card"><span class="meter-label">Median dwell</span><strong class="meter-value" id="liveDwell">0 ms</strong></div><div class="meter-card"><span class="meter-label">Median flight</span><strong class="meter-value" id="liveFlight">0 ms</strong></div><div class="meter-card"><span class="meter-label">Rasio backspace</span><strong class="meter-value" id="liveBackspace">0.0%</strong></div><div class="meter-card"><span class="meter-label">Entropi spasial</span><strong class="meter-value" id="liveEntropy">0.00 bits</strong></div></div></details><div class="section-actions"><button type="button" class="btn-secondary" onclick="showExamSection(2)">Kembali ke Reading</button></div></div>
+    </section>
+  </div>
+  <footer class="exam-submit-bar" data-zone="navigation"><div><strong>Sudah selesai meninjau?</strong><p>Jawaban dapat diubah sampai sesi dikirim.</p></div><button type="button" class="btn-primary" id="submitExamButton" onclick="submitExamSession()">Selesaikan &amp; kirim jawaban</button></footer>
+</main>

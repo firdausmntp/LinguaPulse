@@ -1,0 +1,16 @@
+[
+  {
+    "question_id": "W1",
+    "section": "writing",
+    "question_type": "essay",
+    "title": "TOEFL Independent & Academic Writing Task",
+    "passage": "",
+    "prompt": "Do you agree or disagree with the following statement?\n\n\"Artificial intelligence and automated translation tools have made learning a second language such as English less necessary for university students than it was in the past.\"\n\nUse specific reasons and examples to support your position. Write at least 80–150 words.",
+    "options": [],
+    "correct_answer": "",
+    "explanation": "Penilaian esai mencakup struktur argumen, kohesi paragraf, variasi kosakata akademik, dan keaslian proses penulisan.",
+    "sample_ai_reference": "While artificial intelligence and real-time translation tools have advanced remarkably, learning English remains indispensable for university students. First, academic discourse requires nuanced critical thinking and cultural context that automated translators frequently misinterpret. Second, direct proficiency enables students to engage spontaneously in international seminars, collaborative research, and professional networking without technological latency. Therefore, AI tools should function as supplementary aids rather than replacements for genuine language acquisition.",
+    "points_xp": 80
+  }
+]
+

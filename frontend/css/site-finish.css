@@ -1,0 +1,23 @@
+/* Hallmark · shape: product-led assessment · genre: modern-minimal · theme: brand · v2.0.0 */
+/* Hallmark · pre-emit critique: keep global navigation on one line and give the mobile menu a clear focusable trigger. */
+.site-menu-toggle { display: none; }
+.header-inner { position: relative; }
+.main-nav a { padding-block: var(--space-sm); }
+.site-header.menu-open .main-nav { box-shadow: var(--shadow-md); }
+@media (max-width: 700px) {
+  .header-inner { flex-wrap: nowrap; min-height: 68px; padding-block: var(--space-sm); padding-inline: var(--space-md); gap: var(--space-xs); }
+  .site-brand { gap: var(--space-xs); }
+  .site-brand .brand-wordmark { font-size: 18px; letter-spacing: -.4px; }
+  .brand-wordmark small { font-size: 12px; }
+  .site-brand img { width: 28px; height: 28px; }
+  .account-nav, .main-nav + .account-nav { margin-left: auto; gap: var(--space-xs); }
+  .account-nav a, .account-nav button { font-size: 12px; min-height: 28px; display: inline-flex; align-items: center; }
+  .account-nav .btn-primary, .account-nav .btn-secondary { padding-inline: var(--space-xs); min-height: 38px; }
+  .site-menu-toggle { display: grid; place-items: center; flex-shrink: 0; width: 32px; height: 38px; padding: var(--space-2xs); border: 1px solid var(--color-rule); border-radius: var(--radius-sm); background: var(--color-paper-2); color: var(--color-ink); cursor: pointer; }
+  .site-menu-toggle svg { width: 19px; height: 19px; }
+  .site-header .main-nav { display: none; position: absolute; top: calc(100% - 1px); left: var(--space-md); right: var(--space-md); width: auto; margin: 0; padding: var(--space-xs); order: initial; border: 1px solid var(--color-rule); border-radius: var(--radius-md); background: var(--color-paper-2); z-index: var(--z-sticky); }
+  .site-header.menu-open .main-nav:not(.hidden) { display: flex; flex-direction: column; gap: var(--space-2xs); align-items: stretch; }
+  .site-header .main-nav a { padding: var(--space-sm); min-height: 44px; }
+  .site-header .main-nav a:hover { background: var(--color-accent-soft); }
+}
+@media (prefers-reduced-motion: reduce) { .site-header * { transition: none; } }
