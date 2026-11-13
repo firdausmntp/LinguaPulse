@@ -81,7 +81,12 @@ class ExamRoutes:
                 r_correct += 1
 
         rewrite_done = sum(1 for item in q_bank["grammar_rewrite"] if str(ans.get(item["id"]) or "").strip())
-        essay_text = str(ans.get(q_bank["writing"]["id"]) or ans.get("W1") or "").strip()
+        essay_text = str(ans.get(q_bank["writing"]["id"]) or ans.get("W-001") or ans.get("W1") or "").strip()
+        if not essay_text:
+            for k, v in ans.items():
+                if isinstance(v, str) and len(v.split()) > 10:
+                    essay_text = v.strip()
+                    break
         essay_wc = len(essay_text.split()) if essay_text else 0
 
         accuracy_percent = round((l_correct + g_correct + r_correct) / max(1, len(l_questions) + len(q_bank['grammar_mc']) + len(q_bank['reading']['questions'])) * 100)
@@ -101,6 +106,11 @@ class ExamRoutes:
             r_correct, len(q_bank["reading"]["questions"]), rewrite_done, essay_wc,
             est_toefl, 0, json.dumps(ans, ensure_ascii=False), now_str
         ))
+        if isinstance(ans, dict):
+            cur.executemany(
+                "INSERT OR REPLACE INTO exam_submission_answers (session_id, question_id, answer_text) VALUES (?, ?, ?)",
+                [(sid, str(qid), str(val)) for qid, val in ans.items()]
+            )
 
         cur.execute("""
             INSERT INTO telemetry_sessions

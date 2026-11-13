@@ -83,11 +83,16 @@
 .admin-sidebar { position: sticky; top: var(--space-lg); padding-block: var(--space-md); }
 .admin-console-brand { display: block; font-family: var(--font-display); color: var(--color-ink); font-size: 24px; text-decoration: none; margin-bottom: 32px; }
 .admin-sidebar .admin-subtabs { display: flex; flex-direction: column; align-items: stretch; gap: var(--space-xs); }
-.admin-sidebar .subtab-btn { text-align: left; width: 100%; min-height: 46px; border-color: transparent; background: transparent; }
+.admin-sidebar .subtab-btn { text-align: left; width: 100%; min-height: 40px; border-color: transparent; background: transparent; }
 .admin-sidebar .subtab-btn.active { color: var(--color-accent); background: var(--color-accent-soft); border-color: var(--color-rule); }
 .admin-sidebar .btn-export-csv { background: var(--color-paper-2); color: var(--color-ink-2); border: 1px solid var(--color-rule); margin-top: var(--space-lg); text-align: center; }
 .admin-return { display: inline-block; margin-top: 32px; font-size: 14px; }
 .admin-content { min-width: 0; }
 .admin-console .admin-top-bar { padding-bottom: var(--space-lg); margin-bottom: 32px; }
 .admin-console .admin-split-layout { grid-template-columns: minmax(0, 1fr); }
-@media (max-width: 900px) { .admin-console { grid-template-columns: minmax(0, 1fr); gap: var(--space-lg); } .admin-sidebar { position: static; padding: 0; } .admin-console-brand { margin-bottom: var(--space-md); } .admin-sidebar .admin-subtabs { flex-direction: row; flex-wrap: wrap; } .admin-sidebar .subtab-btn { width: auto; flex: 1; white-space: nowrap; } .admin-sidebar .btn-export-csv { margin-top: 0; } .admin-return { margin-top: var(--space-md); } }
+@media (max-width: 900px) {
+  body:not(.is-admin) .admin-console { grid-template-columns: minmax(0, 1fr); gap: var(--space-lg); }
+  body:not(.is-admin) .admin-sidebar { position: static; padding: 0; }
+  body:not(.is-admin) .admin-sidebar .admin-subtabs { flex-direction: row; flex-wrap: wrap; }
+  body:not(.is-admin) .admin-sidebar .subtab-btn { width: auto; flex: 1; white-space: nowrap; }
+}

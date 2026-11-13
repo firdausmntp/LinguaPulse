@@ -1,16 +1,42 @@
 // Desktop collapse preference and accessible mobile drawer.
 const adminNarrow = matchMedia('(max-width: 700px)');
 function initAdminShell() {
-  document.getElementById('adminName').textContent = appState.currentUser.display_name;
-  const initials = getInitials(appState.currentUser.display_name);
+  const name = appState.currentUser?.display_name || 'Admin';
+  const initials = getInitials(name);
   if (document.getElementById('adminAvatar')) document.getElementById('adminAvatar').textContent = initials;
   if (document.getElementById('adminTopAvatar')) document.getElementById('adminTopAvatar').textContent = initials;
+  if (document.getElementById('adminDropdownName')) document.getElementById('adminDropdownName').textContent = name;
   let collapsed = false;
   try { collapsed = localStorage.getItem('admin_sidebar_collapsed') === 'true'; } catch (_) {}
   document.body.classList.toggle('admin-collapsed', collapsed);
   closeAdminMenu();
+  closeAdminUserMenu();
   syncAdminToggle();
 }
+
+function toggleAdminUserMenu() {
+  const dd = document.getElementById('adminUserDropdown');
+  const btn = document.getElementById('adminUserDropdownToggle');
+  if (!dd) return;
+  const isHidden = dd.classList.toggle('hidden');
+  if (btn) btn.setAttribute('aria-expanded', String(!isHidden));
+}
+
+function closeAdminUserMenu() {
+  const dd = document.getElementById('adminUserDropdown');
+  const btn = document.getElementById('adminUserDropdownToggle');
+  if (dd && !dd.classList.contains('hidden')) {
+    dd.classList.add('hidden');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+  }
+}
+
+document.addEventListener('click', event => {
+  if (!event.target.closest('.admin-user-dropdown-wrapper')) {
+    closeAdminUserMenu();
+  }
+});
+
 function syncAdminToggle() {
   const toggle = document.getElementById('adminSidebarToggle');
   if (!toggle) return;

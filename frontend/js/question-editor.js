@@ -2,7 +2,20 @@
 const questionEditor = { original: null, options: ['', '', '', ''], busy: false, dirty: false };
 const questionPagination = { page: 1, pageSize: 15 };
 const questionModuleLabels = { listening: 'Listening', grammar: 'Structure', reading: 'Reading', writing: 'Writing riset' };
-const qField = id => document.getElementById(id);
+if (typeof qField === 'undefined') {
+  window.qField = id => document.getElementById(id);
+}
+if (typeof updateAudioPreview === 'undefined') {
+  window.updateAudioPreview = function() {
+    const audio = qField('questionAudioPreview');
+    if (!audio) return;
+    const url = (qField('qFormAudio')?.value || '').trim();
+    audio.pause();
+    const valid = url.startsWith('/media/') || /^https:\/\//i.test(url);
+    audio.classList.toggle('hidden', !valid);
+    if (valid) audio.src = url; else audio.removeAttribute('src');
+  };
+}
 
 function questionMessage(message, error = false) {
   const box = qField(error && document.querySelector('.question-bank-layout.is-editing') ? 'questionFormError' : 'questionEditorStatus');
@@ -45,6 +58,12 @@ async function loadAdminQuestionsTable() {
     appState.adminQuestionsList = data.all_questions || [];
     renderBankKpis(appState.adminQuestionsList);
     renderQuestionBank();
+    const urlParams = new URLSearchParams(location.search);
+    const targetUuid = urlParams.get('uuid') || urlParams.get('id');
+    if (targetUuid) {
+      const idx = appState.adminQuestionsList.findIndex(q => q.question_id === targetUuid);
+      if (idx !== -1) editQuestionRow(idx);
+    }
     questionMessage('Perubahan bank soal berlaku untuk sesi baru.');
   } catch (error) {
     questionMessage(error.message, true);
@@ -210,7 +229,7 @@ async function editQuestionRow(index, duplicate = false) {
   for (const [id, key] of Object.entries({ qFormId: 'question_id', qFormSection: 'section', qFormTitle: 'title', qFormPrompt: 'prompt', qFormPassage: 'passage', qFormSample: 'sample_ai_reference', qFormAudio: 'audio_url', qFormExplanation: 'explanation' })) qField(id).value = q[key] || '';
   qField('qFormType').innerHTML = `<option value="${escapeHtml(q.question_type)}"></option>`;
   updateQuestionFields();
-  if (duplicate) qField('qFormId').value = q.question_id.slice(0, 27) + '-COPY-' + Date.now().toString().slice(-6);
+  if (duplicate) qField('qFormId').value = generateAutoQuestionId();
   qField('qFormId').readOnly = !duplicate;
   questionEditor.options = q.options?.length ? q.options.map(choiceText) : ['', '', '', ''];
   renderQuestionOptions(String(q.correct_answer || '0'));
@@ -221,6 +240,11 @@ async function editQuestionRow(index, duplicate = false) {
   qField('questionPreview').classList.add('hidden');
   updateAudioPreview(); renderQuestionBank();
   questionEditor.dirty = false;
+  const currentUrl = new URL(location.href);
+  if (!duplicate) {
+    currentUrl.searchParams.set('uuid', q.question_id);
+    history.replaceState(null, '', currentUrl.toString());
+  }
   openQuestionEditor('qFormTitle');
 }
 
@@ -247,10 +271,28 @@ async function confirmQuestionTransition() {
 async function requestNewQuestion() { if (await confirmQuestionTransition()) resetQuestionForm(true); }
 const duplicateQuestion = index => editQuestionRow(index, true);
 
+function generateAutoQuestionId(section = 'grammar') {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = Math.random() * 16 | 0;
+    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+  });
+}
+
 function resetQuestionForm(focus = false) {
   if (questionEditor.busy || !qField('questionForm')) return;
   questionEditor.original = null;
+  const currentUrl = new URL(location.href);
+  if (currentUrl.searchParams.has('uuid') || currentUrl.searchParams.has('id')) {
+    currentUrl.searchParams.delete('uuid');
+    currentUrl.searchParams.delete('id');
+    history.replaceState(null, '', currentUrl.toString());
+  }
   qField('questionForm').reset();
+  const initialSection = qField('qFormSection')?.value || 'grammar';
+  qField('qFormId').value = generateAutoQuestionId(initialSection);
   qField('qFormId').readOnly = false;
   questionEditor.options = ['', '', '', ''];
   renderQuestionOptions('0'); updateQuestionFields(true); updateAudioPreview();
@@ -277,13 +319,14 @@ async function saveQuestionCrud(event) {
   event.preventDefault();
   if (questionEditor.busy) return;
   const payload = questionPayload();
+  if (payload.prompt) payload.prompt = payload.prompt.replace(/_{2,}/g, '______');
   qField('questionFormError').classList.add('hidden');
   setQuestionBusy(true);
   try {
     await api('/api/admin/questions', { method: 'POST', body: JSON.stringify(payload) });
     setQuestionBusy(false); resetQuestionForm();
     await loadAdminQuestionsTable();
-    questionMessage('Soal ' + payload.question_id.toUpperCase() + ' tersimpan dan tersinkron ke bank soal.');
+    questionMessage('Soal ' + payload.question_id.toLowerCase() + ' tersimpan dan tersinkron ke bank soal.');
   } catch (error) { questionMessage(error.message, true); }
   finally { setQuestionBusy(false); }
 }
@@ -310,59 +353,78 @@ async function deleteQuestionRow(id) {
   finally { setQuestionBusy(false); }
 }
 
-function updateAudioPreview() {
-  const audio = qField('questionAudioPreview');
-  const url = qField('qFormAudio').value.trim();
-  audio.pause();
-  const valid = url.startsWith('/media/') || /^https:\/\//i.test(url);
-  audio.classList.toggle('hidden', !valid);
-  if (valid) audio.src = url; else audio.removeAttribute('src');
-}
-
-async function uploadQuestionAudio(event) {
-  const file = event.target.files[0];
-  if (!file || questionEditor.busy) return;
-  if (file.size > 8 * 1024 * 1024) { event.target.value = ''; return questionMessage('Ukuran audio maksimal 8 MB.', true); }
-  setQuestionBusy(true); questionMessage('Mengunggah audio…');
-  try {
-    const encoded = await new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(reader.result.split(',')[1]); reader.onerror = () => reject(new Error('Berkas audio tidak dapat dibaca.')); reader.readAsDataURL(file); });
-    const data = await api('/api/admin/audio', { method: 'POST', body: JSON.stringify({ filename: file.name, data_base64: encoded }) });
-    qField('qFormAudio').value = data.audio_url; updateAudioPreview();
-    questionMessage('Audio diunggah. Simpan soal untuk menghubungkan audio ini.');
-  } catch (error) { questionMessage(error.message, true); }
-  finally { setQuestionBusy(false); event.target.value = ''; }
-}
-
 function previewQuestion() {
   const q = questionPayload();
   const el = qField('questionPreviewBody');
-  el.innerHTML = `<h4>${escapeHtml(q.title || questionModuleLabels[q.section])}</h4>${q.section === 'reading' ? `<p class="preview-passage">${escapeHtml(readablePassage(q.passage))}</p>` : ''}${q.section === 'listening' && (q.audio_url.startsWith('/media/') || /^https:\/\//i.test(q.audio_url)) ? `<audio controls preload="none" src="${escapeHtml(q.audio_url)}" aria-label="Audio soal pratinjau"></audio>` : ''}<p>${escapeHtml(q.prompt || 'Pertanyaan belum diisi.')}</p>${q.question_type === 'multiple_choice' ? `<ol type="A" class="preview-options">${q.options.map((option, index) => `<li>${escapeHtml(choiceText(option) || 'Opsi belum diisi')}${String(index) === String(q.correct_answer) ? ' <strong>(kunci)</strong>' : ''}</li>`).join('')}</ol>` : '<p>Peserta menulis jawaban pada lembar tugas.</p>'}`;
+  const sectionName = questionModuleLabels[q.section] || q.section;
+  
+  let mediaHtml = '';
+  if (q.section === 'listening' && (q.audio_url.startsWith('/media/') || /^https:\/\//i.test(q.audio_url))) {
+    mediaHtml = `
+      <div class="preview-media-box">
+        <div class="preview-media-label">Rekaman Audio Soal:</div>
+        <audio controls preload="none" src="${escapeHtml(q.audio_url)}" class="preview-audio-player" aria-label="Audio soal pratinjau"></audio>
+      </div>`;
+  }
+
+  let passageHtml = '';
+  if (q.section === 'reading' && q.passage) {
+    passageHtml = `
+      <div class="preview-passage-card">
+        <span class="preview-badge-subtle">Wacana Teks</span>
+        <div class="preview-passage-content">${escapeHtml(readablePassage(q.passage))}</div>
+      </div>`;
+  }
+
+  let answerHtml = '';
+  if (q.question_type === 'multiple_choice') {
+    answerHtml = `
+      <div class="preview-options-container">
+        <div class="preview-options-heading">Pilihan Jawaban (A-D):</div>
+        <div class="preview-choice-list">
+          ${q.options.map((option, index) => {
+            const isCorrect = String(index) === String(q.correct_answer);
+            const letter = String.fromCharCode(65 + index);
+            return `
+              <div class="preview-choice-item ${isCorrect ? 'is-correct-key' : ''}">
+                <span class="preview-choice-letter">${letter}</span>
+                <span class="preview-choice-text">${escapeHtml(choiceText(option) || 'Opsi belum diisi')}</span>
+                ${isCorrect ? '<span class="preview-correct-badge">KUNCI JAWABAN</span>' : ''}
+              </div>`;
+          }).join('')}
+        </div>
+      </div>`;
+  } else {
+    answerHtml = `
+      <div class="preview-essay-card">
+        <span class="preview-badge-subtle">Jawaban Terbuka</span>
+        <p class="preview-essay-hint">Peserta akan mengetik esai / teks jawaban pada bidang input respons langsung.</p>
+        ${q.correct_answer ? `<div class="preview-ref-answer"><strong>Kunci / Referensi:</strong> ${escapeHtml(q.correct_answer)}</div>` : ''}
+      </div>`;
+  }
+
+  el.innerHTML = `
+    <div class="preview-card-wrapper">
+      <div class="preview-header-meta">
+        <span class="preview-section-pill preview-pill-${escapeHtml(q.section)}">${escapeHtml(sectionName)}</span>
+        <span class="preview-id-pill">${escapeHtml(q.question_id || 'ID Baru')}</span>
+      </div>
+      <h4 class="preview-question-title">${escapeHtml(q.title || 'Soal EPT')}</h4>
+      ${mediaHtml}
+      ${passageHtml}
+      <div class="preview-prompt-card">
+        <div class="preview-prompt-label">Pertanyaan:</div>
+        <p class="preview-prompt-text">${escapeHtml(q.prompt || 'Pertanyaan belum diisi.').replace(/_{2,}/g, '<span class="blank-fill-indicator">______</span>')}</p>
+      </div>
+      ${answerHtml}
+      ${q.explanation ? `
+        <div class="preview-explanation-box">
+          <strong>Pembahasan:</strong>
+          <p>${escapeHtml(q.explanation)}</p>
+        </div>` : ''}
+    </div>`;
+
   qField('questionPreview').classList.remove('hidden');
-  qField('questionPreview').tabIndex = -1;
-  qField('questionPreview').focus({ preventScroll: true });
+  qField('questionPreview').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-async function importQuestionBank(event) {
-  const file = event.target.files[0];
-  if (!file || questionEditor.busy) return;
-  try {
-    if (file.size > 2 * 1024 * 1024) throw new Error('Berkas JSON maksimal 2 MB.');
-    const parsed = JSON.parse(await file.text());
-    const questions = Array.isArray(parsed) ? parsed : parsed.questions;
-    if (!Array.isArray(questions) || !questions.length || questions.length > 200) throw new Error('Gunakan JSON berisi 1 hingga 200 soal.');
-    if (!await adminConfirm('Impor ' + questions.length + ' soal?', 'Kode soal yang sama akan diperbarui. Semua soal diperiksa sebelum perubahan disimpan.', 'Impor soal')) return;
-    setQuestionBusy(true);
-    const data = await api('/api/admin/questions/import', { method: 'POST', body: JSON.stringify({ questions }) });
-    await loadAdminQuestionsTable(); questionMessage(data.imported + ' soal berhasil diimpor.');
-  } catch (error) { questionMessage(error instanceof SyntaxError ? 'JSON tidak valid. Periksa kembali berkas impor.' : error.message, true); }
-  finally { event.target.value = ''; setQuestionBusy(false); }
-}
-
-async function exportQuestionBank() {
-  try {
-    const data = await api('/api/admin/questions/export');
-    const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
-    const a = Object.assign(document.createElement('a'), { href: url, download: 'linguapulse-ept-questions.json' });
-    a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
-  } catch (error) { questionMessage(error.message, true); }
-}

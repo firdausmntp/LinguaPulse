@@ -58,13 +58,13 @@ LinguaPulse adalah aplikasi web lengkap untuk latihan TOEFL EPT sekaligus instru
 
 ```bash
 # 1. Masuk ke folder proyek
-cd toefl
+cd LinguaPulse
 
 # 2. Jalankan server (butuh Python 3.11+)
 python app.py
 
 # 3. Buka browser
-# http://localhost:8000
+# http://localhost:8878 (atau via tunnel: https://lingua.ganigani.web.id)
 ```
 
 | Akun demo | Username | Sandi |

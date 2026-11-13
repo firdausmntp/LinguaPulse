@@ -1,59 +1,65 @@
   <main id="viewAdmin" class="view-container admin-console">
     <button type="button" class="admin-menu-shade hidden" id="adminMenuShade" aria-label="Tutup menu admin" onclick="closeAdminMenu()"></button>
     <aside class="admin-sidebar" id="adminSidebar" aria-label="Navigasi admin">
-      <button type="button" class="admin-drawer-close" onclick="closeAdminMenu(true)" aria-label="Tutup navigasi">
-        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m6 6 12 12M6 18 18 6"/></svg>
-      </button>
       <div class="sidebar-brand-wrapper">
         <a href="/admin/overview" class="admin-console-brand">
           <span class="brand-logo-box"><img src="/assets/logo/linguapulse-master-app-icon.svg" width="22" height="22" alt=""></span>
           <span class="sidebar-label brand-title">LinguaPulse</span>
         </a>
+        <button type="button" class="admin-drawer-close" onclick="closeAdminMenu(true)" aria-label="Tutup navigasi">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 6 12 12M6 18 18 6"/></svg>
+        </button>
         <button type="button" class="admin-collapse-toggle" onclick="toggleAdminSidebar()" aria-label="Ciutkan sidebar">
           <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
         </button>
       </div>
       <p class="admin-role sidebar-label">Administrasi EPT</p>
-      <div class="admin-subtabs">
+      <div class="sidebar-subtabs">
         <button class="subtab-btn active" id="subtabOverview" onclick="switchAdminTab('overview')" aria-label="Ringkasan" title="Ringkasan"><span data-icon="home"></span><span class="sidebar-label">Ringkasan</span></button>
         <button class="subtab-btn" id="subtabProctor" onclick="switchAdminTab('proctor')" aria-label="Pengawasan" title="Pengawasan"><span data-icon="shield"></span><span class="sidebar-label">Pengawasan</span></button>
         <button class="subtab-btn" id="subtabQuestions" onclick="switchAdminTab('questions')" aria-label="Bank soal" title="Bank soal"><span data-icon="book"></span><span class="sidebar-label">Bank soal</span></button>
         <button class="subtab-btn" id="subtabUsers" onclick="switchAdminTab('users')" aria-label="Akun pengguna" title="Akun pengguna"><span data-icon="settings"></span><span class="sidebar-label">Akun pengguna</span></button>
         <a data-download class="btn-export-csv" href="/api/export/csv" download="dataset_telemetri_toefl.csv" aria-label="Ekspor CSV" title="Ekspor CSV"><span data-icon="download"></span><span class="sidebar-label">Ekspor CSV</span></a>
       </div>
-      <div class="sidebar-account">
-        <span class="avatar" id="adminAvatar" aria-hidden="true"></span>
-        <div class="sidebar-label"><strong id="adminName"></strong><small>Administrator</small></div>
-      </div>
-      <button type="button" class="admin-logout" onclick="handleLogout()" aria-label="Keluar akun" title="Keluar akun"><span data-icon="arrowUpRight"></span><span class="sidebar-label">Keluar akun</span></button>
     </aside>
     <div class="admin-content">
       <div class="admin-top-bar">
         <div class="admin-top-left">
           <button type="button" id="adminSidebarToggle" class="admin-menu-toggle" onclick="toggleAdminSidebar()" aria-controls="adminSidebar" aria-expanded="true" aria-label="Ciutkan sidebar"><span data-icon="list"></span></button>
           <div class="admin-context">
+            <h1 id="adminPageTitle">Ringkasan</h1>
             <nav class="admin-breadcrumbs" aria-label="Navigasi rekam jejak">
               <a href="/dashboard">Beranda</a>
-              <span class="breadcrumb-sep">&gt;</span>
-              <a href="/admin/overview">Administrasi</a>
-              <span class="breadcrumb-sep">&gt;</span>
+              <span class="breadcrumb-sep">/</span>
               <span id="adminBreadcrumb" class="breadcrumb-current">Ringkasan</span>
             </nav>
-            <h1 id="adminPageTitle">Ringkasan</h1>
           </div>
         </div>
         <div class="admin-top-actions">
-          <a href="/" class="admin-home-link"><span data-icon="arrowUpRight"></span>Lihat situs</a>
-          <div class="admin-user-pill" title="Administrator">
-            <span class="admin-avatar-circle" id="adminTopAvatar" aria-hidden="true">AD</span>
-            <span class="admin-status-dot" aria-hidden="true"></span>
+          <button class="btn-secondary admin-refresh-top" type="button" onclick="refreshCurrentAdminTab()" title="Segarkan data"><span data-icon="clock"></span><span class="top-action-label">Segarkan</span></button>
+          <a href="/" class="admin-home-link" title="Buka landing page publik"><span data-icon="arrowUpRight"></span><span class="top-action-label">Lihat situs</span></a>
+          <div class="admin-user-dropdown-wrapper">
+            <button type="button" class="admin-user-pill" id="adminUserDropdownToggle" onclick="toggleAdminUserMenu()" aria-expanded="false" aria-haspopup="true" title="Menu akun">
+              <span class="admin-avatar-circle" id="adminTopAvatar" aria-hidden="true">AD</span>
+              <span class="admin-status-dot" aria-hidden="true"></span>
+            </button>
+            <div class="admin-user-dropdown hidden" id="adminUserDropdown" role="menu">
+              <div class="dropdown-header">
+                <strong id="adminDropdownName">Administrator</strong>
+                <span id="adminDropdownRole" class="dropdown-badge">Admin</span>
+              </div>
+              <div class="dropdown-divider"></div>
+              <a href="/dashboard" class="dropdown-item" role="menuitem"><span data-icon="home"></span> Dasbor peserta</a>
+              <a href="/account" class="dropdown-item" role="menuitem"><span data-icon="settings"></span> Pengaturan akun</a>
+              <div class="dropdown-divider"></div>
+              <button type="button" class="dropdown-item dropdown-logout" onclick="handleLogout()" role="menuitem"><span data-icon="arrowUpRight"></span> Keluar akun</button>
+            </div>
           </div>
         </div>
       </div>
       <section id="adminTabOverview" aria-label="Ringkasan administrasi">
         <div class="overview-heading">
-          <div><h2>Status Operasional TOEFL EPT</h2><p>Ringkasan kesiapan materi, sesi ujian aktif, dan telemetri pengawasan peserta.</p></div>
-          <button class="btn-secondary" type="button" onclick="loadAdminOverview()"><span data-icon="clock"></span>Segarkan</button>
+          <div><h2>Status Operasional TOEFL EPT</h2><p>Kesiapan materi ujian, sesi pengerjaan aktif, dan telemetri pengawasan peserta.</p></div>
         </div>
         <div id="adminOverviewContent" role="status">Memuat ringkasan…</div>
       </section>
@@ -123,7 +129,7 @@
             <div class="editor-heading"><h2 id="questionEditorTitle">Soal baru</h2><div class="bank-editor-tools"><button type="button" class="btn-secondary" onclick="previewQuestion()">Pratinjau</button><button type="submit" form="questionForm" class="btn-primary" id="saveQuestionButton">Simpan soal</button></div></div>
             <div id="questionFormError" class="inline-error hidden" role="alert"></div>
             <form id="questionForm" onsubmit="saveQuestionCrud(event)" class="question-editor-form">
-              <div class="form-row-2"><div><label for="qFormId">Kode soal</label><input type="text" id="qFormId" pattern="[A-Za-z0-9_-]{1,40}" maxlength="40" required placeholder="G5"></div><div><label for="qFormSection">Modul</label><select id="qFormSection"><option value="grammar">Structure</option><option value="listening">Listening</option><option value="reading">Reading</option><option value="writing">Writing riset</option></select></div></div>
+              <div class="form-row-2"><div><label for="qFormId">UUID Soal</label><input type="text" id="qFormId" pattern="[A-Za-z0-9_-]{1,40}" maxlength="40" required placeholder="c328d087-7e61-464e-bc8e-28956bb0e9b9"></div><div><label for="qFormSection">Modul</label><select id="qFormSection"><option value="grammar">Structure</option><option value="listening">Listening</option><option value="reading">Reading</option><option value="writing">Writing riset</option></select></div></div>
               <div class="form-row-2"><div><label for="qFormType">Bentuk tugas</label><select id="qFormType"><option value="multiple_choice">Pilihan ganda</option><option value="rewrite">Perbaikan kalimat</option><option value="essay">Esai riset</option></select></div><div><label for="qFormTitle">Topik soal</label><input type="text" id="qFormTitle" maxlength="160" placeholder="Contoh: Campus announcement"></div></div>
               <div id="questionAudioFields" class="hidden"><label for="qFormAudio">Audio Listening</label><input type="text" inputmode="url" id="qFormAudio" placeholder="URL HTTPS atau hasil unggahan lokal"><div class="audio-upload-row"><label for="qFormAudioFile">Unggah audio</label><input type="file" id="qFormAudioFile" accept="audio/wav,audio/mpeg,audio/ogg,audio/mp4,.wav,.mp3,.ogg,.m4a"></div><small>WAV, MP3, OGG, atau M4A. Maksimal 8 MB.</small><audio id="questionAudioPreview" controls preload="none" class="hidden" aria-label="Pratinjau audio Listening"></audio></div>
               <div id="questionPassageFields" class="hidden"><label for="qFormPassage" id="questionPassageLabel">Wacana bacaan</label><textarea id="qFormPassage" rows="5" maxlength="20000"></textarea><small id="questionPassageHelp">Wacana ini ditampilkan bersama pertanyaan Reading.</small></div>

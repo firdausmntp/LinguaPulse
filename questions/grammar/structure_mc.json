@@ -1,11 +1,11 @@
 [
   {
-    "question_id": "G1",
+    "question_id": "d9d01058-6624-4b79-885a-c32cdafd3f7e",
     "section": "grammar",
     "question_type": "multiple_choice",
     "title": "Negative Adverbial Inversion",
     "passage": "",
-    "prompt": "Rarely ________ located near city lights or at lower elevations because light pollution interferes with astronomical observations.",
+    "prompt": "Rarely ______ located near city lights or at lower elevations because light pollution interferes with astronomical observations.",
     "options": [
       "A. observatories are",
       "B. are",
@@ -18,12 +18,12 @@
     "points_xp": 30
   },
   {
-    "question_id": "G2",
+    "question_id": "91f5e143-da2d-4b13-9159-e3e6d01c691f",
     "section": "grammar",
     "question_type": "multiple_choice",
     "title": "Reduced & Non-Restrictive Relative Clauses",
     "passage": "",
-    "prompt": "The outer ear, ________ the fleshy pinna and the auditory canal, picks up and funnels sound waves toward the eardrum.",
+    "prompt": "The outer ear, ______ the fleshy pinna and the auditory canal, picks up and funnels sound waves toward the eardrum.",
     "options": [
       "A. includes",
       "B. which it includes",
@@ -36,12 +36,12 @@
     "points_xp": 30
   },
   {
-    "question_id": "G3",
+    "question_id": "e850b69e-4e61-486a-a154-6a1ad15b60d9",
     "section": "grammar",
     "question_type": "multiple_choice",
     "title": "Subjunctive Mood in Academic English",
     "passage": "",
-    "prompt": "The university senate recommended that every international applicant ________ an English proficiency assessment prior to enrollment.",
+    "prompt": "The university senate recommended that every international applicant ______ an English proficiency assessment prior to enrollment.",
     "options": [
       "A. completes",
       "B. complete",
@@ -54,7 +54,7 @@
     "points_xp": 30
   },
   {
-    "question_id": "G4",
+    "question_id": "81ff0705-794c-4306-a33c-59c612a43f80",
     "section": "grammar",
     "question_type": "multiple_choice",
     "title": "Parallel Structure in Written Expression",
@@ -72,4 +72,3 @@
     "points_xp": 35
   }
 ]
-

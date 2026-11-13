@@ -40,7 +40,7 @@ def init_schema() -> None:
         )
     """)
 
-    # 2. Tabel Bank Soal TOEFL (Dapat dikelola melalui Panel Admin CRUD)
+    # 2. Tabel Bank Soal TOEFL (Murni Relasional)
     cur.execute("""
         CREATE TABLE IF NOT EXISTS questions (
             question_id TEXT PRIMARY KEY,
@@ -49,13 +49,46 @@ def init_schema() -> None:
             title TEXT,
             passage TEXT,
             prompt TEXT NOT NULL,
-            options_json TEXT,
             correct_answer TEXT,
             explanation TEXT,
             sample_ai_reference TEXT,
             points_xp INTEGER NOT NULL DEFAULT 25,
             is_active INTEGER NOT NULL DEFAULT 1,
-            created_at TEXT NOT NULL
+            created_at TEXT NOT NULL,
+            audio_url TEXT NOT NULL DEFAULT ''
+        )
+    """)
+
+    # 2b. Tabel Opsi Pilihan Ganda (Relasional 1-to-N)
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS question_options (
+            option_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            question_id TEXT NOT NULL REFERENCES questions(question_id) ON DELETE CASCADE,
+            option_index INTEGER NOT NULL,
+            option_text TEXT NOT NULL,
+            UNIQUE(question_id, option_index)
+        )
+    """)
+
+    # 2c. Tabel Jawaban Ujian Peserta Per Butir (Relasional 1-to-N)
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS exam_submission_answers (
+            answer_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            session_id TEXT NOT NULL REFERENCES exam_submissions(session_id) ON DELETE CASCADE,
+            question_id TEXT NOT NULL,
+            answer_text TEXT NOT NULL,
+            UNIQUE(session_id, question_id)
+        )
+    """)
+
+    # 2d. Tabel Badges User (Relasional 1-to-N)
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS user_badges (
+            badge_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+            badge_key TEXT NOT NULL,
+            awarded_at TEXT NOT NULL,
+            UNIQUE(user_id, badge_key)
         )
     """)
 

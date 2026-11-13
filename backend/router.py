@@ -155,6 +155,14 @@ class TOEFLPlatformRouter(AdminRoutes, ExamRoutes, SimpleHTTPRequestHandler):
             return self._send_app_not_found()
         return super().do_GET()
 
+    def end_headers(self):
+        if not self.path.startswith('/media/'):
+            self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            self.send_header('Pragma', 'no-cache')
+            self.send_header('Expires', '0')
+        super().end_headers()
+
+
     def _send_app_not_found(self):
         body = (FRONTEND_DIR / 'index.html').read_bytes()
         self.send_response(404)

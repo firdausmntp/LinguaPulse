@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" width="100%" height="100%" aria-label="Simulasi Ruang Ujian LinguaPulse">
+  <defs>
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#1E293B"/>
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#3B82F6"/>
+    </linearGradient>
+    <linearGradient id="pulseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#60A5FA" stop-opacity="0.2"/>
+    </linearGradient>
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#0F172A" flood-opacity="0.08"/>
+    </filter>
+    <style>
+      .timer-text { font-family: 'JetBrains Mono', monospace; font-weight: 700; fill: #60A5FA; }
+      .audio-wave { animation: pulseWave 1.8s ease-in-out infinite alternate; transform-origin: center bottom; }
+      @keyframes pulseWave {
+        0% { transform: scaleY(0.4); opacity: 0.5; }
+        100% { transform: scaleY(1.1); opacity: 1; }
+      }
+      .wave-1 { animation-delay: 0.1s; }
+      .wave-2 { animation-delay: 0.3s; }
+      .wave-3 { animation-delay: 0.2s; }
+      .wave-4 { animation-delay: 0.4s; }
+      .wave-5 { animation-delay: 0.15s; }
+      .cursor-pulse { animation: breathe 3s ease-in-out infinite; }
+      @keyframes breathe {
+        0%, 100% { opacity: 0.9; transform: translate(0, 0); }
+        50% { opacity: 0.4; transform: translate(6px, -4px); }
+      }
+    </style>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="800" height="520" rx="16" fill="#F8FAFC"/>
+
+  <!-- Window Header Bar -->
+  <rect width="800" height="54" rx="16" fill="url(#headerGrad)"/>
+  <rect y="42" width="800" height="12" fill="url(#headerGrad)"/>
+  
+  <!-- Window Dots -->
+  <circle cx="28" cy="27" r="5" fill="#EF4444" opacity="0.85"/>
+  <circle cx="44" cy="27" r="5" fill="#F59E0B" opacity="0.85"/>
+  <circle cx="60" cy="27" r="5" fill="#10B981" opacity="0.85"/>
+
+  <!-- Header Title & Badges -->
+  <text x="86" y="32" font-family="'IBM Plex Sans', sans-serif" font-size="12.5" font-weight="600" fill="#94A3B8" letter-spacing="0.02em">SIMULASI TOEFL EPT • SECTION 1 LISTENING</text>
+  
+  <!-- Live Timer Badge -->
+  <rect x="670" y="14" width="105" height="26" rx="6" fill="#0A1322" stroke="#334155" stroke-width="1"/>
+  <circle cx="684" cy="27" r="3.5" fill="#EF4444">
+    <animate attributeName="opacity" values="1;0.2;1" dur="1s" repeatCount="indefinite"/>
+  </circle>
+  <text x="696" y="31.5" class="timer-text" font-size="12.5">24:45</text>
+
+  <!-- Left Column: Audio & Passage Card -->
+  <g transform="translate(24, 74)" filter="url(#cardShadow)">
+    <rect width="360" height="420" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+    
+    <!-- Audio Player Visualizer Box -->
+    <rect x="20" y="20" width="320" height="110" rx="10" fill="#0F172A"/>
+    <circle cx="56" cy="65" r="18" fill="#2563EB"/>
+    <polygon points="53,58 64,65 53,72" fill="#FFFFFF"/>
+    
+    <!-- Animated Audio Waveform -->
+    <g transform="translate(90, 78)">
+      <rect class="audio-wave wave-1" x="0" y="-24" width="4" height="24" rx="2" fill="#38BDF8"/>
+      <rect class="audio-wave wave-2" x="10" y="-36" width="4" height="36" rx="2" fill="#60A5FA"/>
+      <rect class="audio-wave wave-3" x="20" y="-18" width="4" height="18" rx="2" fill="#38BDF8"/>
+      <rect class="audio-wave wave-4" x="30" y="-42" width="4" height="42" rx="2" fill="#818CF8"/>
+      <rect class="audio-wave wave-5" x="40" y="-28" width="4" height="28" rx="2" fill="#60A5FA"/>
+      <rect class="audio-wave wave-2" x="50" y="-15" width="4" height="15" rx="2" fill="#38BDF8"/>
+      <rect class="audio-wave wave-1" x="60" y="-34" width="4" height="34" rx="2" fill="#818CF8"/>
+      <rect class="audio-wave wave-4" x="70" y="-20" width="4" height="20" rx="2" fill="#60A5FA"/>
+      <rect class="audio-wave wave-3" x="80" y="-38" width="4" height="38" rx="2" fill="#38BDF8"/>
+      <rect class="audio-wave wave-5" x="90" y="-22" width="4" height="22" rx="2" fill="#60A5FA"/>
+      <rect class="audio-wave wave-2" x="100" y="-32" width="4" height="32" rx="2" fill="#818CF8"/>
+      <rect class="audio-wave wave-1" x="110" y="-16" width="4" height="16" rx="2" fill="#38BDF8"/>
+      <rect class="audio-wave wave-4" x="120" y="-26" width="4" height="26" rx="2" fill="#60A5FA"/>
+    </g>
+    <text x="240" y="70" class="timer-text" font-size="11.5" fill="#94A3B8">00:48 / 02:15</text>
+    
+    <!-- Audio Progress Bar -->
+    <rect x="20" y="118" width="320" height="4" rx="2" fill="#1E293B"/>
+    <rect x="20" y="118" width="120" height="4" rx="2" fill="#38BDF8"/>
+
+    <!-- Conversation Context Lines -->
+    <text x="20" y="165" font-family="'IBM Plex Sans', sans-serif" font-size="14" font-weight="700" fill="#0F172A">Conversation Excerpt (Part A)</text>
+    
+    <rect x="20" y="185" width="280" height="10" rx="5" fill="#E2E8F0"/>
+    <rect x="20" y="205" width="310" height="10" rx="5" fill="#F1F5F9"/>
+    <rect x="20" y="225" width="240" height="10" rx="5" fill="#F1F5F9"/>
+    
+    <rect x="20" y="260" width="290" height="10" rx="5" fill="#E2E8F0"/>
+    <rect x="20" y="280" width="260" height="10" rx="5" fill="#F1F5F9"/>
+    
+    <!-- Proctoring Integrity Indicator (Subtle) -->
+    <g transform="translate(20, 350)">
+      <rect width="320" height="48" rx="8" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1"/>
+      <circle cx="24" cy="24" r="5" fill="#16A34A"/>
+      <text x="40" y="28" font-family="'IBM Plex Sans', sans-serif" font-size="12" font-weight="600" fill="#166534">Sensor Integritas Aktif: Telemetri Fokus &amp; Pointer Stabil</text>
+    </g>
+  </g>
+
+  <!-- Right Column: Question Card & Interactive Choices -->
+  <g transform="translate(408, 74)" filter="url(#cardShadow)">
+    <rect width="368" height="420" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+    
+    <!-- Question Meta -->
+    <g transform="translate(24, 24)">
+      <rect width="64" height="22" rx="6" fill="#EFF6FF"/>
+      <text x="12" y="15" font-family="'IBM Plex Sans', sans-serif" font-size="11" font-weight="700" fill="#2563EB">SOAL 04</text>
+      <text x="76" y="15" font-family="'IBM Plex Sans', sans-serif" font-size="11.5" fill="#64748B">Listening Comprehension</text>
+    </g>
+
+    <!-- Prompt Question -->
+    <text x="24" y="80" font-family="'IBM Plex Sans', sans-serif" font-size="14.5" font-weight="600" fill="#0F172A">What does the woman imply about the seminar?</text>
+
+    <!-- Option A -->
+    <g transform="translate(24, 108)">
+      <rect width="320" height="48" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <circle cx="24" cy="24" r="11" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+      <text x="19" y="28" font-family="'IBM Plex Sans', sans-serif" font-size="11.5" font-weight="600" fill="#475569">A</text>
+      <text x="46" y="29" font-family="'IBM Plex Sans', sans-serif" font-size="12.5" fill="#334155">She was unable to attend the morning session.</text>
+    </g>
+
+    <!-- Option B (Selected State - Glowing) -->
+    <g transform="translate(24, 168)">
+      <rect width="320" height="48" rx="8" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.8"/>
+      <circle cx="24" cy="24" r="11" fill="#2563EB"/>
+      <text x="19" y="28" font-family="'IBM Plex Sans', sans-serif" font-size="11.5" font-weight="700" fill="#FFFFFF">B</text>
+      <text x="46" y="29" font-family="'IBM Plex Sans', sans-serif" font-size="12.5" font-weight="600" fill="#1E3A8A">The topic was more intriguing than expected.</text>
+      <circle class="cursor-pulse" cx="304" cy="24" r="4" fill="#3B82F6"/>
+    </g>
+
+    <!-- Option C -->
+    <g transform="translate(24, 228)">
+      <rect width="320" height="48" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <circle cx="24" cy="24" r="11" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+      <text x="19" y="28" font-family="'IBM Plex Sans', sans-serif" font-size="11.5" font-weight="600" fill="#475569">C</text>
+      <text x="46" y="29" font-family="'IBM Plex Sans', sans-serif" font-size="12.5" fill="#334155">The professor rescheduled the keynote presentation.</text>
+    </g>
+
+    <!-- Option D -->
+    <g transform="translate(24, 288)">
+      <rect width="320" height="48" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <circle cx="24" cy="24" r="11" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+      <text x="19" y="28" font-family="'IBM Plex Sans', sans-serif" font-size="11.5" font-weight="600" fill="#475569">D</text>
+      <text x="46" y="29" font-family="'IBM Plex Sans', sans-serif" font-size="12.5" fill="#334155">She had already read the presenter's research paper.</text>
+    </g>
+
+    <!-- Bottom Action Row inside Workspace -->
+    <g transform="translate(24, 355)">
+      <!-- Mark question button -->
+      <rect width="110" height="40" rx="8" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1"/>
+      <text x="24" y="25" font-family="'IBM Plex Sans', sans-serif" font-size="12" font-weight="600" fill="#D97706">Tandai Soal</text>
+
+      <!-- Next question button -->
+      <rect x="210" y="0" width="110" height="40" rx="8" fill="#2563EB"/>
+      <text x="238" y="25" font-family="'IBM Plex Sans', sans-serif" font-size="12" font-weight="600" fill="#FFFFFF">Soal Berikut</text>
+    </g>
+  </g>
+</svg>

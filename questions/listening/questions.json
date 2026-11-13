@@ -6,7 +6,7 @@
     "passage": "Attention students. The university library will close at six p.m. this Friday for scheduled maintenance. If you need to borrow a book, please visit the circulation desk before five thirty. The library will reopen at nine a.m. on Saturday. Study rooms in the student center will remain available during the closure.",
     "audio_url": "/media/listening/library-announcement.wav",
     "sample_ai_reference": "",
-    "question_id": "L1",
+    "question_id": "57d1cb89-7cf2-46b2-9756-014db8ac96ea",
     "prompt": "Why will the university library close early on Friday?",
     "options": [
       "A public holiday is being observed.",
@@ -24,7 +24,7 @@
     "passage": "Attention students. The university library will close at six p.m. this Friday for scheduled maintenance. If you need to borrow a book, please visit the circulation desk before five thirty. The library will reopen at nine a.m. on Saturday. Study rooms in the student center will remain available during the closure.",
     "audio_url": "/media/listening/library-announcement.wav",
     "sample_ai_reference": "",
-    "question_id": "L2",
+    "question_id": "07150a41-c7d1-4cb5-b566-4d0d6d7daf9f",
     "prompt": "By what time should students visit the circulation desk to borrow a book?",
     "options": [
       "Before 5:30 p.m. on Friday.",

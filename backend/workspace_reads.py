@@ -28,11 +28,18 @@ def practice_question(section, excluded):
         raise ValueError('Modul latihan tidak tersedia.')
     with get_connection() as conn:
         rows = conn.execute("""SELECT question_id, title, prompt, passage, audio_url,
-            options_json, correct_answer FROM questions WHERE section=?
+            correct_answer FROM questions WHERE section=?
             AND question_type='multiple_choice' AND is_active=1""", (section,)).fetchall()
+        opt_rows = conn.execute("""SELECT q.question_id, o.option_text 
+            FROM question_options o JOIN questions q ON q.question_id = o.question_id
+            WHERE q.section=? AND q.question_type='multiple_choice' AND q.is_active=1
+            ORDER BY o.question_id, o.option_index""", (section,)).fetchall()
+    opts_by_qid = {}
+    for r in opt_rows:
+        opts_by_qid.setdefault(r['question_id'], []).append(r['option_text'])
     valid = []
     for row in rows:
-        options = json.loads(row['options_json'] or '[]')
+        options = opts_by_qid.get(row['question_id'], [])
         answer = str(row['correct_answer'])
         passage = (row['passage'] or '') if section == 'reading' else ''
         if section == 'reading' and not passage.strip():
@@ -61,16 +68,17 @@ def practice_question(section, excluded):
 
 
 def check_practice_answer(payload):
-    qid = str(payload.get('id') or '').strip().upper()
+    qid = str(payload.get('id') or '').strip().lower()
     choice = payload.get('choice')
     if not qid or not isinstance(choice, int) or isinstance(choice, bool) or choice < 0:
         raise ValueError('Pilihan jawaban tidak valid.')
     with get_connection() as conn:
-        row = conn.execute("""SELECT question_id, options_json, correct_answer, explanation
+        row = conn.execute("""SELECT question_id, correct_answer, explanation
             FROM questions WHERE question_id=? AND question_type='multiple_choice' AND is_active=1""", (qid,)).fetchone()
-    if not row:
-        raise ValueError('Soal latihan tidak ditemukan.')
-    options = json.loads(row['options_json'] or '[]')
+        if not row:
+            raise ValueError('Soal latihan tidak ditemukan.')
+        opt_rows = conn.execute("SELECT option_text FROM question_options WHERE question_id=? ORDER BY option_index", (qid,)).fetchall()
+        options = [r['option_text'] for r in opt_rows]
     answer = str(row['correct_answer'])
     if not answer.isdigit() or not 0 <= int(answer) < len(options) or choice >= len(options):
         raise ValueError('Pilihan jawaban tidak valid.')
@@ -85,12 +93,19 @@ def check_practice_answer(payload):
 
 def sample_question(excluded=''):
     with get_connection() as conn:
-        rows = conn.execute("""SELECT question_id, title, prompt, options_json, correct_answer
+        rows = conn.execute("""SELECT question_id, title, prompt, correct_answer
             FROM questions WHERE section = 'grammar' AND question_type = 'multiple_choice'
             AND is_active = 1""").fetchall()
+        opt_rows = conn.execute("""SELECT q.question_id, o.option_text 
+            FROM question_options o JOIN questions q ON q.question_id = o.question_id
+            WHERE q.section='grammar' AND q.question_type='multiple_choice' AND q.is_active=1
+            ORDER BY o.question_id, o.option_index""").fetchall()
+    opts_by_qid = {}
+    for r in opt_rows:
+        opts_by_qid.setdefault(r['question_id'], []).append(r['option_text'])
     valid = []
     for row in rows:
-        options = json.loads(row['options_json'] or '[]')
+        options = opts_by_qid.get(row['question_id'], [])
         answer = str(row['correct_answer'])
         if isinstance(options, list) and len(options) >= 2 and answer.isdigit() and 0 <= int(answer) < len(options):
             valid.append({'id': row['question_id'], 'title': row['title'] or '', 'prompt': row['prompt'] or '', 'options': options})
@@ -99,17 +114,18 @@ def sample_question(excluded=''):
 
 
 def check_sample_answer(payload):
-    qid = str(payload.get('id') or '').strip().upper()
+    qid = str(payload.get('id') or '').strip().lower()
     choice = payload.get('choice')
     if not qid or not isinstance(choice, int) or isinstance(choice, bool) or choice < 0:
         raise ValueError('Pilihan jawaban tidak valid.')
     with get_connection() as conn:
-        row = conn.execute("""SELECT question_id, options_json, correct_answer, explanation
+        row = conn.execute("""SELECT question_id, correct_answer, explanation
             FROM questions WHERE question_id=? AND section='grammar'
             AND question_type='multiple_choice' AND is_active=1""", (qid,)).fetchone()
-    if not row:
-        raise ValueError('Contoh soal tidak ditemukan.')
-    options = json.loads(row['options_json'] or '[]')
+        if not row:
+            raise ValueError('Contoh soal tidak ditemukan.')
+        opt_rows = conn.execute("SELECT option_text FROM question_options WHERE question_id=? ORDER BY option_index", (qid,)).fetchall()
+        options = [r['option_text'] for r in opt_rows]
     answer = str(row['correct_answer'])
     if not answer.isdigit() or not 0 <= int(answer) < len(options) or choice >= len(options):
         raise ValueError('Pilihan jawaban tidak valid.')

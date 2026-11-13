@@ -6,5 +6,5 @@ DATA_DIR = ROOT_DIR / "data"
 DB_PATH = DATA_DIR / "toefl_platform.db"
 
 SERVER_HOST = "0.0.0.0"
-SERVER_PORT = 8000
+SERVER_PORT = 8878
 

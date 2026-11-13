@@ -194,11 +194,12 @@ function initTelemetrySensors() {
       telemetryState.bulkInsertCount += 1;
       logTimelineEvent("BULK_INPUT", `InputEvent: ${inputType || "multi-char"}`);
     }
+    const essayId = (appState.examData?.questions?.writing?.id) || "writing-response";
     if (e.target.id === "essayEditor") {
       const text = e.target.value.trim();
       const words = text ? text.split(/\s+/).length : 0;
       document.getElementById("essayWordCounter").textContent = `${words} kata`;
-      appState.selectedAnswers[e.target.dataset.answer || "W1"] = e.target.value;
+      appState.selectedAnswers[e.target.dataset.answer || essayId] = e.target.value;
     }
   });
 

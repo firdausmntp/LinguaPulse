@@ -25,8 +25,9 @@ async function switchAdminTab(tab, updateHistory = true) {
     const section = document.getElementById(sectionId);
     const btn = document.getElementById(btnId);
     if (section) section.classList.toggle("hidden", key !== tab);
-    if (btn) btn.classList.toggle("active", key !== tab);
+    if (btn) btn.classList.toggle("active", key === tab);
   });
+
   const titles = { overview: 'Ringkasan', proctor: 'Pengawasan', questions: 'Bank soal', users: 'Akun pengguna' };
   const currentTitle = document.getElementById('adminCurrentTitle');
   if (currentTitle) currentTitle.textContent = titles[tab] || 'Ringkasan';
@@ -34,10 +35,20 @@ async function switchAdminTab(tab, updateHistory = true) {
   if (pageTitle) pageTitle.textContent = titles[tab] || 'Ringkasan';
   const breadcrumb = document.getElementById('adminBreadcrumb');
   if (breadcrumb) breadcrumb.textContent = titles[tab] || 'Ringkasan';
+  if (typeof closeAdminMenu === 'function') closeAdminMenu();
   const operations = { overview: loadAdminOverview, proctor: loadProctorSessions, questions: loadAdminQuestionsTable, users: loadAdminUsersTable };
   if (operations[tab]) await operations[tab]();
   return true;
 }
+
+async function refreshCurrentAdminTab() {
+  const path = appState.route || location.pathname;
+  let tab = 'overview';
+  if (path.startsWith('/admin/')) tab = path.replace('/admin/', '');
+  const operations = { overview: loadAdminOverview, proctor: loadProctorSessions, questions: loadAdminQuestionsTable, users: loadAdminUsersTable };
+  if (operations[tab]) await operations[tab]();
+}
+
 
 const proctorView = { selected: null };
 function proctorPercent(value) { return Math.max(0, Math.min(100, Number(value || 0) * 100)).toFixed(1); }

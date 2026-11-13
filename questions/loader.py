@@ -28,40 +28,28 @@ def load_all_questions_from_folders():
 
 
 def sync_questions_to_folders(rows):
-    grouped = {key: [] for key in SECTION_FILES}
-    for row in rows:
-        key = (row['section'], row['question_type'])
-        if key not in grouped:
-            continue
-        item = {name: row.get(name) or '' for name in (
-            'question_id', 'section', 'question_type', 'title', 'passage', 'prompt',
-            'correct_answer', 'explanation', 'sample_ai_reference', 'audio_url')}
-        item['correct_answer'] = str(row.get('correct_answer') or '')
-        item['options'] = row.get('options') if 'options' in row else json.loads(row.get('options_json') or '[]')
-        item['is_active'] = int(row.get('is_active', 1))
-        grouped[key].append(item)
-    for key, path in SECTION_FILES.items():
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps(grouped[key], indent=2, ensure_ascii=False), encoding='utf-8')
+    return
 
 
 def sync_db_questions_to_disk():
-    with get_connection() as conn:
-        rows = [dict(row) for row in conn.execute('SELECT * FROM questions ORDER BY question_id')]
-    sync_questions_to_folders(rows)
+    return
 
 
 def get_structured_questions(include_inactive=False):
     with get_connection() as conn:
         sql = 'SELECT * FROM questions' + ('' if include_inactive else ' WHERE is_active = 1') + ' ORDER BY question_id'
         rows = [dict(row) for row in conn.execute(sql)]
+        opt_rows = conn.execute('SELECT question_id, option_text FROM question_options ORDER BY question_id, option_index').fetchall()
+    opts_by_qid = {}
+    for r in opt_rows:
+        opts_by_qid.setdefault(r['question_id'], []).append(r['option_text'])
     grammar_mc, rewrites, reading, listening, writing, all_items = [], [], [], [], [], []
     for row in rows:
         item = {name: row.get(name) or '' for name in (
             'question_id', 'section', 'question_type', 'title', 'passage', 'prompt',
             'correct_answer', 'explanation', 'sample_ai_reference', 'audio_url')}
         item.update({
-            'id': row['question_id'], 'options': json.loads(row.get('options_json') or '[]'),
+            'id': row['question_id'], 'options': opts_by_qid.get(row['question_id'], []),
             'answer': int(row['correct_answer']) if str(row['correct_answer']).isdigit() else row['correct_answer'],
             'is_active': int(row['is_active']),
         })
