@@ -1,5 +1,7 @@
 # Verifikasi refactor halaman LinguaPulse
 
+Catatan ini berasal dari pengujian sebelum perpindahan database. Hasil terbaru menggunakan MySQL tersedia pada [verifikasi migrasi 16 November 2026](mysql-migration-2026-11-16.md); bagian Hallmark di bawah merupakan hasil audit terdahulu.
+
 Pemeriksaan memakai SQLite dan bank soal sementara. Database aplikasi dan bank soal asli tidak digunakan untuk penulisan data uji.
 
 ## Hasil

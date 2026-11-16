@@ -1,5 +1,4 @@
 import json
-import random
 import re
 import time
 from .database import get_connection
@@ -7,7 +6,6 @@ from .attempts import get_attempt
 from .telemetry_engine import extract_features_and_predict
 from .security import decrypt_and_verify_payload, verify_cf_challenge
 from .ai_tutor import generate_ai_tutor_explanation
-from questions.loader import get_structured_questions
 from .result_review import build_section_reviews
 
 
@@ -42,7 +40,7 @@ class ExamRoutes:
             return self._send_json({'error': 'Identitas sesi tidak valid.'}, 400)
         sid = 'SES-' + attempt
         with get_connection() as check:
-            existing = check.execute('SELECT participant_code FROM exam_submissions WHERE session_id = ?', (sid,)).fetchone()
+            existing = check.execute('SELECT participant_code FROM exam_submissions WHERE session_id = %s', (sid,)).fetchone()
         if existing:
             if existing['participant_code'] != p_code:
                 return self._send_json({'error': 'Sesi tidak valid.'}, 403)
@@ -93,43 +91,6 @@ class ExamRoutes:
         # Historical schema column retained; no unofficial TOEFL score is generated.
         est_toefl = 0
 
-        conn = get_connection()
-        cur = conn.cursor()
-        cur.execute("""
-            INSERT INTO exam_submissions
-            (session_id, participant_code, display_name, grammar_mc_correct, grammar_mc_total,
-             reading_mc_correct, reading_mc_total, rewrite_count, essay_word_count,
-             estimated_toefl_score, xp_earned, answers_json, submitted_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """, (
-            sid, p_code, d_name, g_correct, len(q_bank["grammar_mc"]),
-            r_correct, len(q_bank["reading"]["questions"]), rewrite_done, essay_wc,
-            est_toefl, 0, json.dumps(ans, ensure_ascii=False), now_str
-        ))
-        if isinstance(ans, dict):
-            cur.executemany(
-                "INSERT OR REPLACE INTO exam_submission_answers (session_id, question_id, answer_text) VALUES (?, ?, ?)",
-                [(sid, str(qid), str(val)) for qid, val in ans.items()]
-            )
-
-        cur.execute("""
-            INSERT INTO telemetry_sessions
-            (session_id, participant_code, device_profile, task_condition, duration_sec,
-             features_json, ablation_json, xgboost_score, cnn1d_score, rule_flag,
-             inference_latency_ms, heatmap_points_json, timeline_events_json, created_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """, (
-            sid, p_code, dev_prof, cond, float(payload.get("duration_sec", 0)),
-            json.dumps(feats), json.dumps(abl), xgb_s, cnn_s, rule_f,
-            lat, json.dumps(payload.get("heatmap_points", [])[:250]),
-            json.dumps(payload.get("timeline_events", [])[:80]), now_str
-        ))
-        cur.execute('UPDATE exam_submissions SET listening_mc_correct = ?, listening_mc_total = ? WHERE session_id = ?',
-                    (l_correct, len(l_questions), sid))
-        conn.commit()
-        conn.close()
-
-
         rewrite_map = {
             item["id"]: (ans.get(item["id"]) or "")
             for item in q_bank["grammar_rewrite"]
@@ -174,8 +135,49 @@ class ExamRoutes:
             }
         }
         with get_connection() as conn:
-            conn.execute('UPDATE users SET consent_agreed = 1 WHERE user_id = ?', (user['user_id'],))
-            conn.execute('INSERT OR REPLACE INTO submission_results VALUES (?, ?)',
+            locked = conn.execute('SELECT attempt_id FROM exam_attempts WHERE attempt_id=%s AND user_id=%s FOR UPDATE',
+                                  (attempt, user['user_id'])).fetchone()
+            if not locked:
+                return self._send_json({'error': 'Sesi tidak ditemukan.'}, 400)
+            existing = conn.execute('SELECT participant_code FROM exam_submissions WHERE session_id=%s', (sid,)).fetchone()
+            if existing:
+                if existing['participant_code'] != p_code:
+                    return self._send_json({'error': 'Sesi tidak valid.'}, 403)
+                return self._send_json({'status': 'ok', 'session_id': sid, 'already_submitted': True})
+            cur = conn.cursor()
+            cur.execute("""
+                INSERT INTO exam_submissions
+                (session_id, participant_code, display_name, grammar_mc_correct, grammar_mc_total,
+                 reading_mc_correct, reading_mc_total, rewrite_count, essay_word_count,
+                 estimated_toefl_score, xp_earned, answers_json, submitted_at)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, (
+                sid, p_code, d_name, g_correct, len(q_bank["grammar_mc"]),
+                r_correct, len(q_bank["reading"]["questions"]), rewrite_done, essay_wc,
+                est_toefl, 0, json.dumps(ans, ensure_ascii=False), now_str
+            ))
+            if isinstance(ans, dict):
+                cur.executemany(
+                    "INSERT INTO exam_submission_answers (session_id, question_id, answer_text) VALUES (%s, %s, %s) ON DUPLICATE KEY UPDATE answer_text=VALUES(answer_text)",
+                    [(sid, str(qid), str(val)) for qid, val in ans.items()]
+                )
+
+            cur.execute("""
+                INSERT INTO telemetry_sessions
+                (session_id, participant_code, device_profile, task_condition, duration_sec,
+                 features_json, ablation_json, xgboost_score, cnn1d_score, rule_flag,
+                 inference_latency_ms, heatmap_points_json, timeline_events_json, created_at)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, (
+                sid, p_code, dev_prof, cond, float(payload.get("duration_sec", 0)),
+                json.dumps(feats), json.dumps(abl), xgb_s, cnn_s, rule_f,
+                lat, json.dumps(payload.get("heatmap_points", [])[:250]),
+                json.dumps(payload.get("timeline_events", [])[:80]), now_str
+            ))
+            cur.execute('UPDATE exam_submissions SET listening_mc_correct = %s, listening_mc_total = %s WHERE session_id = %s',
+                        (l_correct, len(l_questions), sid))
+            conn.execute('UPDATE users SET consent_agreed = 1 WHERE user_id = %s', (user['user_id'],))
+            conn.execute('INSERT INTO submission_results (session_id,result_json) VALUES (%s, %s) ON DUPLICATE KEY UPDATE result_json=VALUES(result_json)',
                          (sid, json.dumps(result, ensure_ascii=False)))
         public_result = {k: v for k, v in result.items() if k not in {'telemetry_evaluation', 'security_verification'}}
         return self._send_json(public_result)

@@ -61,6 +61,7 @@
         <div class="overview-heading">
           <div><h2>Status Operasional TOEFL EPT</h2><p>Kesiapan materi ujian, sesi pengerjaan aktif, dan telemetri pengawasan peserta.</p></div>
         </div>
+        <section class="exam-settings-panel" aria-labelledby="examSettingsTitle"><div><h3 id="examSettingsTitle">Durasi paket aktif</h3><p>Atur waktu berdasarkan jumlah dan tingkat kesulitan soal. Berlaku untuk sesi baru.</p></div><form id="examSettingsForm" onsubmit="saveExamSettings(event)"><label for="examDuration">Durasi (menit)</label><input id="examDuration" type="number" min="1" max="240" step="1" required disabled><button class="btn-secondary" type="submit" disabled>Simpan durasi</button><span id="examSettingsStatus" role="status" aria-live="polite"></span></form></section>
         <div id="adminOverviewContent" role="status">Memuat ringkasan…</div>
       </section>
       <section id="adminTabProctor" class="hidden">

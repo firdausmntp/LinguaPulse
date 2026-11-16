@@ -37,7 +37,9 @@ async function initExamPreparation() {
     document.getElementById('beginExamButton').textContent = 'Hapus draf & mulai ulang';
   }
   try {
-    const bank = await loadExamQuestions(false);
+    const [bank, settings] = await Promise.all([loadExamQuestions(false), api('/api/exam/settings')]);
+    const duration = document.getElementById('prepareDuration');
+    if (duration) duration.textContent = `${settings.duration_minutes} menit untuk sesi latihan ini`;
     if (!document.getElementById('prepareBankSummary')) return;
     const modules = [['Listening', bank.listening.questions.length], ['Structure', bank.grammar_mc.length], ['Reading', bank.reading.questions.length]];
     document.getElementById('prepareBankSummary').innerHTML = modules.map(([name, count]) => `<div><dt>${name}</dt><dd>${count} soal</dd></div>`).join('');

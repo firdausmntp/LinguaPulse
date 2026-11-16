@@ -4,7 +4,6 @@ import re
 import time
 from urllib.parse import urlparse, unquote
 from .database import get_connection
-from questions.loader import sync_db_questions_to_disk
 
 VALID_TYPES = {
     ('listening', 'multiple_choice'), ('grammar', 'multiple_choice'),
@@ -82,18 +81,18 @@ def write_question(conn, item):
     conn.execute("""INSERT INTO questions
         (question_id, section, question_type, title, passage, prompt, correct_answer,
          explanation, sample_ai_reference, audio_url, is_active, points_xp, created_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?)
-        ON CONFLICT(question_id) DO UPDATE SET section=excluded.section,
-          question_type=excluded.question_type, title=excluded.title, passage=excluded.passage,
-          prompt=excluded.prompt, correct_answer=excluded.correct_answer,
-          explanation=excluded.explanation, sample_ai_reference=excluded.sample_ai_reference,
-          audio_url=excluded.audio_url,
-          is_active=excluded.is_active, points_xp=0""",
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 0, %s)
+        ON DUPLICATE KEY UPDATE section=VALUES(section),
+          question_type=VALUES(question_type), title=VALUES(title), passage=VALUES(passage),
+          prompt=VALUES(prompt), correct_answer=VALUES(correct_answer),
+          explanation=VALUES(explanation), sample_ai_reference=VALUES(sample_ai_reference),
+          audio_url=VALUES(audio_url),
+          is_active=VALUES(is_active), points_xp=0""",
         (*values, item['is_active'], time.strftime('%Y-%m-%d %H:%M:%S')))
-    conn.execute("DELETE FROM question_options WHERE question_id = ?", (item['question_id'],))
+    conn.execute("DELETE FROM question_options WHERE question_id = %s", (item['question_id'],))
     if item['question_type'] == 'multiple_choice' and item['options']:
         conn.executemany(
-            "INSERT INTO question_options (question_id, option_index, option_text) VALUES (?, ?, ?)",
+            "INSERT INTO question_options (question_id, option_index, option_text) VALUES (%s, %s, %s)",
             [(item['question_id'], idx, opt) for idx, opt in enumerate(item['options'])]
         )
 
@@ -103,11 +102,11 @@ def get_question_detail(question_id):
     if not re.fullmatch(r'[a-z0-9_-]{1,40}', qid):
         raise ValueError('Kode soal tidak valid.')
     with get_connection() as conn:
-        row = conn.execute('SELECT * FROM questions WHERE question_id = ?', (qid,)).fetchone()
+        row = conn.execute('SELECT * FROM questions WHERE question_id = %s', (qid,)).fetchone()
         if not row:
             raise ValueError('Soal tidak ditemukan. Muat ulang bank soal.')
         item = {field: row[field] or '' for field in FIELDS}
-        opt_rows = conn.execute('SELECT option_text FROM question_options WHERE question_id = ? ORDER BY option_index', (qid,)).fetchall()
+        opt_rows = conn.execute('SELECT option_text FROM question_options WHERE question_id = %s ORDER BY option_index', (qid,)).fetchall()
         item['options'] = [r['option_text'] for r in opt_rows]
         item['is_active'] = int(row['is_active'])
         return {'question': item}
@@ -120,7 +119,7 @@ def save_question(payload):
         if not re.fullmatch(r'[a-z0-9_-]{1,40}', qid) or active not in (0, 1, False, True):
             raise ValueError('Status aktif soal tidak valid.')
         with get_connection() as conn:
-            cursor = conn.execute('UPDATE questions SET is_active = ? WHERE question_id = ?', (int(active), qid))
+            cursor = conn.execute('UPDATE questions SET is_active = %s WHERE question_id = %s', (int(active), qid))
             if not cursor.rowcount:
                 raise ValueError('Soal tidak ditemukan. Muat ulang bank soal.')
         return {'status': 'ok', 'question_id': qid, 'is_active': int(active)}
@@ -130,7 +129,7 @@ def save_question(payload):
     if mode not in {'create', 'update'}:
         raise ValueError('Mode penyimpanan soal tidak valid.')
     with get_connection() as conn:
-        exists = conn.execute('SELECT 1 FROM questions WHERE question_id = ?', (item['question_id'],)).fetchone()
+        exists = conn.execute('SELECT 1 FROM questions WHERE question_id = %s', (item['question_id'],)).fetchone()
         if mode == 'create' and exists:
             raise ValueError('Kode soal sudah digunakan. Pilih kode baru atau buka soal untuk diedit.')
         if mode == 'update':
@@ -144,9 +143,21 @@ def import_questions(payload):
     items = payload.get('questions') if isinstance(payload, dict) else None
     if not isinstance(items, list) or not 1 <= len(items) <= 200:
         raise ValueError('Impor memerlukan 1 hingga 200 soal dalam properti questions.')
+    # Older exports may store a shared Reading passage only on the first item.
+    passages = {}
+    for value in items:
+        if isinstance(value, dict) and value.get('section') == 'reading':
+            title, passage = value.get('title'), value.get('passage')
+            if isinstance(title, str) and isinstance(passage, str) and passage.strip():
+                passages.setdefault(title.strip(), set()).add(passage.strip())
     validated = []
     seen = set()
     for number, value in enumerate(items, 1):
+        if isinstance(value, dict) and value.get('section') == 'reading':
+            title = value.get('title')
+            choices = passages.get(title.strip(), set()) if isinstance(title, str) else set()
+            if not value.get('passage') and len(choices) == 1:
+                value = {**value, 'passage': next(iter(choices))}
         try:
             item = validate_question(value)
         except ValueError as error:
@@ -178,11 +189,12 @@ def export_questions():
 
 
 def delete_question(question_id):
+    question_id = str(question_id or '').strip().lower()
     if not re.fullmatch(r'[A-Za-z0-9_-]{1,40}', question_id):
         raise ValueError('Kode soal tidak valid.')
     with get_connection() as conn:
-        cursor = conn.execute('DELETE FROM questions WHERE question_id = ?', (question_id,))
+        cursor = conn.execute('DELETE FROM questions WHERE question_id = %s', (question_id,))
         if not cursor.rowcount:
             raise ValueError('Soal sudah tidak tersedia. Muat ulang bank soal.')
-        conn.execute('DELETE FROM question_options WHERE question_id = ?', (question_id,))
+        conn.execute('DELETE FROM question_options WHERE question_id = %s', (question_id,))
     return {'status': 'deleted', 'question_id': question_id}

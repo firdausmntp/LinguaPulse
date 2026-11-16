@@ -3,7 +3,9 @@ async function loadAdminOverview() {
   const el = document.getElementById('adminOverviewContent');
   el.setAttribute('aria-busy', 'true');
   try {
-    const data = await api('/api/admin/overview');
+    const [data, settings] = await Promise.all([api('/api/admin/overview'), api('/api/exam/settings')]);
+    const duration = document.getElementById('examDuration');
+    if (duration) { duration.value = settings.duration_minutes; duration.disabled = false; duration.form.querySelector('button').disabled = false; }
     if (!el.isConnected) return;
     const modules = [['listening', 'Listening', 'headphones'], ['grammar', 'Structure', 'layers'], ['reading', 'Reading', 'book'], ['writing', 'Writing riset', 'pen']];
     const total = data.modules.reduce((sum, item) => sum + item.active, 0);
@@ -30,4 +32,18 @@ async function openOverviewSession(id) {
   if (!await switchAdminTab('proctor')) return;
   const index = appState.proctorSessions.findIndex(session => session.session_id === id);
   if (index >= 0) { inspectTelemetrySession(index, true); }
+}
+
+async function saveExamSettings(event) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const status = document.getElementById('examSettingsStatus');
+  const button = form.querySelector('button');
+  button.disabled = true;
+  try {
+    const duration = Number(document.getElementById('examDuration').value);
+    const result = await api('/api/admin/exam-settings', { method: 'POST', body: JSON.stringify({ duration_minutes: duration }) });
+    status.textContent = `Durasi ${result.duration_minutes} menit disimpan untuk sesi baru.`;
+  } catch (error) { status.textContent = error.message; }
+  finally { button.disabled = false; }
 }

@@ -32,9 +32,9 @@ def check_workspace_api(request):
             assert another['question']['id'] != question['id']
     assert request('/api/practice/question?section=invalid', opener=client)[0] == 400
     from unittest.mock import patch
-    with patch('backend.workspace_reads.random.choice', side_effect=lambda items: next(item for item in items if item['question_id'] == 'R2')):
+    with patch('backend.workspace_reads.random.choice', side_effect=lambda items: next(item for item in items if 'bioluminescence' in item['title'].lower())):
         inherited = request('/api/practice/question?section=reading', opener=client)[1]['question']
-        assert inherited['id'] == 'R2' and 'bioluminescence' in inherited['passage'].lower()
+        assert 'bioluminescence' in inherited['passage'].lower()
     assert request('/api/history', opener=client)[1] == before
     print('PASS: role-protected overview, practice modules/random exclusion and unchanged exam history', flush=True)
 

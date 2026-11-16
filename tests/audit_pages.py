@@ -60,16 +60,16 @@ def montage():
 
 def run():
     from backend import config
-    with tempfile.TemporaryDirectory(prefix='linguapulse-audit-') as tmp:
+    from mysql_support import temporary_database
+    with temporary_database(), tempfile.TemporaryDirectory(prefix='linguapulse-audit-') as tmp:
         config.DATA_DIR=Path(tmp)
-        config.DB_PATH=Path(tmp)/'audit.db'
         from backend.database import init_schema
         from backend.seed_data import seed_all
         from backend.router import TOEFLPlatformRouter
-        import questions.loader as loader
-        loader.SECTION_FILES={key:Path(tmp)/path.name for key,path in loader.SECTION_FILES.items()}
         init_schema()
         seed_all()
+        from question_fixtures import seed_test_questions
+        seed_test_questions()
         class QuietRouter(TOEFLPlatformRouter):
             def log_message(self,*args):
                 pass

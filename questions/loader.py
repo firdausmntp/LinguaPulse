@@ -1,38 +1,5 @@
-"""JSON question synchronization and the active EPT bank."""
-import copy
-import json
-from pathlib import Path
+"""Read the active question bank from MySQL."""
 from backend.database import get_connection
-
-QUESTIONS_DIR = Path(__file__).resolve().parent
-SECTION_FILES = {
-    ('listening', 'multiple_choice'): QUESTIONS_DIR / 'listening/questions.json',
-    ('grammar', 'multiple_choice'): QUESTIONS_DIR / 'grammar/structure_mc.json',
-    ('grammar', 'rewrite'): QUESTIONS_DIR / 'grammar/sentence_rewrite.json',
-    ('reading', 'multiple_choice'): QUESTIONS_DIR / 'reading/passages.json',
-    ('writing', 'essay'): QUESTIONS_DIR / 'writing/prompts.json',
-}
-
-
-def load_all_questions_from_folders():
-    items = []
-    for folder_name in ('listening', 'grammar', 'reading', 'writing'):
-        for path in sorted((QUESTIONS_DIR / folder_name).glob('*.json')):
-            try:
-                data = json.loads(path.read_text(encoding='utf-8'))
-                if isinstance(data, list):
-                    items.extend(data)
-            except (ValueError, OSError):
-                continue
-    return items
-
-
-def sync_questions_to_folders(rows):
-    return
-
-
-def sync_db_questions_to_disk():
-    return
 
 
 def get_structured_questions(include_inactive=False):
@@ -66,6 +33,16 @@ def get_structured_questions(include_inactive=False):
             rewrites.append(item)
         else:
             grammar_mc.append(item)
+    # Legacy rows sometimes store a shared Reading passage on only one question.
+    passages = {}
+    for item in reading:
+        passage = item['passage'].strip()
+        if passage:
+            passages.setdefault(item['title'], set()).add(passage)
+    for item in reading:
+        choices = passages.get(item['title'], set())
+        if not item['passage'].strip() and item['title'] and len(choices) == 1:
+            item['passage'] = next(iter(choices))
     selected_writing = writing[0] if writing else {
         'id': 'W-NONE', 'title': 'Writing tambahan', 'prompt': 'Belum ada tugas Writing aktif.',
         'sample_ai_reference': '', 'options': []}

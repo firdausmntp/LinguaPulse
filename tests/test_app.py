@@ -1,4 +1,4 @@
-"""End-to-end checks against a temporary database and temporary question files."""
+"""End-to-end checks against a temporary database."""
 import json
 import sys
 import tempfile
@@ -13,21 +13,21 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from backend import config
 from playwright.sync_api import sync_playwright, expect
+from mysql_support import temporary_database
 
 
 def run():
-    with tempfile.TemporaryDirectory(prefix='linguapulse-test-') as tmp:
+    with temporary_database(), tempfile.TemporaryDirectory(prefix='linguapulse-test-') as tmp:
         config.DATA_DIR = Path(tmp)
-        config.DB_PATH = Path(tmp) / 'test.db'
         from backend.database import init_schema, get_connection
         from backend.seed_data import seed_all
         from backend.router import TOEFLPlatformRouter
-        import questions.loader as loader
-        loader.SECTION_FILES = {key: Path(tmp) / path.name for key, path in loader.SECTION_FILES.items()}
         import backend.audio_upload as audio_upload
         audio_upload.MEDIA_DIR = Path(tmp) / 'uploads'
         init_schema()
         seed_all()
+        from question_fixtures import seed_test_questions
+        seed_test_questions()
         class QuietRouter(TOEFLPlatformRouter):
             def log_message(self, *_args):
                 pass
@@ -92,7 +92,7 @@ def run():
         check_workspace_api(request)
         print('PASS: HTTP routes, validation, session/logout, CSRF, admin authorization and CRUD', flush=True)
 
-        artifacts = ROOT / 'docs' / 'qa'
+        artifacts = Path(tmp) / 'qa'
         artifacts.mkdir(parents=True, exist_ok=True)
         with sync_playwright() as playwright:
             browser = playwright.chromium.launch(headless=True)
@@ -258,6 +258,16 @@ def run():
             page.get_by_role('button', name='Masuk', exact=True).click()
             page.wait_for_url(lambda u: '/admin' in u)
             expect(page.locator('.overview-stats')).to_be_visible()
+            expect(page.locator('#examDuration')).to_have_value('25')
+            page.locator('#examDuration').fill('30')
+            page.get_by_role('button', name='Simpan durasi').click()
+            expect(page.locator('#examSettingsStatus')).to_contain_text('30 menit disimpan')
+            assert other.request.post(origin + '/api/auth/login', data={'identifier': 'nadia_putri', 'password': 'student123'}).ok
+            other.goto(origin + '/exam')
+            expect(other.locator('#prepareDuration')).to_contain_text('30 menit')
+            page.locator('#examDuration').fill('25')
+            page.get_by_role('button', name='Simpan durasi').click()
+            expect(page.locator('#examSettingsStatus')).to_contain_text('25 menit disimpan')
             page.get_by_role('button', name='Pengawasan', exact=True).click()
             expect(page.locator('#proctorSessionsBody tr').first).to_be_visible()
             page.get_by_role('button', name='Bank soal').click()
@@ -279,7 +289,7 @@ def run():
             print('PASS: browser login/register, route guards, no landing sensors, exam draft/refresh, submission, results/history, private results and admin tabs', flush=True)
         server.shutdown()
         server.server_close()
-        print('Screenshots: docs/qa/', flush=True)
+        print('Screenshot sementara dibersihkan setelah pengujian.', flush=True)
 
 
 if __name__ == '__main__':

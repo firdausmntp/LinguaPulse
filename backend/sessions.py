@@ -30,21 +30,21 @@ def session_user(request):
     with get_connection() as conn:
         row = conn.execute('''SELECT users.* FROM auth_sessions
             JOIN users ON users.user_id = auth_sessions.user_id
-            WHERE token_hash = ? AND expires_at > ?''', (token_hash(token), time.time())).fetchone()
+            WHERE token_hash = %s AND expires_at > %s''', (token_hash(token), time.time())).fetchone()
     return format_user_row(row) if row else None
 
 
 def create_session(request, user):
     token = secrets.token_urlsafe(32)
     with get_connection() as conn:
-        conn.execute('DELETE FROM auth_sessions WHERE expires_at < ? OR token_hash = ?',
+        conn.execute('DELETE FROM auth_sessions WHERE expires_at < %s OR token_hash = %s',
                      (time.time(), token_hash(read_token(request))))
-        conn.execute('INSERT INTO auth_sessions VALUES (?, ?, ?)',
+        conn.execute('INSERT INTO auth_sessions VALUES (%s, %s, %s)',
                      (token_hash(token), user['user_id'], time.time() + SESSION_AGE))
     return f'{COOKIE_NAME}={token}; Path=/; HttpOnly; SameSite=Lax; Max-Age={SESSION_AGE}'
 
 
 def logout_session(request):
     with get_connection() as conn:
-        conn.execute('DELETE FROM auth_sessions WHERE token_hash = ?', (token_hash(read_token(request)),))
+        conn.execute('DELETE FROM auth_sessions WHERE token_hash = %s', (token_hash(read_token(request)),))
     return f'{COOKIE_NAME}=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0'

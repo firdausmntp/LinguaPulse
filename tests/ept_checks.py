@@ -4,6 +4,7 @@ import hashlib
 import hmac
 import json
 import time
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from urllib.request import build_opener, ProxyHandler, HTTPCookieProcessor
 from http.cookiejar import CookieJar
@@ -13,13 +14,23 @@ from playwright.sync_api import expect
 def check_ept_api(request, origin):
     from backend.security import _keystream_xor
     original = request('/api/admin/questions/export')[1]['questions']
-    listening = next(q for q in original if q['question_id'] == 'L1')
+    listening = next(q for q in original if q['section'] == 'listening')
+    listening_id = listening['question_id']
     assert listening['audio_url'].endswith('.wav')
     student_client = build_opener(ProxyHandler({}), HTTPCookieProcessor(CookieJar()))
     request('/api/auth/login', {'identifier': 'nadia_putri', 'password': 'student123'}, opener=student_client)
+    assert request('/api/exam/settings', opener=student_client)[1]['duration_minutes'] == 25
+    assert request('/api/admin/exam-settings', {'duration_minutes': 12}, opener=student_client)[0] == 403
+    for invalid in (0, 241, True, 1.5, '12'):
+        assert request('/api/admin/exam-settings', {'duration_minutes': invalid})[0] == 400
+    assert request('/api/admin/exam-settings', {'duration_minutes': 12})[0] == 200
+    assert request('/api/exam/settings', opener=student_client)[1]['duration_minutes'] == 12
     payload = {'device_profile': 'PC_PHYSICAL', 'task_condition': 'MANDIRI', 'consent_agreed': True}
+    before_start = time.time()
     status, started = request('/api/exam/start', payload, opener=student_client)
     assert status == 200 and len(started['bank']['listening']['questions']) >= 2
+    assert 719 <= started['deadline'] / 1000 - before_start <= 722
+    assert request('/api/admin/exam-settings', {'duration_minutes': 25})[0] == 200
     assert not started['bank']['listening']['questions'][0]['passage']
     for item in (
         started['bank']['listening']['questions']
@@ -30,6 +41,7 @@ def check_ept_api(request, origin):
     ):
         assert not ({'answer', 'correct_answer', 'explanation', 'folder_file'} & set(item))
     resumed = request('/api/exam/resume?id=' + started['attempt_id'], opener=student_client)[1]
+    assert resumed['deadline'] == started['deadline']
     assert not resumed['bank']['listening']['questions'][0]['passage']
     for item in (
         resumed['bank']['listening']['questions']
@@ -40,10 +52,10 @@ def check_ept_api(request, origin):
     ):
         assert not ({'answer', 'correct_answer', 'explanation', 'folder_file'} & set(item))
     # Changing live answer keys must not alter a previously started attempt.
-    changed = {**listening, 'correct_answer': str((int(listening['correct_answer']) + 1) % 4), 'mode': 'update', 'original_id': 'L1'}
+    changed = {**listening, 'correct_answer': str((int(listening['correct_answer']) + 1) % 4), 'mode': 'update', 'original_id': listening_id}
     assert request('/api/admin/questions', changed)[0] == 200
     plain = {**payload, 'attempt_id': started['attempt_id'], 'duration_sec': 30,
-             'answers': {'L1': int(listening['correct_answer'])}, 'participant_code': 'FORGED-OTHER'}
+             'answers': {listening_id: int(listening['correct_answer'])}, 'participant_code': 'FORGED-OTHER'}
     handshake = request('/api/security/handshake', opener=student_client)[1]
     iv = '11223344556677889900aabb'
     ciphertext = base64.b64encode(_keystream_xor(json.dumps(plain).encode(), handshake['session_key'], iv)).decode()
@@ -51,7 +63,16 @@ def check_ept_api(request, origin):
     message = f"{handshake['handshake_id']}.{iv}.{stamp}.{ciphertext}"
     envelope = {'handshake_id': handshake['handshake_id'], 'iv': iv, 'timestamp': stamp, 'ciphertext': ciphertext,
                 'signature': hmac.new(handshake['session_key'].encode(), message.encode(), hashlib.sha256).hexdigest()}
-    status, result = request('/api/submit', envelope, opener=student_client)
+    with ThreadPoolExecutor(max_workers=8) as workers:
+        responses = list(workers.map(lambda _: request('/api/submit', envelope, opener=student_client), range(8)))
+    assert all(status == 200 for status, result in responses), responses
+    full_results = [result for status, result in responses if not result.get('already_submitted')]
+    assert len(full_results) == 1, responses
+    status, result = 200, full_results[0]
+    from backend.database import get_connection
+    with get_connection() as conn:
+        for table in ('exam_submissions', 'telemetry_sessions', 'submission_results'):
+            assert conn.execute(f'SELECT COUNT(*) FROM {table} WHERE session_id=%s', (result['session_id'],)).fetchone()[0] == 1
     assert status == 200, result
     assert result['toefl_practice_result']['listening_mc_correct'] == 1
     reviews = result['toefl_practice_result']['section_reviews']
@@ -61,7 +82,7 @@ def check_ept_api(request, origin):
     assert reviews['reading'][1]['passage']
     assert result['participant_code'] != 'FORGED-OTHER'
     assert request('/api/submit', envelope, opener=student_client)[1]['already_submitted']
-    assert request('/api/admin/questions', {**listening, 'mode': 'update', 'original_id': 'L1'})[0] == 200
+    assert request('/api/admin/questions', {**listening, 'mode': 'update', 'original_id': listening_id})[0] == 200
     other_client = build_opener(ProxyHandler({}), HTTPCookieProcessor(CookieJar()))
     request('/api/auth/login', {'identifier': 'smoke_user', 'password': 'validpassword123'}, opener=other_client)
     assert request('/api/exam/resume?id=' + started['attempt_id'], opener=other_client)[0] == 404
@@ -83,7 +104,7 @@ def check_ept_api(request, origin):
     status, uploaded = request('/api/admin/audio', {'filename': 'announcement.wav', 'data_base64': base64.b64encode(audio.read_bytes()).decode()})
     assert status == 200 and uploaded['audio_url'].startswith('/media/uploads/')
     assert request('/api/admin/audio', {'filename': 'fake.wav', 'data_base64': 'bm90IGF1ZGlv'})[0] == 400
-    print('PASS: EPT Listening, frozen grading, private attempts, question import/activation, audio upload', flush=True)
+    print('PASS: EPT Listening, frozen grading, 8 concurrent submissions saved once, private attempts, question import/activation, audio upload', flush=True)
 
 
 def check_ept_browser(admin, context, origin, artifacts):
@@ -98,9 +119,9 @@ def check_ept_browser(admin, context, origin, artifacts):
     combo.fill('Semua')
     combo.press('ArrowDown')
     combo.press('Enter')
-    admin.locator('#questionSearch').fill('L1')
-    expect(admin.locator('#adminQuestionsBody tr')).to_have_count(1)
-    admin.get_by_role('button', name='Edit', exact=True).click()
+    admin.locator('#questionSearch').fill('Campus library')
+    expect(admin.locator('#adminQuestionsBody tr').first).to_be_visible()
+    admin.locator('#adminQuestionsBody tr').first.get_by_role('button', name='Edit', exact=True).click()
     expect(admin.locator('#qFormAudio')).to_have_value('/media/listening/library-announcement.wav')
     expect(admin.locator('#qFormPrompt')).not_to_have_value('')
     admin.get_by_role('button', name='Pratinjau', exact=True).click()
@@ -116,7 +137,7 @@ def check_ept_browser(admin, context, origin, artifacts):
     admin.locator('#qFormCorrect-combo').press('Enter')
     admin.locator('#qFormExplanation').fill('The collective noun team takes is in this sentence.')
     admin.locator('#saveQuestionButton').click()
-    expect(admin.locator('#questionEditorStatus')).to_contain_text('UI-CUSTOM-G tersimpan')
+    expect(admin.locator('#questionEditorStatus')).to_contain_text('ui-custom-g tersimpan')
     admin.locator('#questionSearch').fill('UI-CUSTOM-G')
     expect(admin.locator('#adminQuestionsBody tr')).to_have_count(1)
     admin.get_by_role('button', name='Salin', exact=True).click()
@@ -148,7 +169,7 @@ def check_ept_browser(admin, context, origin, artifacts):
     learner.locator('#listeningAudio').evaluate('audio => audio.load()')
     learner.wait_for_function('document.getElementById("listeningAudio").readyState >= 1')
     assert learner.locator('#listeningAudio').evaluate('audio => audio.duration > 10')
-    learner.locator('.exam-workspace').screenshot(path=str(Path(__file__).resolve().parents[1] / 'frontend/assets/previews/ept-workspace.png'))
+    learner.locator('.exam-workspace').screenshot(path=str(artifacts / 'ept-workspace.png'))
     learner.locator('#listeningAudio').evaluate('audio => audio.play()')
     learner.wait_for_function('!document.getElementById("listeningAudio").paused')
     learner.locator('#listeningMcContainer input').first.check()

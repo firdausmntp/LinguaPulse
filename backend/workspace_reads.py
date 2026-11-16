@@ -10,15 +10,15 @@ def admin_overview():
         students = conn.execute("SELECT COUNT(*) FROM users WHERE role='student'").fetchone()[0]
         users = conn.execute('SELECT COUNT(*) FROM users').fetchone()[0]
         modules = [dict(row) for row in conn.execute("""SELECT section, COUNT(*) AS total,
-            SUM(is_active) AS active,
-            SUM(CASE WHEN is_active = 1 AND question_type = 'multiple_choice' THEN 1 ELSE 0 END) AS active_mc
+            CAST(SUM(is_active) AS SIGNED) AS active,
+            CAST(SUM(CASE WHEN is_active = 1 AND question_type = 'multiple_choice' THEN 1 ELSE 0 END) AS SIGNED) AS active_mc
             FROM questions GROUP BY section""")]
         completed = conn.execute('SELECT COUNT(*) FROM exam_submissions').fetchone()[0]
-        ongoing = conn.execute("""SELECT COUNT(*) FROM exam_attempts a WHERE expires_at > ?
-            AND NOT EXISTS (SELECT 1 FROM exam_submissions s WHERE s.session_id = 'SES-' || a.attempt_id)""",
+        ongoing = conn.execute("""SELECT COUNT(*) FROM exam_attempts a WHERE expires_at > %s
+            AND NOT EXISTS (SELECT 1 FROM exam_submissions s WHERE s.session_id = CONCAT('SES-', a.attempt_id))""",
             (time.time(),)).fetchone()[0]
         sessions = [dict(row) for row in conn.execute("""SELECT session_id, display_name,
-            participant_code, submitted_at FROM exam_submissions ORDER BY submitted_at DESC, rowid DESC LIMIT 5""")]
+            participant_code, submitted_at FROM exam_submissions ORDER BY submitted_at DESC, submission_order DESC LIMIT 5""")]
     return {'students': students, 'users': users, 'modules': modules,
             'completed': completed, 'ongoing': ongoing, 'recent': sessions}
 
@@ -28,11 +28,11 @@ def practice_question(section, excluded):
         raise ValueError('Modul latihan tidak tersedia.')
     with get_connection() as conn:
         rows = conn.execute("""SELECT question_id, title, prompt, passage, audio_url,
-            correct_answer FROM questions WHERE section=?
+            correct_answer FROM questions WHERE section=%s
             AND question_type='multiple_choice' AND is_active=1""", (section,)).fetchall()
         opt_rows = conn.execute("""SELECT q.question_id, o.option_text 
             FROM question_options o JOIN questions q ON q.question_id = o.question_id
-            WHERE q.section=? AND q.question_type='multiple_choice' AND q.is_active=1
+            WHERE q.section=%s AND q.question_type='multiple_choice' AND q.is_active=1
             ORDER BY o.question_id, o.option_index""", (section,)).fetchall()
     opts_by_qid = {}
     for r in opt_rows:
@@ -74,10 +74,10 @@ def check_practice_answer(payload):
         raise ValueError('Pilihan jawaban tidak valid.')
     with get_connection() as conn:
         row = conn.execute("""SELECT question_id, correct_answer, explanation
-            FROM questions WHERE question_id=? AND question_type='multiple_choice' AND is_active=1""", (qid,)).fetchone()
+            FROM questions WHERE question_id=%s AND question_type='multiple_choice' AND is_active=1""", (qid,)).fetchone()
         if not row:
             raise ValueError('Soal latihan tidak ditemukan.')
-        opt_rows = conn.execute("SELECT option_text FROM question_options WHERE question_id=? ORDER BY option_index", (qid,)).fetchall()
+        opt_rows = conn.execute("SELECT option_text FROM question_options WHERE question_id=%s ORDER BY option_index", (qid,)).fetchall()
         options = [r['option_text'] for r in opt_rows]
     answer = str(row['correct_answer'])
     if not answer.isdigit() or not 0 <= int(answer) < len(options) or choice >= len(options):
@@ -120,11 +120,11 @@ def check_sample_answer(payload):
         raise ValueError('Pilihan jawaban tidak valid.')
     with get_connection() as conn:
         row = conn.execute("""SELECT question_id, correct_answer, explanation
-            FROM questions WHERE question_id=? AND section='grammar'
+            FROM questions WHERE question_id=%s AND section='grammar'
             AND question_type='multiple_choice' AND is_active=1""", (qid,)).fetchone()
         if not row:
             raise ValueError('Contoh soal tidak ditemukan.')
-        opt_rows = conn.execute("SELECT option_text FROM question_options WHERE question_id=? ORDER BY option_index", (qid,)).fetchall()
+        opt_rows = conn.execute("SELECT option_text FROM question_options WHERE question_id=%s ORDER BY option_index", (qid,)).fetchall()
         options = [r['option_text'] for r in opt_rows]
     answer = str(row['correct_answer'])
     if not answer.isdigit() or not 0 <= int(answer) < len(options) or choice >= len(options):

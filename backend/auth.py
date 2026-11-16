@@ -3,9 +3,8 @@ import hashlib
 import hmac
 import re
 import secrets
-import sqlite3
 import time
-from .database import get_connection
+from .database import get_connection, IntegrityError
 
 
 def hash_password(raw):
@@ -50,13 +49,13 @@ def register_user(username, email, password, display_name, role='student'):
             conn.execute('''INSERT INTO users
                 (participant_code, username, email, password_hash, display_name, role,
                  xp, streak, badges_json, consent_agreed, created_at)
-                VALUES (?, ?, ?, ?, ?, 'student', 0, 0, '[]', 0, ?)''', (
+                VALUES (%s, %s, %s, %s, %s, 'student', 0, 0, '[]', 0, %s)''', (
                     'RESP-' + secrets.token_hex(5).upper(), username, email,
                     hash_password(password), display_name, time.strftime('%Y-%m-%d %H:%M:%S')
                 ))
-        except sqlite3.IntegrityError:
+        except IntegrityError:
             return {'error': 'Username atau email sudah terdaftar.'}
-        row = conn.execute('SELECT * FROM users WHERE username = ?', (username,)).fetchone()
+        row = conn.execute('SELECT * FROM users WHERE username = %s', (username,)).fetchone()
     return {'status': 'ok', 'user': format_user_row(row)}
 
 
@@ -65,10 +64,10 @@ def login_user(identifier, password):
         return {'error': 'Username/email dan kata sandi harus berupa teks.'}
     with get_connection() as conn:
         ident = identifier.strip().lower()
-        row = conn.execute('SELECT * FROM users WHERE username = ? OR email = ?', (ident, ident)).fetchone()
+        row = conn.execute('SELECT * FROM users WHERE username = %s OR email = %s', (ident, ident)).fetchone()
         if not row or not verify_password(password, row['password_hash']):
             return {'error': 'Username/email atau kata sandi salah.'}
         if not row['password_hash'].startswith('pbkdf2_sha256$'):
-            conn.execute('UPDATE users SET password_hash = ? WHERE user_id = ?',
+            conn.execute('UPDATE users SET password_hash = %s WHERE user_id = %s',
                          (hash_password(password), row['user_id']))
     return {'status': 'ok', 'user': format_user_row(row)}

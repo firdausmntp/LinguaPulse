@@ -50,7 +50,7 @@ function renderExamQuestions(data) {
   if (writing) add([writing], 3);
   appState.exam.marked ||= [];
   examRenderState.listeningGroups = groupExamQuestions(listening, item => item.audio_url || '');
-  examRenderState.readingGroups = groupExamQuestions(reading, item => `${item.title || ''}\n${item.passage || data.reading.passage || ''}`);
+  examRenderState.readingGroups = groupExamQuestions(reading, item => `${item.title || ''}\n${item.passage || ''}`);
   document.getElementById('grammarMcContainer').innerHTML = (data.grammar_mc || []).map(item => questionCard(item)).join('') || '<p>Belum ada soal Structure pada paket ini.</p>';
   document.getElementById('grammarRewriteContainer').innerHTML = (data.grammar_rewrite || []).map(item => questionCard(item, true)).join('') || '<p>Tidak ada tugas perbaikan kalimat pada paket ini.</p>';
   document.getElementById('listeningMcContainer').innerHTML = examRenderState.listeningGroups.map((group, index) => group.items.map(item => questionCard(item, false, index)).join('')).join('') || '<p>Belum ada soal Listening. Hubungi pengawas untuk melengkapi paket.</p>';
@@ -111,7 +111,7 @@ function switchReadingGroup(index) {
   const group = examRenderState.readingGroups[index];
   document.getElementById('readingGroupSelect').value = String(index);
   document.getElementById('readingTitle').textContent = group?.title || 'Reading comprehension';
-  document.getElementById('readingPassageText').textContent = readablePassage(group?.items[0]?.passage || appState.questionsBank?.reading?.passage || 'Bacaan belum tersedia.');
+  document.getElementById('readingPassageText').textContent = readablePassage(group?.items[0]?.passage || 'Bacaan belum tersedia.');
   document.querySelectorAll('#readingMcContainer [data-question-group]').forEach(card => card.classList.toggle('hidden', Number(card.dataset.questionGroup) !== index));
   if (appState.exam) { appState.exam.readingGroup = index; saveExamDraft(); }
 }

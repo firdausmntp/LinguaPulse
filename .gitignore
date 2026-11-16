@@ -12,6 +12,7 @@ data/*.sqlite3
 data/*.db-journal
 data/*.db-wal
 data/*.db-shm
+data/*.sql
 
 # Audio uploads & local test assets
 frontend/media/listening/uploads/
@@ -28,6 +29,11 @@ docs/qa/test_temp_*/
 
 # Environments & virtualenvs
 .env
+.env.*
+!.env.example
+!.env.test.example
+/data/mysql-local/
+/data/mysql-local.log
 .venv/
 venv/
 ENV/

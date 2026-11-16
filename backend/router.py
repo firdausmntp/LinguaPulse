@@ -9,6 +9,7 @@ from .database import get_connection
 from .auth import login_user, register_user
 from .sessions import session_user, create_session, logout_session
 from .security import create_security_handshake
+from .exam_settings import get_exam_settings, save_exam_settings
 from .routes_admin import AdminRoutes
 from .routes_exam import ExamRoutes
 from questions.loader import get_structured_questions, public_bank
@@ -86,6 +87,10 @@ class TOEFLPlatformRouter(AdminRoutes, ExamRoutes, SimpleHTTPRequestHandler):
         if path == '/api/sample-question':
             excluded = parse_qs(parsed.query).get('exclude', [''])[0]
             return self._send_json(sample_question(excluded))
+        if path == '/api/exam/settings':
+            if not self._authorize():
+                return
+            return self._send_json(get_exam_settings())
         if path == '/api/auth/me':
             return self._send_json({'user': session_user(self)})
         if path in ADMIN_PATHS:
@@ -129,7 +134,7 @@ class TOEFLPlatformRouter(AdminRoutes, ExamRoutes, SimpleHTTPRequestHandler):
             if path == '/api/results':
                 sid = parse_qs(parsed.query).get('id', [''])[0]
                 with get_connection() as conn:
-                    result = conn.execute('SELECT result_json FROM submission_results JOIN exam_submissions USING (session_id) WHERE session_id = ? AND participant_code = ?', (sid, user['participant_code'])).fetchone()
+                    result = conn.execute('SELECT result_json FROM submission_results JOIN exam_submissions USING (session_id) WHERE session_id = %s AND participant_code = %s', (sid, user['participant_code'])).fetchone()
                 if result:
                     data = json.loads(result['result_json'])
                     data.pop('telemetry_evaluation', None)
@@ -177,7 +182,7 @@ class TOEFLPlatformRouter(AdminRoutes, ExamRoutes, SimpleHTTPRequestHandler):
         with get_connection() as conn:
             rows = conn.execute("""SELECT session_id, grammar_mc_correct, grammar_mc_total,
                 reading_mc_correct, reading_mc_total, listening_mc_correct, listening_mc_total, rewrite_count, essay_word_count, submitted_at
-                FROM exam_submissions WHERE participant_code = ? ORDER BY submitted_at DESC, rowid DESC""",
+                FROM exam_submissions WHERE participant_code = %s ORDER BY submitted_at DESC, submission_order DESC""",
                 (user['participant_code'],)).fetchall()
         output = []
         for row in rows:
@@ -235,6 +240,13 @@ class TOEFLPlatformRouter(AdminRoutes, ExamRoutes, SimpleHTTPRequestHandler):
             return self._send_json(result, cookie=create_session(self, result['user']))
         if parsed.path == '/api/auth/logout':
             return self._send_json({'status': 'ok'}, cookie=logout_session(self))
+        if parsed.path == '/api/admin/exam-settings':
+            if not self._authorize(admin=True):
+                return
+            try:
+                return self._send_json(save_exam_settings(payload))
+            except ValueError as error:
+                return self._send_json({'error': str(error)}, 400)
         if parsed.path == '/api/admin/users':
             actor = self._authorize(admin=True)
             if not actor:

@@ -14,7 +14,7 @@ def submit_respondent_survey(user, payload):
     p_code = user["participant_code"]
     with get_connection() as conn:
         sub = conn.execute(
-            "SELECT session_id FROM exam_submissions WHERE session_id = ? AND participant_code = ?",
+            "SELECT session_id FROM exam_submissions WHERE session_id = %s AND participant_code = %s",
             (session_id, p_code)
         ).fetchone()
         if not sub:
@@ -35,18 +35,18 @@ def submit_respondent_survey(user, payload):
         conn.execute("""
             INSERT INTO respondent_surveys
             (session_id, participant_code, tab_switched, copied_pasted, external_resources, honest_label, feedback_note, submitted_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            ON CONFLICT(session_id) DO UPDATE SET
-                tab_switched=excluded.tab_switched,
-                copied_pasted=excluded.copied_pasted,
-                external_resources=excluded.external_resources,
-                honest_label=excluded.honest_label,
-                feedback_note=excluded.feedback_note,
-                submitted_at=excluded.submitted_at
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            ON DUPLICATE KEY UPDATE
+                tab_switched=VALUES(tab_switched),
+                copied_pasted=VALUES(copied_pasted),
+                external_resources=VALUES(external_resources),
+                honest_label=VALUES(honest_label),
+                feedback_note=VALUES(feedback_note),
+                submitted_at=VALUES(submitted_at)
         """, (session_id, p_code, tab_switched, copied_pasted, external_resources, honest_label, feedback_note, now_str))
 
         conn.execute(
-            "UPDATE telemetry_sessions SET ground_truth_label = ? WHERE session_id = ?",
+            "UPDATE telemetry_sessions SET ground_truth_label = %s WHERE session_id = %s",
             (honest_label, session_id)
         )
 
@@ -63,7 +63,7 @@ def get_respondent_survey(user, session_id):
         return {"submitted": False}
     with get_connection() as conn:
         row = conn.execute(
-            "SELECT * FROM respondent_surveys WHERE session_id = ? AND participant_code = ?",
+            "SELECT * FROM respondent_surveys WHERE session_id = %s AND participant_code = %s",
             (session_id, user["participant_code"])
         ).fetchone()
         if not row:
@@ -93,7 +93,7 @@ def update_proctor_label(actor, payload):
 
     with get_connection() as conn:
         cur = conn.execute(
-            "UPDATE telemetry_sessions SET ground_truth_label = ? WHERE session_id = ?",
+            "UPDATE telemetry_sessions SET ground_truth_label = %s WHERE session_id = %s",
             (label, session_id)
         )
         if cur.rowcount == 0:

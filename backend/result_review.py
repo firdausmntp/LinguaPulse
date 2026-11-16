@@ -39,8 +39,8 @@ def enrich_saved_review(data, session_id, user):
         return data
     with get_connection() as conn:
         row = conn.execute("""SELECT a.bank_json, s.answers_json, s.submitted_at
-            FROM exam_attempts a JOIN exam_submissions s ON s.session_id = 'SES-' || a.attempt_id
-            WHERE a.user_id=? AND s.participant_code=? AND s.session_id=?""",
+            FROM exam_attempts a JOIN exam_submissions s ON s.session_id = CONCAT('SES-', a.attempt_id)
+            WHERE a.user_id=%s AND s.participant_code=%s AND s.session_id=%s""",
             (user['user_id'], user['participant_code'], session_id)).fetchone()
     if row:
         result['section_reviews'] = build_section_reviews(json.loads(row['bank_json']), json.loads(row['answers_json']))

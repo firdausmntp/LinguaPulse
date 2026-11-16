@@ -6,14 +6,14 @@
 
 ![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-Vanilla%20ES2022-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-8-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 ![License](https://img.shields.io/badge/License-Apache--2.0-blue?style=for-the-badge&logo=apache&logoColor=white)
 
 **Platform simulasi TOEFL EPT dengan pengawasan integritas berbasis machine learning.**
 
-Listening · Structure · Reading — plus telemetri perilaku (keystroke dynamics, fokus, pointer) yang dinilai model XGBoost dan 1D-CNN untuk riset integritas pengerjaan.
+Listening Â· Structure Â· Reading â€” plus telemetri perilaku (keystroke dynamics, fokus, pointer) yang dinilai model XGBoost dan 1D-CNN untuk riset integritas pengerjaan.
 
-[Fitur](#-fitur-unggulan) · [Mulai Cepat](#-mulai-cepat) · [Arsitektur](#-arsitektur) · [API](#-ringkasan-api) · [Struktur Proyek](#-struktur-proyek) · [Pengujian](#-pengujian) · [Sitasi](#-sitasi-akademik) · [Lisensi](#-lisensi)
+[Fitur](#-fitur-unggulan) Â· [Mulai Cepat](#-mulai-cepat) Â· [Arsitektur](#-arsitektur) Â· [API](#-ringkasan-api) Â· [Struktur Proyek](#-struktur-proyek) Â· [Pengujian](#-pengujian) Â· [Sitasi](#-sitasi-akademik) Â· [Lisensi](#-lisensi)
 
 </div>
 
@@ -21,34 +21,34 @@ Listening · Structure · Reading — plus telemetri perilaku (keystroke dynamic
 
 ## Tentang Proyek
 
-LinguaPulse adalah aplikasi web lengkap untuk latihan TOEFL EPT sekaligus instrumen riset: setiap sesi ujian merekam pola perilaku peserta secara **lokal dan privasi-sadar** — tanpa menyimpan isi ketikan mentah atau isi clipboard — lalu mengekstraknya menjadi fitur terukur (median dwell time, rasio backspace, entropi spasial pointer, episode kehilangan fokus) untuk diklasifikasikan oleh model integritas pengerjaan.
+LinguaPulse adalah aplikasi web lengkap untuk latihan TOEFL EPT sekaligus instrumen riset: setiap sesi ujian merekam pola perilaku peserta secara **lokal dan privasi-sadar** â€” tanpa menyimpan isi ketikan mentah atau isi clipboard â€” lalu mengekstraknya menjadi fitur terukur (median dwell time, rasio backspace, entropi spasial pointer, episode kehilangan fokus) untuk diklasifikasikan oleh model integritas pengerjaan.
 
 > Hasil latihan bukan skor atau sertifikat TOEFL resmi.
 
 | | |
 |---|---|
-| **Backend** | Python standard library murni — `http.server`, `sqlite3`, tanpa framework |
-| **Frontend** | SPA Vanilla JavaScript, tanpa bundler, tanpa dependensi eksternal |
-| **Database** | SQLite tunggal dengan migrasi aditif yang aman terhadap data lama |
-| **Bank Soal** | JSON dua arah sinkron dengan editor admin (`questions/`) |
-| **ML Pipeline** | XGBoost, 1D-CNN, dan baseline rule-based — via paket terpisah [`proctor_telemetry`](https://github.com/firdausmntp/proctor_telemetry) (lokal: `packages/`, diabaikan git) + `ml_pipeline/` |
-| **Tema Visual** | *Cobalt Modern* — CSS tokens terpusat, tanpa emoji pada UI |
+| **Backend** | Python standard library murni â€” `http.server`, `sqlite3`, tanpa framework |
+| **Frontend** | SPA Vanilla JavaScript, tanpa bundler; font dimuat dari Google Fonts |
+| **Database** | MySQL 8, InnoDB, utf8mb4; migrasi SQLite baca-saja tersedia |
+| **Bank Soal** | MySQL; JSON digunakan untuk arsip serta impor/ekspor manual |
+| **ML Pipeline** | XGBoost, 1D-CNN, dan baseline rule-based â€” via paket terpisah [`proctor_telemetry`](https://github.com/firdausmntp/proctor_telemetry) (lokal: `packages/`, diabaikan git) + `ml_pipeline/` |
+| **Tema Visual** | *Cobalt Modern* â€” CSS tokens terpusat, tanpa emoji pada UI |
 
 ## Fitur Unggulan
 
 ### Ruang Ujian
-- **Paket EPT utuh** — Listening (audio sintetis lokal), Structure, dan Reading dalam satu sesi 25 menit.
-- **Snapshot bank soal per sesi** — `/api/exam/start` membekukan salinan soal ke database, sehingga pengeditan admin tidak pernah mengubah penilaian sesi yang sedang berjalan.
-- **Draf tahan kegagalan** — jawaban, bagian aktif, dan sisa waktu tersimpan di perangkat; refresh tidak mengulang timer; kirim ulang otomatis terlindungi ID percobaan anti-duplikasi.
+- **Paket EPT utuh** â€” Listening (audio sintetis lokal), Structure, dan Reading dalam satu sesi dengan durasi yang diatur pengawas (bawaan 25 menit).
+- **Snapshot bank soal per sesi** â€” `/api/exam/start` membekukan salinan soal ke database, sehingga pengeditan admin tidak pernah mengubah penilaian sesi yang sedang berjalan.
+- **Draf tahan kegagalan** â€” jawaban, bagian aktif, dan sisa waktu tersimpan di perangkat; refresh tidak mengulang timer; kirim ulang otomatis terlindungi ID percobaan anti-duplikasi.
 - **Auto-submit saat waktu habis** dengan jaring penyelamat: jika pengiriman gagal, draf tetap aman untuk dicoba kembali.
-- **Latihan bebas** (`/practice`) — soal acak, pembahasan langsung, tanpa timer, tanpa rekaman, tidak menyentuh riwayat ujian.
+- **Latihan bebas** (`/practice`) â€” soal acak, pembahasan langsung, tanpa timer, tanpa rekaman, tidak menyentuh riwayat ujian.
 
 ### Pengawasan Integritas (Proctoring)
-- **Sensor tiga kanal** — keystroke dynamics (dwell/flight/interkey, backspace, paste), fokus & visibilitas (blur, tab hidden), dan pointer (heatmap ternormalisasi, entropi spasial antar zona passage/answer/navigation).
-- **Aktif hanya saat ujian** — sensor pointer dan ketikan mati total di landing, login, dasbor, latihan, dan panel admin.
-- **Muatan terenkripsi** — handshake kunci dan enkripsi paket telemetri (`security.js` ↔ `security.py`), verifikasi tantangan anti-bot, cookie sesi `HttpOnly`.
-- **Inferensi ganda** — skor XGBoost, 1D-CNN, dan flag rule-based beserta ablation tersimpan terpisah dari hasil akademik.
-- **Panel pengawas** — ringkasan operasional, detail sesi dengan timeline peristiwa dan heatmap, manajemen akun, CRUD bank soal dengan pratinjau peserta, impor/ekspor JSON, unggah audio hingga 8 MB.
+- **Sensor tiga kanal** â€” keystroke dynamics (dwell/flight/interkey, backspace, paste), fokus & visibilitas (blur, tab hidden), dan pointer (heatmap ternormalisasi, entropi spasial antar zona passage/answer/navigation).
+- **Aktif hanya saat ujian** â€” sensor pointer dan ketikan mati total di landing, login, dasbor, latihan, dan panel admin.
+- **Muatan terenkripsi** â€” handshake kunci dan enkripsi paket telemetri (`security.js` â†” `security.py`), verifikasi tantangan anti-bot, cookie sesi `HttpOnly`.
+- **Inferensi ganda** â€” skor XGBoost, 1D-CNN, dan flag rule-based beserta ablation tersimpan terpisah dari hasil akademik.
+- **Panel pengawas** â€” ringkasan operasional, detail sesi dengan timeline peristiwa dan heatmap, manajemen akun, CRUD bank soal dengan pratinjau peserta, impor/ekspor JSON, unggah audio hingga 8 MB.
 
 ### Privasi & Etika Riset
 - Tidak ada karakter ketikan mentah, isi clipboard, atau data biometrik yang disimpan.
@@ -60,11 +60,16 @@ LinguaPulse adalah aplikasi web lengkap untuk latihan TOEFL EPT sekaligus instru
 # 1. Masuk ke folder proyek
 cd LinguaPulse
 
-# 2. Jalankan server (butuh Python 3.11+)
+# 2. Pasang dependensi (Python 3.11+)
+python -m pip install -r requirements.txt
+
+# 3. Siapkan MySQL dan .env sesuai docs/mysql.md
+# Pada komputer pengembangan ini, .env sudah tersedia; jangan ditimpa.
+# Sesudah restart Windows: powershell -File scripts/start_mysql_local.ps1
 python app.py
 
-# 3. Buka browser
-# http://localhost:8878 (atau via tunnel: https://lingua.ganigani.web.id)
+# 4. Buka browser
+# http://localhost:8878 (server mendengarkan localhost secara default)
 ```
 
 | Akun demo | Username | Sandi |
@@ -72,18 +77,20 @@ python app.py
 | Pengawas | `admin` | `admin123` |
 | Peserta | `nadia_putri` | `student123` |
 
+Petunjuk database baru, pemindahan SQLite, akun tes, dan backup: [docs/mysql.md](docs/mysql.md).
+
 ### Alur Peserta
 
 ```
-/  landing  →  /register  →  /dashboard  →  /exam (persiapan + persetujuan)
-      →  /exam/session (timer 25 menit, sensor aktif)  →  /results  →  /history
+/  landing  â†’  /register  â†’  /dashboard  â†’  /exam (persiapan + persetujuan)
+      â†’  /exam/session (timer sesuai pengaturan, sensor aktif)  â†’  /results  â†’  /history
 ```
 
 ### Pemeriksaan Kualitas
 
 ```bash
 python -m compileall -q backend questions      # sintaks Python
-node --check frontend/js/exam.js               # sintaks JavaScript (per berkas)
+node --check frontend/js/exam/exam.js               # sintaks JavaScript (per berkas)
 python tests/test_app.py                       # HTTP + headless browser (butuh playwright)
 ```
 
@@ -102,10 +109,9 @@ flowchart LR
         E --> G[routes_admin.py]
         F --> H[telemetry_engine.py]
         H --> I[proctor_telemetry pkg]
-        F --> J[(SQLite data/toefl_platform.db)]
+        F --> J[(MySQL - InnoDB)]
         G --> J
-        F --> K[questions/ JSON bank]
-        G -- CRUD sinkron --> K
+        K[Arsip JSON] -. impor manual .-> G
     end
     subgraph ML["ml_pipeline/"]
         L[XGBoost] & M[1D-CNN] & N[Rule-based]
@@ -115,25 +121,27 @@ flowchart LR
 
 **Prinsip penting:**
 
-1. **Snapshot per sesi** — bank soal aktif disalin ke `exam_attempts` saat sesi dimulai; resume dan penilaian memakai salinan yang sama.
-2. **Pemisahan data** — hasil akademik (`exam_submissions`) dan telemetri (`telemetry_sessions`) berada di tabel berbeda sesuai batasan masalah penelitian.
-3. **Kerangka modular** — `TOEFLPlatformRouter` mewarisi `AdminRoutes` + `ExamRoutes`; setiap berkas dibatasi maksimal 350 baris.
+1. **Snapshot per sesi** â€” bank soal aktif disalin ke `exam_attempts` saat sesi dimulai; resume dan penilaian memakai salinan yang sama.
+2. **Pemisahan data** â€” hasil akademik (`exam_submissions`) dan telemetri (`telemetry_sessions`) berada di tabel berbeda sesuai batasan masalah penelitian.
+3. **Kerangka modular** â€” `TOEFLPlatformRouter` mewarisi `AdminRoutes` + `ExamRoutes`; setiap berkas dibatasi maksimal 350 baris.
 
 ## Ringkasan API
 
 | Endpoint | Method | Akses | Fungsi |
 |---|---|---|---|
-| `/api/auth/login` · `/api/auth/register` · `/api/auth/logout` | POST | Publik | Sesi akun, cookie `HttpOnly` |
+| `/api/auth/login` Â· `/api/auth/register` Â· `/api/auth/logout` | POST | Publik | Sesi akun, cookie `HttpOnly` |
 | `/api/auth/me` | GET | Publik | Identitas sesi aktif |
 | `/api/questions` | GET | Akun | Bank soal publik (admin melihat status aktif) |
+| `/api/exam/settings` | GET | Akun | Durasi paket aktif |
+| `/api/admin/exam-settings` | POST | Admin | Atur durasi sesi baru (1â€“240 menit) |
 | `/api/exam/start` | POST | Peserta | Mulai sesi, bekukan bank, dapat `deadline` |
 | `/api/exam/resume` | GET | Peserta | Lanjutkan sesi dari draf perangkat |
 | `/api/submit` | POST | Peserta | Kirim jawaban + telemetri terenkripsi |
 | `/api/practice/question` | GET/POST | Peserta | Latihan bebas dan pembahasan |
-| `/api/history` · `/api/results?id=` | GET | Pemilik | Riwayat dan detail hasil |
-| `/api/admin/overview` · `/api/proctor/sessions` | GET | Admin | Ringkasan dan detail pengawasan |
+| `/api/history` Â· `/api/results?id=` | GET | Pemilik | Riwayat dan detail hasil |
+| `/api/admin/overview` Â· `/api/proctor/sessions` | GET | Admin | Ringkasan dan detail pengawasan |
 | `/api/admin/questions` (+`/import`, `/export`) | GET/POST/DELETE | Admin | CRUD, impor, ekspor bank soal |
-| `/api/admin/audio` | POST | Admin | Unggah audio Listening ≤ 8 MB |
+| `/api/admin/audio` | POST | Admin | Unggah audio Listening â‰¤ 8 MB |
 | `/api/admin/users` | GET/POST/DELETE | Admin | Manajemen akun |
 | `/api/survey` | GET/POST | Akun | Kuesioner responden riset |
 
@@ -141,30 +149,40 @@ flowchart LR
 
 ```
 toefl/
-├── app.py                      # Entry point: init schema, seed, serve
-├── backend/                    # HTTP router + modul domain (semua < 350 baris)
-│   ├── router.py               #   SPA routes, API, proteksi origin/CSRF
-│   ├── routes_exam.py          #   Submit: penilaian + inferensi telemetri
-│   ├── routes_admin.py         #   Handler pengawas
-│   ├── attempts.py             #   Snapshot bank per sesi
-│   ├── telemetry_engine.py     #   Ekstraksi fitur + fallback engine
-│   ├── security.py             #   Handshake, dekripsi, challenge
-│   ├── auth.py / sessions.py   #   Akun, hash sandi, cookie HttpOnly
-│   └── database.py             #   SQLite + migrasi aditif
-├── frontend/
-│   ├── index.html              # Shell SPA + fallback tanpa JS
-│   ├── pages/                  # Fragmen per route
-│   ├── js/                     # router, exam, telemetry, admin, security
-│   ├── css/                    # tokens.css (Cobalt Modern) + modul layout
-│   └── assets/logo/            # Paket ikon & favicon standar
-├── questions/                  # Bank soal JSON per modul
-├── packages/                   # (gitignored) proctor_telemetry — repo terpisah
-├── ml_pipeline/                # Evaluasi model klasifikasi integritas
-├── tests/                      # HTTP, headless browser, audit halaman
-└── docs/qa/                    # Screenshot verifikasi & catatan QA
+â”œâ”€â”€ app.py                      # Entry point: init schema, seed, serve
+â”œâ”€â”€ backend/                    # HTTP router + modul domain (semua < 350 baris)
+â”‚   â”œâ”€â”€ router.py               #   SPA routes, API, proteksi origin/CSRF
+â”‚   â”œâ”€â”€ routes_exam.py          #   Submit: penilaian + inferensi telemetri
+â”‚   â”œâ”€â”€ routes_admin.py         #   Handler pengawas
+â”‚   â”œâ”€â”€ attempts.py             #   Snapshot bank per sesi
+â”‚   â”œâ”€â”€ telemetry_engine.py     #   Ekstraksi fitur + fallback engine
+â”‚   â”œâ”€â”€ security.py             #   Handshake, dekripsi, challenge
+â”‚   â”œâ”€â”€ auth.py / sessions.py   #   Akun, hash sandi, cookie HttpOnly
+â”‚   â”œâ”€â”€ database.py             #   Koneksi MySQL + transaksi commit/rollback
+â”‚   â””â”€â”€ legacy/                 #   kode migrasi lama (tidak dipanggil startup)
+â”œâ”€â”€ frontend/
+â”‚   â”œâ”€â”€ index.html              # Shell SPA + fallback tanpa JS
+â”‚   â”œâ”€â”€ pages/                  # Fragmen per route
+â”‚   â”œâ”€â”€ js/                     # JavaScript per fitur
+â”‚   â”‚   â”œâ”€â”€ core/               # router, state, dan ikon bersama
+â”‚   â”‚   â”œâ”€â”€ admin/              # panel, akun, dan editor soal admin
+â”‚   â”‚   â”œâ”€â”€ exam/               # ujian, keamanan, dan telemetri
+â”‚   â”‚   â”œâ”€â”€ account/            # autentikasi
+â”‚   â”‚   â””â”€â”€ learning/           # landing, dasbor, latihan, dan hasil
+â”‚   â”œâ”€â”€ css/                    # tokens, dasar, dan shell bersama
+â”‚   â”‚   â”œâ”€â”€ admin/              # panel admin dan editor soal
+â”‚   â”‚   â”œâ”€â”€ exam/               # ruang ujian
+â”‚   â”‚   â”œâ”€â”€ account/            # autentikasi dan akun
+â”‚   â”‚   â””â”€â”€ learning/           # halaman belajar dan hasil
+â”‚   â””â”€â”€ assets/logo/            # Paket ikon & favicon standar
+â”œâ”€â”€ questions/                  # Arsip soal JSON per modul (impor manual)
+â”œâ”€â”€ packages/                   # (gitignored) proctor_telemetry â€” repo terpisah
+â”œâ”€â”€ ml_pipeline/                # Evaluasi model klasifikasi integritas
+â”œâ”€â”€ tests/                      # HTTP, headless browser, audit halaman
+â””â”€â”€ docs/qa/                    # Screenshot verifikasi & catatan QA
 ```
 
-> **Catatan `packages/`** — direktori ini berisi repo git terpisah
+> **Catatan `packages/`** â€” direktori ini berisi repo git terpisah
 > ([`proctor_telemetry`](https://github.com/firdausmntp/proctor_telemetry)) dan sengaja
 > diabaikan oleh `.gitignore`. Clone repo ini tidak menyertakannya; ambil manual:
 
@@ -172,29 +190,37 @@ toefl/
 git clone https://github.com/firdausmntp/proctor_telemetry.git packages/proctor_telemetry
 ```
 
+MySQL adalah sumber data utama bank soal. Pada database baru bank soal kosong;
+tambahkan soal lewat editor admin atau impor berkas JSON. Berkas di `questions/`
+adalah arsip, tidak dibaca ulang otomatis saat server dimulai.
+
 Tanpa direktori itu, `backend/telemetry_engine.py` otomatis memakai fallback engine lokal
 (ekstraksi fitur + skor heuristik) sehingga aplikasi tetap berjalan.
 
 ## Pengujian
 
-`python tests/test_app.py` menjalankan uji HTTP dan browser headless memakai database serta berkas soal sementara — tanpa menambah data uji ke database aplikasi. Butuh `playwright` dan Chromium.
+`python tests/test_app.py` menjalankan uji HTTP dan browser headless memakai skema MySQL sementara yang diisi contoh soal arsip â€” tanpa menambah data uji ke database aplikasi. Butuh `playwright` dan Chromium.
 
 ```bash
-pip install playwright && playwright install chromium
+python -m pip install -r requirements.txt
+python -m pip install playwright
+python -m playwright install chromium
+# Siapkan .env.test dengan akun tes terpisah; lihat docs/mysql.md.
+python -m unittest discover -s tests -p 'test_*.py' -v
 python tests/test_app.py
 ```
 
-Screenshot QA tersimpan di `docs/qa/` (desktop 1440px, tablet 375px, mobile 320px, termasuk mode full-page).
+Pengujian membuat screenshot sementara (desktop dan mobile); contoh dokumentasi QA tersedia di `docs/qa/`.
 
 ## Konfigurasi Riset
 
-- **`TOEFL_AI_API_KEY`** — jika diatur, layanan AI menghasilkan umpan balik esai; tanpa kunci, evaluasi lokal dipakai.
-- **Turnstile** berjalan mode pengembangan; konfigurasi widget produksi dan HTTPS sebelum deploy publik.
-- **Model ML** — prediksi riset bersifat indikatif, bukan penetapan pelanggaran otomatis.
+- **`TOEFL_AI_API_KEY`** â€” jika diatur, layanan AI menghasilkan umpan balik esai; tanpa kunci, evaluasi lokal dipakai.
+- **Turnstile** masih simulasi lokal dan belum memiliki widget produksi. Jangan gunakan sebagai perlindungan bot; integrasi widget, verifikasi token dan HTTPS diperlukan sebelum deploy publik. Mode `CF_ENFORCE_STRICT=true` menolak token simulasi dan belum dapat dipakai oleh antarmuka saat ini.
+- **Model ML** â€” prediksi riset bersifat indikatif, bukan penetapan pelanggaran otomatis.
 
 ## Sitasi Akademik
 
-Jika proyek ini — atau metodologi telemetri multimodal dan fusi perilaku pengerjaannya —
+Jika proyek ini â€” atau metodologi telemetri multimodal dan fusi perilaku pengerjaannya â€”
 digunakan dalam skripsi, tesis, makalah, atau publikasi riset, silakan sitasi:
 
 ```bibtex
@@ -229,6 +255,6 @@ You may obtain a copy of the License at
 
 <div align="center">
 
-**Dibangun sebagai instrumen riset skripsi — latihan bebas, data terlindungi, hasil jujur.**
+**Dibangun sebagai instrumen riset skripsi â€” latihan bebas, data terlindungi, hasil jujur.**
 
 </div>

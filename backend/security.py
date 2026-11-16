@@ -9,12 +9,6 @@ import urllib.parse
 import urllib.request
 from typing import Dict, Any, Tuple
 
-# Kunci rahasia server (dapat di-override lewat environment variable)
-SERVER_MASTER_SECRET = os.environ.get(
-    "TOEFL_SERVER_SECRET",
-    "linguapulse-toefl-telemetry-secret-key-2026-untirta"
-)
-
 # Cloudflare Turnstile Keys (Default menggunakan Cloudflare Official Dummy Test Key untuk localhost)
 CF_TURNSTILE_SITEKEY = os.environ.get("CF_TURNSTILE_SITEKEY", "1x00000000000000000000AA")
 CF_TURNSTILE_SECRET = os.environ.get("CF_TURNSTILE_SECRET", "1x0000000000000000000000000000000AA")
@@ -82,14 +76,16 @@ def decrypt_and_verify_payload(envelope: Dict[str, Any]) -> Tuple[Dict[str, Any]
     timestamp = int(envelope.get("timestamp", 0))
 
     hs = ACTIVE_HANDSHAKES.get(handshake_id)
-    session_key = hs["session_key"] if hs else SERVER_MASTER_SECRET
+    if not hs or time.time() - hs["issued_at"] > 7200:
+        raise ValueError("Sesi keamanan tidak ditemukan atau sudah kedaluwarsa.")
+    session_key = hs["session_key"]
 
     # 1. Verifikasi Anti-Replay Timestamp (maksimal selisih 15 menit)
     now = int(time.time())
     if abs(now - timestamp) > 900:
         raise ValueError("Timestamp paket telemetri kedaluwarsa (anti-replay protection).")
 
-    # 2. Verifikasi Integritas HMAC-SHA256 (mencegah manipulasi fitur telemetri di DevTools)
+    # 2. Verifikasi integritas paket; klien tetap dapat mengubah datanya sendiri.
     mac_message = f"{handshake_id}.{iv_hex}.{timestamp}.{ciphertext_b64}".encode("utf-8")
     expected_sig = hmac.new(session_key.encode("utf-8"), mac_message, hashlib.sha256).hexdigest()
     if not hmac.compare_digest(expected_sig, signature_hex):
@@ -118,9 +114,9 @@ def verify_cf_challenge(token: str, remote_ip: str = "127.0.0.1") -> Dict[str, A
             return {"verified": True, "mode": "LOCAL_DEV_BYPASS"}
         return {"verified": False, "error": "Token Cloudflare Challenge tidak ditemukan."}
 
-    # Token simulasi lokal apabila offline
+    # Token simulasi hanya berlaku di mode pengembangan
     if token.startswith("CF-LOCAL-PASS-"):
-        return {"verified": True, "mode": "CF_LOCAL_CHALLENGE_PASS"}
+        return {"verified": not CF_ENFORCE_STRICT, "mode": "CF_LOCAL_CHALLENGE_PASS"}
 
     try:
         form_data = urllib.parse.urlencode({

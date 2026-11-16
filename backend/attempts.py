@@ -3,6 +3,7 @@ import json
 import secrets
 import time
 from .database import get_connection
+from .exam_settings import get_exam_settings
 from questions.loader import get_structured_questions, public_bank
 
 
@@ -16,6 +17,8 @@ def start_attempt(user, payload):
     bank = get_structured_questions()
     if not bank['listening']['questions'] or not bank['grammar_mc'] or not bank['reading']['questions']:
         raise ValueError('Paket EPT belum lengkap. Pengawas perlu mengaktifkan soal Listening, Structure, dan Reading.')
+    if any(not item.get('passage', '').strip() for item in bank['reading']['questions']):
+        raise ValueError('Ada soal Reading tanpa bacaan yang jelas. Pengawas perlu memperbaiki bank soal.')
     writing_id = payload.get('writing_id')
     if writing_id:
         selected = next((item for item in bank['writing_tasks'] if item['id'] == writing_id), None)
@@ -24,16 +27,16 @@ def start_attempt(user, payload):
         bank['writing'] = selected
     attempt_id = secrets.token_hex(4) + '-' + secrets.token_hex(2) + '-' + secrets.token_hex(2) + '-' + secrets.token_hex(2) + '-' + secrets.token_hex(6)
     now = time.time()
-    deadline = now + 25 * 60
+    deadline = now + get_exam_settings()['duration_minutes'] * 60
     with get_connection() as conn:
-        conn.execute('INSERT INTO exam_attempts VALUES (?,?,?,?,?,?,?)',
+        conn.execute('INSERT INTO exam_attempts VALUES (%s,%s,%s,%s,%s,%s,%s)',
                      (attempt_id, user['user_id'], json.dumps(bank), device, condition, deadline, now))
     return {'attempt_id': attempt_id, 'deadline': round(deadline * 1000), 'bank': public_bank(bank, condition=condition)}
 
 
 def get_attempt(user, attempt_id):
     with get_connection() as conn:
-        row = conn.execute('SELECT * FROM exam_attempts WHERE attempt_id = ? AND user_id = ?',
+        row = conn.execute('SELECT * FROM exam_attempts WHERE attempt_id = %s AND user_id = %s',
                            (attempt_id, user['user_id'])).fetchone()
     return dict(row) if row else None
 
