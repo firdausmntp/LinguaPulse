@@ -17,9 +17,10 @@ def admin_overview():
         ongoing = conn.execute("""SELECT COUNT(*) FROM exam_attempts a WHERE expires_at > %s
             AND NOT EXISTS (SELECT 1 FROM exam_submissions s WHERE s.session_id = CONCAT('SES-', a.attempt_id))""",
             (time.time(),)).fetchone()[0]
+        schedules_active = conn.execute('SELECT COUNT(*) FROM exam_schedules WHERE is_active=1').fetchone()[0]
         sessions = [dict(row) for row in conn.execute("""SELECT session_id, display_name,
             participant_code, submitted_at FROM exam_submissions ORDER BY submitted_at DESC, submission_order DESC LIMIT 5""")]
-    return {'students': students, 'users': users, 'modules': modules,
+    return {'students': students, 'users': users, 'modules': modules, 'schedules_active': schedules_active,
             'completed': completed, 'ongoing': ongoing, 'recent': sessions}
 
 

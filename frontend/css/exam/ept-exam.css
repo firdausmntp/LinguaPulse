@@ -116,7 +116,7 @@
 .exam-instructions dd { font-size: 14px; color: var(--color-muted); line-height: 1.7; }
 .ept-exam #readingTitle { margin-top: var(--space-lg); }
 .ept-exam .passage-scroll-box { border: 0; background: none; padding: 0; margin: var(--space-lg) 0 0; max-height: 620px; line-height: 1.9; font-size: 16px; }
-.ept-exam .answer-pane-title { font-size: 21px !important; padding-bottom: var(--space-lg); border-bottom: 1px solid var(--color-rule); margin-bottom: 0 !important; }
+.ept-exam .answer-pane-title { font-size: 21px; padding-bottom: var(--space-lg); border-bottom: 1px solid var(--color-rule); margin-bottom: 0; }
 .ept-exam .q-card { padding: var(--space-lg) 0; margin: 0; background: none; border: 0; border-bottom: 1px solid var(--color-rule); border-radius: 0; box-shadow: none; scroll-margin-block: var(--space-lg); }
 .ept-exam .q-card:focus { outline: 2px solid var(--color-focus); outline-offset: var(--space-xs); }
 .question-card-head { display: flex; align-items: start; gap: var(--space-md); margin-bottom: var(--space-md); }
@@ -297,7 +297,7 @@
   .exam-pane-switch button[aria-pressed="true"] { color: var(--color-accent); border-color: var(--color-accent); background: var(--color-accent-soft); }
   .exam-workspace[data-pane="answers"] > .pane-left, .exam-workspace[data-pane="context"] > .pane-right { display: none; }
   .ept-exam .pane { padding: var(--space-md); }
-  .ept-exam .answer-pane-title { font-size: 18px !important; padding-bottom: var(--space-md); }
+  .ept-exam .answer-pane-title { font-size: 18px; padding-bottom: var(--space-md); }
   .ept-exam .q-card { padding-block: 20px; }
   .ept-exam .question-card-head .q-prompt { font-size: 16px; line-height: 1.6; }
   .ept-exam .question-card-head { gap: var(--space-xs); }

@@ -9,50 +9,28 @@
 ![MySQL](https://img.shields.io/badge/MySQL-8-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 ![License](https://img.shields.io/badge/License-Apache--2.0-blue?style=for-the-badge&logo=apache&logoColor=white)
 
-**Platform simulasi TOEFL EPT dengan pengawasan integritas berbasis machine learning.**
+**Platform simulasi TOEFL EPT dan instrumen penelitian telemetri perilaku.**
 
-Listening Â· Structure Â· Reading â€” plus telemetri perilaku (keystroke dynamics, fokus, pointer) yang dinilai model XGBoost dan 1D-CNN untuk riset integritas pengerjaan.
-
-[Fitur](#-fitur-unggulan) Â· [Mulai Cepat](#-mulai-cepat) Â· [Arsitektur](#-arsitektur) Â· [API](#-ringkasan-api) Â· [Struktur Proyek](#-struktur-proyek) Â· [Pengujian](#-pengujian) Â· [Sitasi](#-sitasi-akademik) Â· [Lisensi](#-lisensi)
+Listening, Structure, dan Reading disertai tugas Writing tambahan riset. Hasil latihan bukan skor atau sertifikat TOEFL resmi. Nama model dalam prototipe tidak membuktikan tersedianya model terlatih. Status artefak dan jalur inferensi perlu diperiksa sebelum melaporkan hasil ML.
 
 </div>
 
----
-
 ## Tentang Proyek
 
-LinguaPulse adalah aplikasi web lengkap untuk latihan TOEFL EPT sekaligus instrumen riset: setiap sesi ujian merekam pola perilaku peserta secara **lokal dan privasi-sadar** â€” tanpa menyimpan isi ketikan mentah atau isi clipboard â€” lalu mengekstraknya menjadi fitur terukur (median dwell time, rasio backspace, entropi spasial pointer, episode kehilangan fokus) untuk diklasifikasikan oleh model integritas pengerjaan.
+Backend memakai Python `http.server`, PyMySQL, serta MySQL 8 (InnoDB, utf8mb4). Frontend merupakan SPA Vanilla JavaScript dengan tema *Cobalt Modern*. Bank soal aktif bersumber dari MySQL. JSON hanya untuk arsip serta impor/ekspor manual. SQLite lama hanya sumber migrasi baca-saja.
 
-> Hasil latihan bukan skor atau sertifikat TOEFL resmi.
+## Fitur Utama
 
-| | |
-|---|---|
-| **Backend** | Python standard library murni â€” `http.server`, `sqlite3`, tanpa framework |
-| **Frontend** | SPA Vanilla JavaScript, tanpa bundler; font dimuat dari Google Fonts |
-| **Database** | MySQL 8, InnoDB, utf8mb4; migrasi SQLite baca-saja tersedia |
-| **Bank Soal** | MySQL; JSON digunakan untuk arsip serta impor/ekspor manual |
-| **ML Pipeline** | XGBoost, 1D-CNN, dan baseline rule-based â€” via paket terpisah [`proctor_telemetry`](https://github.com/firdausmntp/proctor_telemetry) (lokal: `packages/`, diabaikan git) + `ml_pipeline/` |
-| **Tema Visual** | *Cobalt Modern* â€” CSS tokens terpusat, tanpa emoji pada UI |
+- **Paket ujian:** admin menentukan nama, deskripsi, durasi 1–240 menit, daftar soal, dan draf/publikasi melalui `/admin/packages`. Peserta memilih paket di `/exam`. Paket awal **Experimental** mengelompokkan bank aktif yang sudah ada saat migrasi, tanpa mengimpor soal JSON.
+- **Satu soal per tampilan:** navigasi nomor di kanan desktop, panel yang dapat diciutkan di ponsel, tombol sebelumnya/berikutnya, serta penanda soal untuk ditinjau. Bacaan dan rekaman mengikuti soal aktif.
+- **Snapshot per sesi:** soal, kunci, metadata paket, dan durasi dibekukan ketika mulai. Pengeditan atau penarikan paket berlaku untuk sesi baru.
+- **Draf di perangkat:** jawaban, posisi soal, dan flag tersimpan per akun. Refresh mempertahankan tenggat server. Jika pengiriman gagal, peserta dapat mencoba kembali. Penyimpanan ini bergantung pada localStorage perangkat, bukan sinkronisasi antarperangkat.
+- **Pemisahan hasil:** pilihan ganda Listening/Structure/Reading dihitung sebagai ketepatan latihan EPT. Writing dan perbaikan kalimat merupakan tugas riset tambahan. Bila paket berisi beberapa tugas Writing, peserta memilih satu sebelum mulai.
+- **Latihan bebas:** `/practice` menampilkan soal acak dan pembahasan, tanpa timer, sensor sesi, atau penambahan riwayat ujian.
+- **Admin:** ringkasan, inspeksi sesi, akun, bank soal, pratinjau, impor/ekspor JSON, unggah audio, dan paket ujian. Soal baru harus dipilih secara eksplisit ke paket.
+- **Telemetri:** sensor aktif hanya selama sesi ujian. Telemetri tidak menyimpan karakter ketikan mentah atau isi clipboard. Jawaban akhir Writing tetap disimpan sebagai data akademik. Batas penggunaan dijelaskan pada `/privacy` dan `/terms`.
 
-## Fitur Unggulan
-
-### Ruang Ujian
-- **Paket EPT utuh** â€” Listening (audio sintetis lokal), Structure, dan Reading dalam satu sesi dengan durasi yang diatur pengawas (bawaan 25 menit).
-- **Snapshot bank soal per sesi** â€” `/api/exam/start` membekukan salinan soal ke database, sehingga pengeditan admin tidak pernah mengubah penilaian sesi yang sedang berjalan.
-- **Draf tahan kegagalan** â€” jawaban, bagian aktif, dan sisa waktu tersimpan di perangkat; refresh tidak mengulang timer; kirim ulang otomatis terlindungi ID percobaan anti-duplikasi.
-- **Auto-submit saat waktu habis** dengan jaring penyelamat: jika pengiriman gagal, draf tetap aman untuk dicoba kembali.
-- **Latihan bebas** (`/practice`) â€” soal acak, pembahasan langsung, tanpa timer, tanpa rekaman, tidak menyentuh riwayat ujian.
-
-### Pengawasan Integritas (Proctoring)
-- **Sensor tiga kanal** â€” keystroke dynamics (dwell/flight/interkey, backspace, paste), fokus & visibilitas (blur, tab hidden), dan pointer (heatmap ternormalisasi, entropi spasial antar zona passage/answer/navigation).
-- **Aktif hanya saat ujian** â€” sensor pointer dan ketikan mati total di landing, login, dasbor, latihan, dan panel admin.
-- **Muatan terenkripsi** â€” handshake kunci dan enkripsi paket telemetri (`security.js` â†” `security.py`), verifikasi tantangan anti-bot, cookie sesi `HttpOnly`.
-- **Inferensi ganda** â€” skor XGBoost, 1D-CNN, dan flag rule-based beserta ablation tersimpan terpisah dari hasil akademik.
-- **Panel pengawas** â€” ringkasan operasional, detail sesi dengan timeline peristiwa dan heatmap, manajemen akun, CRUD bank soal dengan pratinjau peserta, impor/ekspor JSON, unggah audio hingga 8 MB.
-
-### Privasi & Etika Riset
-- Tidak ada karakter ketikan mentah, isi clipboard, atau data biometrik yang disimpan.
-- Halaman `/privacy` dan `/terms` menjelaskan penggunaan data riset.
+Paket dapat dipublikasikan setelah memiliki soal aktif Listening dengan audio, Structure pilihan ganda, serta Reading dengan bacaan. Perubahan bank yang membuat paket tidak lengkap akan menonaktifkan tombol mulai sampai admin memperbaikinya. Paket dapat ditarik dari daftar peserta dengan menghapus centang publikasi dan menyimpan.
 
 ## Mulai Cepat
 
@@ -91,6 +69,7 @@ Petunjuk database baru, pemindahan SQLite, akun tes, dan backup: [docs/mysql.md]
 ```bash
 python -m compileall -q backend questions      # sintaks Python
 node --check frontend/js/exam/exam.js               # sintaks JavaScript (per berkas)
+python tests/package_checks.py                # paket + navigasi, QA pada MySQL sementara
 python tests/test_app.py                       # HTTP + headless browser (butuh playwright)
 ```
 
@@ -132,8 +111,10 @@ flowchart LR
 | `/api/auth/login` Â· `/api/auth/register` Â· `/api/auth/logout` | POST | Publik | Sesi akun, cookie `HttpOnly` |
 | `/api/auth/me` | GET | Publik | Identitas sesi aktif |
 | `/api/questions` | GET | Akun | Bank soal publik (admin melihat status aktif) |
-| `/api/exam/settings` | GET | Akun | Durasi paket aktif |
-| `/api/admin/exam-settings` | POST | Admin | Atur durasi sesi baru (1â€“240 menit) |
+| `/api/exam/settings` | GET | Akun | Kompatibilitas durasi Experimental |
+| `/api/admin/exam-settings` | POST | Admin | Kompatibilitas durasi Experimental |
+| `/api/exam/packages` | GET | Akun | Daftar paket publik atau pratinjau `?id=` tanpa kunci |
+| `/api/admin/packages` | GET / POST | Admin | Daftar/detail dan simpan paket dengan versi edit |
 | `/api/exam/start` | POST | Peserta | Mulai sesi, bekukan bank, dapat `deadline` |
 | `/api/exam/resume` | GET | Peserta | Lanjutkan sesi dari draf perangkat |
 | `/api/submit` | POST | Peserta | Kirim jawaban + telemetri terenkripsi |

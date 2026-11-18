@@ -9,6 +9,8 @@ const routes = {
   '/admin/overview': ['admin', 'Panel pengawas - Ringkasan'],
   '/admin/proctor': ['admin', 'Panel pengawas - Pengawasan'],
   '/admin/questions': ['admin', 'Panel pengawas - Bank soal'],
+  '/admin/packages': ['admin', 'Panel pengawas - Paket ujian'],
+  '/admin/schedules': ['admin', 'Panel pengawas - Sesi jadwal'],
   '/admin/users': ['admin', 'Panel pengawas - Akun pengguna'],
   '/privacy': ['privacy', 'Privasi & riset'], '/terms': ['terms', 'Syarat dan ketentuan']
 };
@@ -21,7 +23,7 @@ async function navigate(url, replace = false) {
   }
   const target = new URL(url, location.origin);
   if (target.origin !== location.origin) return;
-  if (appState.route?.startsWith('/admin') && !target.pathname.startsWith('/admin') && !await confirmQuestionTransition()) return;
+  if (appState.route?.startsWith('/admin') && !target.pathname.startsWith('/admin') && !await confirmAdminTransition()) return;
   if (appState.route === '/exam/session' && target.pathname !== '/exam/session' && appState.exam) {
     if (!confirm('Tinggalkan ruang ujian? Pengamatan dihentikan, tetapi waktu sesi tetap berjalan dan draf dapat dilanjutkan.')) return;
     saveExamDraft();
@@ -47,6 +49,7 @@ async function renderRoute() {
     return renderRoute();
   }
   stopExamCountdown();
+  examHeaderObserver.disconnect();
   setTelemetryActive(false);
   document.querySelectorAll('audio').forEach(audio => audio.pause());
   appState.route = path;
@@ -130,7 +133,7 @@ document.addEventListener('click', event => {
 });
 window.addEventListener('popstate', () => { saveExamDraft(); renderRoute(); });
 window.addEventListener('beforeunload', event => {
-  if (appState.route?.startsWith('/admin') && typeof questionEditor !== 'undefined' && questionEditor.dirty) {
+  if (appState.route?.startsWith('/admin') && ((typeof questionEditor !== 'undefined' && questionEditor.dirty) || packageEditor.dirty || (typeof scheduleEditor !== 'undefined' && scheduleEditor.dirty))) {
     event.preventDefault(); event.returnValue = '';
   }
   if (appState.exam && appState.route === '/exam/session') {

@@ -7,6 +7,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from backend.attempts import start_attempt
 from backend.database import get_connection, init_schema
 from backend.question_store import save_question
+from backend.exam_packages import save_package
 from mysql_support import temporary_database
 
 
@@ -23,7 +24,10 @@ class ReadingBankTests(unittest.TestCase):
             save_question({**common, 'question_id': 'r3', 'section': 'reading', 'title': 'Other', 'passage': 'Passage two'})
             with get_connection() as conn:
                 conn.execute("UPDATE questions SET passage='' WHERE question_id='r2'")
-            payload = {'device_profile': 'PC_PHYSICAL', 'task_condition': 'MANDIRI', 'consent_agreed': True}
+            package = save_package(dict(name='Reading test', duration_minutes=25, is_active=True,
+                                        question_ids=['l', 'g', 'r1', 'r2', 'r3']))['package']
+            payload = {'package_id': package['package_id'], 'device_profile': 'PC_PHYSICAL',
+                       'task_condition': 'MANDIRI', 'consent_agreed': True}
             attempt = start_attempt({'user_id': 1}, payload)
             passages = {q['id']: q['passage'] for q in attempt['bank']['reading']['questions']}
             self.assertEqual(passages, {'r1': 'Passage one', 'r2': 'Passage one', 'r3': 'Passage two'})

@@ -1,13 +1,19 @@
 // Render the four EPT/research sections without exposing answer keys.
 const examRenderState = { questions: [], listeningGroups: [], readingGroups: [], listeningIndex: 0, readingIndex: 0 };
 const examSectionNames = ['Listening', 'Structure', 'Reading', 'Writing riset'];
-
-const examMobileViewport = matchMedia('(max-width: 760px)');
-examMobileViewport.addEventListener('change', event => {
-  const navigation = document.querySelector('.question-navigation');
-  if (navigation) navigation.open = !event.matches;
-  syncExamPane();
+const examHeaderObserver = new ResizeObserver(entries => {
+  for (const entry of entries) if (entry.target.isConnected) {
+    document.documentElement.style.setProperty('--exam-status-height', entry.target.getBoundingClientRect().height + 'px');
+  }
 });
+
+const examMobileViewport = matchMedia('(max-width: 1100px)');
+const examNavigatorViewport = matchMedia('(max-width: 760px)');
+examNavigatorViewport.addEventListener('change', () => {
+  const navigation = document.querySelector('.question-navigation');
+  if (navigation) navigation.open = !examNavigatorViewport.matches;
+});
+examMobileViewport.addEventListener('change', syncExamPane);
 
 function groupExamQuestions(questions, key) {
   const groups = [];
@@ -40,10 +46,12 @@ function questionCard(question, rewrite = false, group = null) {
 }
 
 function renderExamQuestions(data) {
-  document.querySelector('.question-navigation').open = !examMobileViewport.matches;
+  examHeaderObserver.disconnect();
+  examHeaderObserver.observe(document.querySelector('.exam-session-header'));
+  document.querySelector('.question-navigation').open = !matchMedia('(max-width: 760px)').matches;
   const listening = data.listening?.questions || [];
   const reading = data.reading?.questions || [];
-  const writing = data.writing;
+  const writing = data.writing?.id === 'W-NONE' ? null : data.writing;
   examRenderState.questions = [];
   const add = (items, section) => items.forEach(item => examRenderState.questions.push({ ...item, section, number: examRenderState.questions.length + 1 }));
   add(listening, 0); add(data.grammar_mc || [], 1); add(data.grammar_rewrite || [], 1); add(reading, 2);
@@ -60,8 +68,8 @@ function renderExamQuestions(data) {
     select.innerHTML = groups.map((group, index) => `<option value="${index}">${label} ${index + 1}: ${escapeHtml(group.title || label)}</option>`).join('') || `<option>${label} belum tersedia</option>`;
     select.disabled = !groups.length;
   }
-  switchListeningGroup(Math.min(appState.exam.listeningGroup || 0, Math.max(0, examRenderState.listeningGroups.length - 1)));
-  switchReadingGroup(Math.min(appState.exam.readingGroup || 0, Math.max(0, examRenderState.readingGroups.length - 1)));
+  switchListeningGroup(Math.min(appState.exam.listeningGroup || 0, Math.max(0, examRenderState.listeningGroups.length - 1)), false);
+  switchReadingGroup(Math.min(appState.exam.readingGroup || 0, Math.max(0, examRenderState.readingGroups.length - 1)), false);
   document.getElementById('writingPromptText').textContent = writing?.prompt || 'Tidak ada tugas Writing untuk sesi ini.';
   document.getElementById('sampleAiText').textContent = writing?.sample_ai_reference || '';
   document.getElementById('scenarioReference').classList.toggle('hidden', appState.exam.condition === 'MANDIRI' || !writing?.sample_ai_reference);
@@ -88,10 +96,11 @@ function renderExamQuestions(data) {
   audio.addEventListener('play', () => { document.getElementById('listeningAudioStatus').textContent = 'Rekaman sedang diputar.'; });
   audio.addEventListener('pause', () => { document.getElementById('listeningAudioStatus').textContent = audio.currentTime ? 'Rekaman dijeda. Tekan putar untuk melanjutkan.' : 'Tekan putar untuk mulai mendengarkan.'; });
   audio.addEventListener('ended', () => { document.getElementById('listeningAudioStatus').textContent = 'Rekaman selesai. Tinjau jawaban Anda sebelum berpindah bagian.'; });
-  refreshExamProgress();
+  displayExamQuestion(appState.exam.currentQuestionId || examRenderState.questions[0]?.id);
 }
 
-function switchListeningGroup(index) {
+function switchListeningGroup(index, jump = true) {
+  if (jump) return jumpToQuestion(examRenderState.listeningGroups[index]?.items[0]?.id);
   examRenderState.listeningIndex = index;
   const group = examRenderState.listeningGroups[index];
   const audio = document.getElementById('listeningAudio');
@@ -99,14 +108,15 @@ function switchListeningGroup(index) {
     audio.pause();
     if (group?.key) audio.src = group.key;
     else audio.removeAttribute('src');
+    document.getElementById('listeningAudioStatus').textContent = group?.key ? 'Tekan putar untuk mulai mendengarkan.' : 'Rekaman belum tersedia pada paket ini.';
   }
   document.getElementById('listeningGroupSelect').value = String(index);
-  document.getElementById('listeningAudioStatus').textContent = group?.key ? 'Tekan putar untuk mulai mendengarkan.' : 'Rekaman belum tersedia pada paket ini.';
   document.querySelectorAll('#listeningMcContainer [data-question-group]').forEach(card => card.classList.toggle('hidden', Number(card.dataset.questionGroup) !== index));
   if (appState.exam) { appState.exam.listeningGroup = index; saveExamDraft(); }
 }
 
-function switchReadingGroup(index) {
+function switchReadingGroup(index, jump = true) {
+  if (jump) return jumpToQuestion(examRenderState.readingGroups[index]?.items[0]?.id);
   examRenderState.readingIndex = index;
   const group = examRenderState.readingGroups[index];
   document.getElementById('readingGroupSelect').value = String(index);
@@ -133,7 +143,7 @@ function refreshExamProgress() {
   const section = appState.exam.section ?? 0;
   const current = questions.filter(item => item.section === section);
   document.getElementById('examSectionCount').textContent = `${current.filter(isExamAnswered).length} / ${current.length} terisi`;
-  document.getElementById('questionNavigator').innerHTML = questions.map(question => `<button type="button" class="question-number${isExamAnswered(question) ? ' is-answered' : ''}${appState.exam.marked.includes(question.id) ? ' is-marked' : ''}" data-jump="${escapeHtml(question.id)}" aria-label="Soal ${question.number}, ${examSectionNames[question.section]}${isExamAnswered(question) ? ', terisi' : ', belum terisi'}${appState.exam.marked.includes(question.id) ? ', ditandai' : ''}">${question.number}</button>`).join('');
+  document.getElementById('questionNavigator').innerHTML = questions.map(question => `<button type="button" class="question-number${isExamAnswered(question) ? ' is-answered' : ''}${appState.exam.marked.includes(question.id) ? ' is-marked' : ''}${appState.exam.currentQuestionId === question.id ? ' is-current' : ''}" aria-current="${appState.exam.currentQuestionId === question.id ? 'step' : 'false'}" data-jump="${escapeHtml(question.id)}" aria-label="Soal ${question.number}, ${examSectionNames[question.section]}${isExamAnswered(question) ? ', terisi' : ', belum terisi'}${appState.exam.marked.includes(question.id) ? ', ditandai' : ''}">${question.number}</button>`).join('');
   document.getElementById('questionNavigator').querySelectorAll('[data-jump]').forEach(button => button.addEventListener('click', () => jumpToQuestion(button.dataset.jump)));
   document.querySelectorAll('[data-flag]').forEach(button => {
     const marked = appState.exam.marked.includes(button.dataset.flag);
@@ -145,22 +155,50 @@ function refreshExamProgress() {
 }
 
 function showExamSection(section) {
-  if (!appState.exam) return;
-  if (typeof recordNavSwitch === 'function') recordNavSwitch('section_' + section);
+  const current = examRenderState.questions.find(q => q.id === appState.exam?.currentQuestionId && q.section === section);
+  const first = current || examRenderState.questions.find(q => q.section === section);
+  if (first) jumpToQuestion(first.id);
+}
+
+function displayExamQuestion(id, focus = false) {
+  const question = examRenderState.questions.find(q => q.id === id) || examRenderState.questions[0];
+  if (!question || !appState.exam) return;
+  const section = question.section;
+  appState.exam.currentQuestionId = question.id;
+  appState.exam.section = section;
   [0, 1, 2, 3].forEach(number => {
     const active = number === section;
-    document.getElementById(`tabSec${number}`).classList.toggle('active', active);
-    document.getElementById(`tabSec${number}`).setAttribute('aria-current', active ? 'step' : 'false');
+    const tab = document.getElementById(`tabSec${number}`);
+    tab.classList.toggle('active', active);
+    tab.setAttribute('aria-current', active ? 'step' : 'false');
+    tab.disabled = !examRenderState.questions.some(q => q.section === number);
     document.getElementById(`leftSec${number}`).classList.toggle('hidden', !active);
     document.getElementById(`rightSec${number}`).classList.toggle('hidden', !active);
   });
-  if (section !== 0) document.getElementById('listeningAudio').pause();
-  appState.exam.section = section;
+  if (section === 0) switchListeningGroup(examRenderState.listeningGroups.findIndex(g => g.items.some(q => q.id === question.id)), false);
+  else document.getElementById('listeningAudio').pause();
+  if (section === 2) switchReadingGroup(examRenderState.readingGroups.findIndex(g => g.items.some(q => q.id === question.id)), false);
+  document.querySelectorAll('.q-card').forEach(card => card.classList.toggle('hidden', card.dataset.questionId !== question.id));
   const workspace = document.querySelector('.exam-workspace');
   workspace.classList.toggle('is-structure', section === 1);
   document.getElementById('examPaneContext').textContent = ['Audio Listening', 'Petunjuk', 'Bacaan', 'Instruksi Writing'][section];
+  document.getElementById('examQuestionPosition').textContent = `Soal ${question.number} dari ${examRenderState.questions.length}`;
+  document.getElementById('previousQuestion').disabled = question.number === 1;
+  document.getElementById('nextQuestion').disabled = question.number === examRenderState.questions.length;
+  document.getElementById('examPackageTitle').textContent = appState.questionsBank.package?.name || 'Sesi ujian EPT';
   showExamPane('answers');
   saveExamDraft(); refreshExamProgress();
+  if (focus) {
+    const target = section === 3 ? document.getElementById('essayEditor') : document.getElementById('question-' + question.id);
+    target?.focus({ preventScroll: true });
+    document.querySelector('.exam-task-area').scrollIntoView({ block: 'start', behavior: 'instant' });
+  }
+}
+
+function stepExamQuestion(direction) {
+  const current = examRenderState.questions.findIndex(q => q.id === appState.exam?.currentQuestionId);
+  const target = examRenderState.questions[current + direction];
+  if (target) jumpToQuestion(target.id);
 }
 
 function showExamPane(pane, moveFocus = false) {
@@ -188,14 +226,8 @@ function syncExamPane() {
   right.setAttribute('aria-hidden', String(right.inert));
 }
 
-function jumpToQuestion(id) {
-  const question = examRenderState.questions.find(item => item.id === id);
-  if (!question) return;
-  if (typeof recordNavSwitch === 'function') recordNavSwitch('jump_' + id);
-  if (question.section === 0) switchListeningGroup(examRenderState.listeningGroups.findIndex(group => group.items.some(item => item.id === id)));
-  if (question.section === 2) switchReadingGroup(examRenderState.readingGroups.findIndex(group => group.items.some(item => item.id === id)));
-  showExamSection(question.section);
-  const card = [...document.querySelectorAll('[data-question-id]')].find(item => item.dataset.questionId === id);
-  if (card) { card.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' }); card.focus({ preventScroll: true }); }
-  if (question.section === 3) document.getElementById('essayEditor').focus({ preventScroll: true });
+function jumpToQuestion(id, focus = true) {
+  if (!examRenderState.questions.some(q => q.id === id)) return;
+  if (appState.exam?.currentQuestionId !== id && typeof recordNavSwitch === 'function') recordNavSwitch('question_' + id);
+  displayExamQuestion(id, focus);
 }

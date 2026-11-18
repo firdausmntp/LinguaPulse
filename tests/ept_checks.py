@@ -154,7 +154,15 @@ def check_ept_browser(admin, context, origin, artifacts):
     with admin.expect_download() as downloaded:
         admin.get_by_role('button', name='Ekspor JSON', exact=True).click()
     assert downloaded.value.suggested_filename.endswith('.json')
-    # Student exercises the real Listening player, flags, per-passage navigation and custom item.
+    # Newly authored bank items enter a package only after an explicit admin choice.
+    package = admin.request.get(origin + '/api/admin/packages?id=PKG-EXPERIMENTAL').json()
+    custom_id = admin.locator('#adminQuestionsBody tr').filter(has_text='Custom subject agreement').count()
+    assert custom_id == 1
+    qid = admin.locator('#adminQuestionsBody tr').filter(has_text='Custom subject agreement').inner_text().lower()
+    assert 'ui-custom-g' in qid
+    assert admin.request.post(origin + '/api/admin/packages', data={**package,
+        'question_ids': [*package['question_ids'], 'ui-custom-g', 'ept-reading-custom']}).ok
+    # Student exercises the real Listening player, flags and per-passage navigation.
     learner_context = context.browser.new_context(viewport={'width': 1440, 'height': 900})
     learner_context.request.post(origin + '/api/auth/login', data={'identifier': 'nadia_putri', 'password': 'student123'})
     learner = learner_context.new_page()

@@ -4,12 +4,12 @@ async function initAdminPage() {
   let tab = params.get('tab') || 'overview';
   const path = appState.route || location.pathname;
   if (path.startsWith('/admin/')) tab = path.replace('/admin/', '');
-  if (!['overview', 'proctor', 'questions', 'users'].includes(tab)) tab = 'overview';
+  if (!['overview', 'proctor', 'questions', 'users', 'packages', 'schedules'].includes(tab)) tab = 'overview';
   await switchAdminTab(tab, false);
 }
 
 async function switchAdminTab(tab, updateHistory = true) {
-  if (typeof confirmQuestionTransition === 'function' && !await confirmQuestionTransition()) return false;
+  if (!await confirmAdminTransition()) return false;
   if (updateHistory) {
     history.pushState(null, '', `/admin/${tab}`);
     appState.route = `/admin/${tab}`;
@@ -18,6 +18,8 @@ async function switchAdminTab(tab, updateHistory = true) {
     overview: ["adminTabOverview", "subtabOverview"],
     proctor: ["adminTabProctor", "subtabProctor"],
     questions: ["adminTabQuestions", "subtabQuestions"],
+    packages: ["adminTabPackages", "subtabPackages"],
+    schedules: ["adminTabSchedules", "subtabSchedules"],
     users: ["adminTabUsers", "subtabUsers"]
   };
   Object.keys(tabMap).forEach(key => {
@@ -28,7 +30,7 @@ async function switchAdminTab(tab, updateHistory = true) {
     if (btn) btn.classList.toggle("active", key === tab);
   });
 
-  const titles = { overview: 'Ringkasan', proctor: 'Pengawasan', questions: 'Bank soal', users: 'Akun pengguna' };
+  const titles = { overview: 'Ringkasan', proctor: 'Pengawasan', questions: 'Bank soal', users: 'Akun pengguna', packages: 'Paket ujian', schedules: 'Sesi jadwal' };
   const currentTitle = document.getElementById('adminCurrentTitle');
   if (currentTitle) currentTitle.textContent = titles[tab] || 'Ringkasan';
   const pageTitle = document.getElementById('adminPageTitle');
@@ -36,16 +38,17 @@ async function switchAdminTab(tab, updateHistory = true) {
   const breadcrumb = document.getElementById('adminBreadcrumb');
   if (breadcrumb) breadcrumb.textContent = titles[tab] || 'Ringkasan';
   if (typeof closeAdminMenu === 'function') closeAdminMenu();
-  const operations = { overview: loadAdminOverview, proctor: loadProctorSessions, questions: loadAdminQuestionsTable, users: loadAdminUsersTable };
+  const operations = { overview: loadAdminOverview, proctor: loadProctorSessions, questions: loadAdminQuestionsTable, users: loadAdminUsersTable, packages: loadAdminPackages, schedules: loadAdminSchedules };
   if (operations[tab]) await operations[tab]();
   return true;
 }
 
 async function refreshCurrentAdminTab() {
+  if (!await confirmAdminTransition()) return;
   const path = appState.route || location.pathname;
   let tab = 'overview';
   if (path.startsWith('/admin/')) tab = path.replace('/admin/', '');
-  const operations = { overview: loadAdminOverview, proctor: loadProctorSessions, questions: loadAdminQuestionsTable, users: loadAdminUsersTable };
+  const operations = { overview: loadAdminOverview, proctor: loadProctorSessions, questions: loadAdminQuestionsTable, users: loadAdminUsersTable, packages: loadAdminPackages, schedules: loadAdminSchedules };
   if (operations[tab]) await operations[tab]();
 }
 
@@ -53,6 +56,12 @@ async function refreshCurrentAdminTab() {
 const proctorView = { selected: null };
 function proctorPercent(value) { return Math.max(0, Math.min(100, Number(value || 0) * 100)).toFixed(1); }
 function proctorScenario(value) { return { MANDIRI: 'Mandiri', COPY_TYPING: 'Simulasi menyalin', AI_PARAPHRASE: 'Simulasi parafrase AI' }[value] || value; }
+function proctorTriageBadge(s) {
+  const status = s.triage_status || (Number(s.xgboost_score || 0) >= 0.7 ? 'TERDETEKSI' : (Number(s.xgboost_score || 0) >= 0.4 || s.rule_flag ? 'FLAG' : 'TIDAK_TERDETEKSI'));
+  if (status === 'TERDETEKSI') return '<span class="risk-badge risk-high">Terdeteksi</span>';
+  if (status === 'FLAG') return '<span class="risk-badge risk-mid">Flag</span>';
+  return '<span class="risk-badge risk-low">Tidak terdeteksi</span>';
+}
 
 function proctorLabelBadge(label) {
   if (label === 'CHEATING_REPORTED' || label === 'MANUAL_CHEATING') return '<span class="risk-badge risk-high">Akses Luar</span>';
@@ -86,14 +95,14 @@ async function loadProctorSessions() {
 function renderProctorList() {
   const query = document.getElementById('proctorSearch').value.trim().toLowerCase();
   const filter = document.getElementById('proctorFilter').value;
-  const sessions = appState.proctorSessions.map((session, index) => ({ session, index })).filter(({ session: s }) => (!query || [s.display_name, s.participant_code, s.session_id, s.created_at].join(' ').toLowerCase().includes(query)) && (!filter || (filter === 'flagged' ? s.rule_flag : !s.rule_flag)));
+  const sessions = appState.proctorSessions.map((session, index) => ({ session, index })).filter(({ session: s }) => (!query || [s.display_name, s.participant_code, s.session_id, s.session_code || '', s.created_at].join(' ').toLowerCase().includes(query)) && (!filter || (filter === 'flagged' ? s.rule_flag : !s.rule_flag)));
   document.getElementById('proctorListCount').textContent = sessions.length + ' sesi';
   document.getElementById('proctorSessionsBody').innerHTML = sessions.map(({ session: s, index }) => `
     <tr id="proctorRow${index}" class="${s.session_id === proctorView.selected ? 'selected-row' : ''}">
       <td data-label="Peserta"><strong>${escapeHtml(s.display_name || s.participant_code)}</strong><small>${escapeHtml(s.participant_code)}</small><small><time>${escapeHtml(formatDateTime(s.created_at))}</time></small><small class="monitor-session-code" title="${escapeHtml(s.session_id)}">Sesi ${escapeHtml(s.session_id.slice(-8))}</small></td>
       <td data-label="Perangkat">${icon(s.device_profile === 'PC_PHYSICAL' ? 'laptop' : 'smartphone')}${s.device_profile === 'PC_PHYSICAL' ? 'Komputer' : 'Ponsel'}</td>
-      <td data-label="Skenario peserta">${escapeHtml(proctorScenario(s.task_condition))}</td>
-      <td data-label="Indikator rule"><span class="risk-badge ${s.rule_flag ? 'risk-mid' : 'monitor-neutral'}">${s.rule_flag ? 'Terpicu' : 'Tidak terpicu'}</span></td>
+      <td data-label="Sesi &amp; kondisi"><strong>${escapeHtml(s.session_code || 'Paket langsung')}</strong><small>${escapeHtml(proctorScenario(s.task_condition))}</small></td>
+      <td data-label="Status klasifikasi">${proctorTriageBadge(s)}</td>
       <td data-label="Label riset">${proctorLabelBadge(s.ground_truth_label || s.survey_label)}</td>
       <td data-label="Tindakan"><button type="button" class="btn-secondary" data-inspect-index="${index}" aria-label="Tinjau sesi ${escapeHtml(s.participant_code)} ${escapeHtml(s.session_id.slice(-8))}">Tinjau</button></td>
     </tr>
@@ -137,7 +146,9 @@ function inspectTelemetrySession(index, focus = false) {
     <p class="monitor-session-meta"><time>${escapeHtml(formatDateTime(s.created_at))}</time><span>${s.device_profile === 'PC_PHYSICAL' ? 'Komputer' : 'Ponsel'}</span></p>
     <dl class="monitor-session-details">
       <div><dt>Kode sesi</dt><dd>${escapeHtml(s.session_id)}</dd></div>
-      <div><dt>Skenario yang dipilih peserta</dt><dd>${escapeHtml(proctorScenario(s.task_condition))}</dd></div>
+      <div><dt>Kode gelombang</dt><dd>${escapeHtml(s.session_code || 'Paket langsung')}</dd></div>
+      <div><dt>Kondisi penugasan sesi</dt><dd>${escapeHtml(proctorScenario(s.task_condition))}</dd></div>
+      <div><dt>Status klasifikasi</dt><dd>${proctorTriageBadge(s)}</dd></div>
     </dl>
     <p class="monitor-rule-message">${icon(s.rule_flag ? 'alert' : 'shield')}<span>${s.rule_flag ? 'Rule terpicu. Tinjau konteks dan catatan sesi.' : 'Rule tidak terpicu. Hasil ini tetap perlu dibaca bersama konteks sesi.'}</span></p>
     ${surveyInfo}

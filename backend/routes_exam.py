@@ -4,6 +4,7 @@ import time
 from .database import get_connection
 from .attempts import get_attempt
 from .telemetry_engine import extract_features_and_predict
+from .exam_schedules import classify_triage_status
 from .security import decrypt_and_verify_payload, verify_cf_challenge
 from .ai_tutor import generate_ai_tutor_explanation
 from .result_review import build_section_reviews
@@ -29,7 +30,7 @@ class ExamRoutes:
         answers = payload.get('answers')
         if not isinstance(answers, dict) or any(not isinstance(v, (str, int)) for v in answers.values()):
             return self._send_json({'error': 'Format jawaban tidak valid.'}, 400)
-        if payload.get('device_profile') not in {'PC_PHYSICAL', 'MOBILE_VIRTUAL'} or payload.get('task_condition') not in {'MANDIRI', 'COPY_TYPING', 'AI_PARAPHRASE'}:
+        if payload.get('device_profile') not in {'PC_PHYSICAL', 'MOBILE_VIRTUAL'} or payload.get('task_condition', 'MANDIRI') not in {'MANDIRI', 'COPY_TYPING', 'AI_PARAPHRASE'}:
             return self._send_json({'error': 'Pengaturan sesi tidak valid.'}, 400)
         p_code = user["participant_code"]
         d_name = user["display_name"]
@@ -79,10 +80,13 @@ class ExamRoutes:
                 r_correct += 1
 
         rewrite_done = sum(1 for item in q_bank["grammar_rewrite"] if str(ans.get(item["id"]) or "").strip())
-        essay_text = str(ans.get(q_bank["writing"]["id"]) or ans.get("W-001") or ans.get("W1") or "").strip()
-        if not essay_text:
+        writing_id = q_bank.get('writing', {}).get('id')
+        essay_text = str(ans.get(writing_id) or '').strip() if writing_id and writing_id != 'W-NONE' else ''
+        # Legacy fallback must not turn a rewrite/foreign answer into Writing in a new package.
+        if not essay_text and 'package' not in q_bank and writing_id and writing_id != 'W-NONE':
+            essay_text = str(ans.get('W-001') or ans.get('W1') or '').strip()
             for k, v in ans.items():
-                if isinstance(v, str) and len(v.split()) > 10:
+                if not essay_text and isinstance(v, str) and len(v.split()) > 10:
                     essay_text = v.strip()
                     break
         essay_wc = len(essay_text.split()) if essay_text else 0
@@ -106,6 +110,7 @@ class ExamRoutes:
             "status": "ok",
             "session_id": sid,
             "submitted_at": now_str,
+            "exam_package": q_bank.get("package"),
             "participant_code": p_code,
             "security_verification": {
                 **security_meta,
@@ -129,6 +134,7 @@ class ExamRoutes:
                 "xgboost_score": xgb_s,
                 "cnn1d_score": cnn_s,
                 "rule_flag": rule_f,
+                "triage_status": classify_triage_status(xgb_s, rule_f),
                 "inference_latency_ms": lat,
                 "ablation": abl,
                 "features": feats
@@ -166,13 +172,14 @@ class ExamRoutes:
                 INSERT INTO telemetry_sessions
                 (session_id, participant_code, device_profile, task_condition, duration_sec,
                  features_json, ablation_json, xgboost_score, cnn1d_score, rule_flag,
-                 inference_latency_ms, heatmap_points_json, timeline_events_json, created_at)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                 inference_latency_ms, heatmap_points_json, timeline_events_json, created_at, schedule_id, session_code)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """, (
                 sid, p_code, dev_prof, cond, float(payload.get("duration_sec", 0)),
                 json.dumps(feats), json.dumps(abl), xgb_s, cnn_s, rule_f,
                 lat, json.dumps(payload.get("heatmap_points", [])[:250]),
-                json.dumps(payload.get("timeline_events", [])[:80]), now_str
+                json.dumps(payload.get("timeline_events", [])[:80]), now_str,
+                attempt_row.get("schedule_id"), attempt_row.get("session_code")
             ))
             cur.execute('UPDATE exam_submissions SET listening_mc_correct = %s, listening_mc_total = %s WHERE session_id = %s',
                         (l_correct, len(l_questions), sid))

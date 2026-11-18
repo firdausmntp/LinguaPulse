@@ -6,11 +6,14 @@ from .database import get_connection
 from .auth import format_user_row
 from .question_store import get_question_detail, save_question, import_questions, export_questions, delete_question
 from .audio_upload import upload_audio
+from .exam_schedules import classify_triage_status, delete_schedule, list_schedules, save_schedule
 from .survey import update_proctor_label
 
 
 class AdminRoutes:
     def admin_get(self, parsed):
+        if parsed.path == "/api/admin/schedules":
+            return self._send_json(list_schedules(admin=True))
         if parsed.path == "/api/admin/questions":
             question_id = parse_qs(parsed.query).get("id", [""])[0]
             try:
@@ -48,6 +51,7 @@ class AdminRoutes:
                 d["ablation"] = json.loads(d.pop("ablation_json"))
                 d["heatmap_points"] = json.loads(d.pop("heatmap_points_json") or "[]")
                 d["timeline_events"] = json.loads(d.pop("timeline_events_json") or "[]")
+                d["triage_status"] = classify_triage_status(d["xgboost_score"], d["rule_flag"])
                 sessions.append(d)
             conn.close()
             return self._send_json({"sessions": sessions})
@@ -67,8 +71,8 @@ class AdminRoutes:
 
             output = io.StringIO()
             fieldnames = [
-                "session_id", "participant_code", "device_profile", "task_condition",
-                "ground_truth_label", "survey_tab_switched", "survey_copied_pasted",
+                "session_id", "session_code", "participant_code", "device_profile", "task_condition",
+                "ground_truth_label", "triage_status", "survey_tab_switched", "survey_copied_pasted",
                 "xgboost_score", "cnn1d_score", "rule_flag", "inference_latency_ms",
                 "answer_change_count", "answer_change_ratio", "nav_switch_count",
                 "mean_item_time_sec", "rapid_answer_count", "rapid_answer_ratio",
@@ -83,10 +87,12 @@ class AdminRoutes:
                 feats = json.loads(r["features_json"])
                 row_dict = {
                     "session_id": r["session_id"],
+                    "session_code": r.get("session_code") or "",
                     "participant_code": r["participant_code"],
                     "device_profile": r["device_profile"],
                     "task_condition": r["task_condition"],
                     "ground_truth_label": r["ground_truth_label"] if "ground_truth_label" in r.keys() else "UNLABELED",
+                    "triage_status": classify_triage_status(r["xgboost_score"], r["rule_flag"]),
                     "survey_tab_switched": r["survey_tab_switched"] if r["survey_tab_switched"] is not None else "",
                     "survey_copied_pasted": r["survey_copied_pasted"] if r["survey_copied_pasted"] is not None else "",
                     "xgboost_score": r["xgboost_score"],
@@ -94,7 +100,7 @@ class AdminRoutes:
                     "rule_flag": r["rule_flag"],
                     "inference_latency_ms": r["inference_latency_ms"],
                 }
-                for k in fieldnames[11:]:
+                for k in fieldnames[13:]:
                     row_dict[k] = feats.get(k, 0)
                 writer.writerow(row_dict)
 
@@ -123,6 +129,7 @@ class AdminRoutes:
             '/api/admin/questions': save_question,
             '/api/admin/questions/import': import_questions,
             '/api/admin/audio': upload_audio,
+            '/api/admin/schedules': save_schedule,
         }
         if parsed.path not in handlers:
             return self._send_json({'error': 'Endpoint tidak ditemukan.'}, 404)
@@ -133,10 +140,12 @@ class AdminRoutes:
 
     def admin_delete(self):
         parsed = urlparse(self.path)
-        if parsed.path != '/api/admin/questions':
-            return self._send_json({'error': 'Endpoint tidak ditemukan.'}, 404)
-        question_id = parse_qs(parsed.query).get('id', [''])[0]
+        item_id = parse_qs(parsed.query).get('id', [''])[0]
         try:
-            return self._send_json(delete_question(question_id))
+            if parsed.path == '/api/admin/schedules':
+                return self._send_json(delete_schedule(item_id))
+            if parsed.path == '/api/admin/questions':
+                return self._send_json(delete_question(item_id))
         except ValueError as error:
             return self._send_json({'error': str(error)}, 400)
+        return self._send_json({'error': 'Endpoint tidak ditemukan.'}, 404)

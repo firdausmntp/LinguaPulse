@@ -1,5 +1,7 @@
 """InnoDB schema. Parents precede their foreign-key dependants."""
 import json
+from .package_schema import PACKAGE_TABLES, initialize_packages
+from .exam_schedules import SCHEDULE_TABLES, initialize_schedules
 
 TABLES = {
     'users': """
@@ -44,6 +46,8 @@ TABLES = {
         heatmap_points_json LONGTEXT NOT NULL, timeline_events_json LONGTEXT NOT NULL,
         created_at VARCHAR(32) NOT NULL,
         ground_truth_label VARCHAR(32) NOT NULL DEFAULT 'UNLABELED',
+        schedule_id VARCHAR(40) NULL DEFAULT NULL,
+        session_code VARCHAR(32) NULL DEFAULT NULL,
         INDEX idx_telemetry_participant (participant_code),
         INDEX idx_telemetry_created (created_at)
     """,
@@ -91,14 +95,17 @@ TABLES = {
         attempt_id VARCHAR(36) NOT NULL PRIMARY KEY, user_id BIGINT NOT NULL,
         bank_json LONGTEXT NOT NULL, device_profile VARCHAR(32) NOT NULL,
         task_condition VARCHAR(32) NOT NULL, expires_at DOUBLE NOT NULL,
-        created_at DOUBLE NOT NULL, INDEX idx_attempts_user (user_id)
+        created_at DOUBLE NOT NULL,
+        schedule_id VARCHAR(40) NULL DEFAULT NULL,
+        session_code VARCHAR(32) NULL DEFAULT NULL,
+        INDEX idx_attempts_user (user_id)
     """,
     'schema_migrations': 'version VARCHAR(100) NOT NULL PRIMARY KEY',
 }
 
 
 def initialize_schema(conn):
-    for name, definition in TABLES.items():
+    for name, definition in {**TABLES, **PACKAGE_TABLES, **SCHEDULE_TABLES}.items():
         conn.execute(f'CREATE TABLE IF NOT EXISTS `{name}` ({definition}) '
                      'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin')
     # Retain legacy options_json for lossless import; reads use question_options.
@@ -117,3 +124,5 @@ def initialize_schema(conn):
                                  '(question_id,option_index,option_text) VALUES (%s,%s,%s)',
                                  [(row['question_id'], i, str(v)) for i, v in enumerate(options)])
         conn.execute('INSERT INTO schema_migrations (version) VALUES (%s)', (marker,))
+    initialize_packages(conn)
+    initialize_schedules(conn)

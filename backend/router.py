@@ -10,6 +10,8 @@ from .auth import login_user, register_user
 from .sessions import session_user, create_session, logout_session
 from .security import create_security_handshake
 from .exam_settings import get_exam_settings, save_exam_settings
+from .exam_packages import list_packages, get_package, save_package
+from .exam_schedules import list_schedules
 from .routes_admin import AdminRoutes
 from .routes_exam import ExamRoutes
 from questions.loader import get_structured_questions, public_bank
@@ -24,8 +26,8 @@ from .survey import submit_respondent_survey, get_respondent_survey
 
 PAGE_ROUTES = {'/', '/login', '/register', '/dashboard', '/exam', '/exam/session',
                '/results', '/history', '/admin', '/admin/overview', '/admin/proctor',
-               '/admin/questions', '/admin/users', '/privacy', '/terms', '/practice'}
-ADMIN_PATHS = {'/api/admin/users', '/api/admin/questions', '/api/proctor/sessions', '/api/export/csv', '/api/admin/questions/export', '/api/admin/overview'}
+               '/admin/questions', '/admin/users', '/admin/packages', '/admin/schedules', '/privacy', '/terms', '/practice'}
+ADMIN_PATHS = {'/api/admin/users', '/api/admin/questions', '/api/admin/schedules', '/api/proctor/sessions', '/api/export/csv', '/api/admin/questions/export', '/api/admin/overview'}
 
 
 class TOEFLPlatformRouter(AdminRoutes, ExamRoutes, SimpleHTTPRequestHandler):
@@ -91,6 +93,19 @@ class TOEFLPlatformRouter(AdminRoutes, ExamRoutes, SimpleHTTPRequestHandler):
             if not self._authorize():
                 return
             return self._send_json(get_exam_settings())
+        if path == '/api/exam/schedules':
+            if not self._authorize():
+                return
+            return self._send_json(list_schedules(admin=False))
+        if path in {'/api/exam/packages', '/api/admin/packages'}:
+            admin = path.startswith('/api/admin/')
+            if not self._authorize(admin=admin):
+                return
+            package_id = parse_qs(parsed.query).get('id', [''])[0]
+            try:
+                return self._send_json(get_package(package_id, admin) if package_id else list_packages(admin))
+            except ValueError as error:
+                return self._send_json({'error': str(error)}, 404)
         if path == '/api/auth/me':
             return self._send_json({'user': session_user(self)})
         if path in ADMIN_PATHS:
@@ -212,6 +227,13 @@ class TOEFLPlatformRouter(AdminRoutes, ExamRoutes, SimpleHTTPRequestHandler):
             return self._send_json({'error': 'Permintaan belum dapat diproses. Coba kembali.'}, 500)
 
     def _post(self, parsed, payload):
+        if parsed.path == '/api/admin/packages':
+            if not self._authorize(admin=True):
+                return
+            try:
+                return self._send_json(save_package(payload))
+            except ValueError as error:
+                return self._send_json({'error': str(error)}, 400)
         if parsed.path == '/api/sample-question':
             try:
                 return self._send_json(check_sample_answer(payload))
@@ -255,7 +277,7 @@ class TOEFLPlatformRouter(AdminRoutes, ExamRoutes, SimpleHTTPRequestHandler):
                 return self._send_json(save_user(payload, actor))
             except ValueError as error:
                 return self._send_json({'error': str(error)}, 400)
-        if parsed.path in {'/api/admin/questions', '/api/admin/questions/import', '/api/admin/audio', '/api/proctor/label'}:
+        if parsed.path in {'/api/admin/questions', '/api/admin/questions/import', '/api/admin/audio', '/api/admin/schedules', '/api/proctor/label'}:
             if not self._authorize(admin=True):
                 return
             return self.admin_post(parsed, payload)

@@ -16,7 +16,13 @@ function saveExamDraft() {
       exam: appState.exam, answers: appState.selectedAnswers,
       telemetry: getTelemetrySnapshot()
     }));
-  } catch (_) { showToast('Penyimpanan perangkat penuh. Biarkan halaman terbuka sampai jawaban terkirim.'); }
+    const status = document.getElementById('examDraftStatus');
+    if (status) status.textContent = 'Tersimpan di perangkat';
+  } catch (_) {
+    const status = document.getElementById('examDraftStatus');
+    if (status) status.textContent = 'Draf belum tersimpan';
+    showToast('Penyimpanan perangkat penuh. Biarkan halaman terbuka sampai jawaban terkirim.');
+  }
 }
 
 function clearExamDraft() {
@@ -32,23 +38,11 @@ async function initExamPreparation() {
   const isMobile = /Android|iPhone|iPad|Mobile/i.test(navigator.userAgent);
   document.getElementById('deviceProfile').value = draft?.exam?.device || (isMobile ? 'MOBILE_VIRTUAL' : 'PC_PHYSICAL');
   if (draft?.exam) {
-    document.getElementById('taskCondition').value = draft.exam.condition;
     document.getElementById('resumeExamButton').classList.remove('hidden');
     document.getElementById('beginExamButton').textContent = 'Hapus draf & mulai ulang';
   }
-  try {
-    const [bank, settings] = await Promise.all([loadExamQuestions(false), api('/api/exam/settings')]);
-    const duration = document.getElementById('prepareDuration');
-    if (duration) duration.textContent = `${settings.duration_minutes} menit untuk sesi latihan ini`;
-    if (!document.getElementById('prepareBankSummary')) return;
-    const modules = [['Listening', bank.listening.questions.length], ['Structure', bank.grammar_mc.length], ['Reading', bank.reading.questions.length]];
-    document.getElementById('prepareBankSummary').innerHTML = modules.map(([name, count]) => `<div><dt>${name}</dt><dd>${count} soal</dd></div>`).join('');
-    document.getElementById('prepareWritingSelect').innerHTML = bank.writing_tasks.map(item => `<option value="${escapeHtml(item.id)}">${escapeHtml(item.title)}</option>`).join('') || '<option value="">Belum ada tugas tambahan</option>';
-    if (typeof initAdminComboboxes === 'function') initAdminComboboxes();
-  } catch (error) {
-    const el = document.getElementById('prepareError');
-    if (el) { el.textContent = error.message; el.classList.remove('hidden'); }
-  }
+  await loadPreparationPackages();
+  initAdminComboboxes();
 }
 
 async function beginExam(event) {
@@ -60,18 +54,25 @@ async function beginExam(event) {
   error.classList.add('hidden');
   try {
     await initSecurityHandshake();
-    const started = await api('/api/exam/start', { method: 'POST', body: JSON.stringify({
+    const typedCode = (document.getElementById('sessionCodeInput')?.value || '').trim().toUpperCase();
+    const startBody = {
+      package_id: preparationPackages.selected,
       device_profile: document.getElementById('deviceProfile').value,
-      task_condition: document.getElementById('taskCondition').value,
       writing_id: document.getElementById('prepareWritingSelect').value,
       consent_agreed: document.getElementById('examConsent').checked
-    }) });
+    };
+    if (preparationPackages.selectedSchedule) {
+      startBody.schedule_id = preparationPackages.selectedSchedule.schedule_id;
+      startBody.session_code = preparationPackages.selectedSchedule.session_code;
+    } else if (typedCode) {
+      startBody.session_code = typedCode;
+    }
+    const started = await api('/api/exam/start', { method: 'POST', body: JSON.stringify(startBody) });
     clearExamDraft();
     resetTelemetry();
     appState.exam = {
       attemptId: started.attempt_id, deadline: started.deadline,
       device: document.getElementById('deviceProfile').value,
-      condition: document.getElementById('taskCondition').value,
       section: 0, consent: true, marked: []
     };
     appState.questionsBank = started.bank;
@@ -136,7 +137,7 @@ async function initExamPage() {
     }
     queueMicrotask(() => { refreshExamProgress(); saveExamDraft(); });
   });
-  showExamSection(appState.exam.section ?? 0);
+  displayExamQuestion(appState.exam.currentQuestionId || examRenderState.questions[0]?.id);
   refreshTelemetryMeters();
   setTelemetryActive(true);
   startExamCountdown();
@@ -144,7 +145,9 @@ async function initExamPage() {
 
 async function submitExamSession(automatic = false) {
   if (!appState.exam || appState.submitting) return;
-  if (!automatic && !confirm('Kirim jawaban dan akhiri sesi? Jawaban tidak dapat diubah setelah dikirim.')) return;
+  const unanswered = examRenderState.questions.filter(q => !isExamAnswered(q)).length;
+  const marked = appState.exam.marked?.length || 0;
+  if (!automatic && !confirm(`${unanswered} soal belum terisi dan ${marked} ditandai. Kirim jawaban dan akhiri sesi? Jawaban tidak dapat diubah setelah dikirim.`)) return;
   appState.submitting = true;
   document.getElementById('examSubmitError').classList.add('hidden');
   stopExamCountdown();

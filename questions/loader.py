@@ -1,12 +1,23 @@
 """Read the active question bank from MySQL."""
 from backend.database import get_connection
+from contextlib import nullcontext
 
 
-def get_structured_questions(include_inactive=False):
-    with get_connection() as conn:
-        sql = 'SELECT * FROM questions' + ('' if include_inactive else ' WHERE is_active = 1') + ' ORDER BY question_id'
-        rows = [dict(row) for row in conn.execute(sql)]
-        opt_rows = conn.execute('SELECT question_id, option_text FROM question_options ORDER BY question_id, option_index').fetchall()
+def get_structured_questions(include_inactive=False, question_ids=None, conn=None):
+    with (get_connection() if conn is None else nullcontext(conn)) as conn:
+        conditions = [] if include_inactive else ['is_active = 1']
+        params = []
+        if question_ids is not None:
+            conditions.append('question_id IN (' + ','.join(['%s'] * len(question_ids)) + ')' if question_ids else '1=0')
+            params = question_ids
+        sql = 'SELECT * FROM questions' + (' WHERE ' + ' AND '.join(conditions) if conditions else '') + ' ORDER BY question_id'
+        rows = [dict(row) for row in conn.execute(sql, params)]
+        row_ids = [row['question_id'] for row in rows]
+        opt_rows = conn.execute('SELECT question_id, option_text FROM question_options WHERE question_id IN ('
+                               + ','.join(['%s'] * len(row_ids)) + ') ORDER BY question_id, option_index', row_ids).fetchall() if row_ids else []
+    if question_ids is not None:
+        order = {qid: i for i, qid in enumerate(question_ids)}
+        rows.sort(key=lambda row: order[row['question_id']])
     opts_by_qid = {}
     for r in opt_rows:
         opts_by_qid.setdefault(r['question_id'], []).append(r['option_text'])
@@ -78,10 +89,7 @@ def public_bank(bank, condition=None, include_list=False):
     grammar_rewrite = [_public_question(item, condition) for item in bank.get('grammar_rewrite', [])]
     writing_tasks = [_public_question(item, condition) for item in bank.get('writing_tasks', [])]
     writing_raw = bank.get('writing') or {}
-    writing = _public_question({**writing_raw, 'section': 'writing'}, condition) if writing_raw else {
-        'id': 'W-NONE', 'section': 'writing', 'question_type': 'essay',
-        'title': 'Writing tambahan', 'passage': '', 'prompt': 'Belum ada tugas Writing aktif.',
-        'options': [], 'audio_url': ''}
+    writing = _public_question({**writing_raw, 'section': 'writing'}, condition) if writing_raw and writing_raw.get('id') != 'W-NONE' else None
     output = {
         'listening': {'questions': listening},
         'grammar_mc': grammar_mc,
@@ -91,6 +99,10 @@ def public_bank(bank, condition=None, include_list=False):
         'writing': writing,
         'writing_tasks': writing_tasks,
     }
+    if bank.get('package'):
+        output['package'] = dict(bank['package'])
+    if bank.get('schedule'):
+        output['schedule'] = dict(bank['schedule'])
     if include_list:
         output['all_questions'] = [{
             'question_id': item.get('question_id') or item.get('id') or '',

@@ -15,6 +15,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from backend.database import get_connection, init_schema
 from backend.mysql_schema import TABLES
+from backend.package_schema import DEFAULT_PACKAGE_ID, initialize_packages
+from backend.exam_schedules import DEFAULT_SCHEDULE_ID, initialize_schedules
 from backend import config
 
 MARKER = 'mysql_from_sqlite_v1'
@@ -70,10 +72,21 @@ def migrate(source_path, backup_dir, apply=False):
         for table in TABLES:
             if table == 'schema_migrations':
                 markers = {r['version'] for r in target.execute('SELECT version FROM schema_migrations')}
-                if markers - {'options_relational_v1'}:
+                if markers - {'options_relational_v1', 'exam_packages_v1', 'exam_schedules_v1'}:
                     raise ValueError('Target sudah berisi data migrasi; tidak ditimpa.')
             elif target.execute(f'SELECT COUNT(*) FROM `{table}`').fetchone()[0]:
                 raise ValueError(f'Target sudah berisi data ({table}); tidak ditimpa.')
+        # Only the untouched empty draft created by startup may be replaced.
+        packages = target.execute('SELECT * FROM exam_packages').fetchall()
+        if (len(packages) != 1 or packages[0]['package_id'] != DEFAULT_PACKAGE_ID
+                or packages[0]['version'] != 1 or packages[0]['is_active']
+                or target.execute('SELECT COUNT(*) FROM exam_package_questions').fetchone()[0]):
+            raise ValueError('Target sudah berisi paket ujian; tidak ditimpa.')
+        schedules = target.execute('SELECT * FROM exam_schedules').fetchall()
+        if len(schedules) > 1 or (len(schedules) == 1 and (schedules[0]['schedule_id'] != DEFAULT_SCHEDULE_ID or schedules[0]['version'] != 1)):
+            raise ValueError('Target sudah berisi sesi jadwal; tidak ditimpa.')
+        target.execute('DELETE FROM exam_schedules')
+        target.execute('DELETE FROM exam_packages WHERE package_id=%s', (DEFAULT_PACKAGE_ID,))
         target.execute('DELETE FROM schema_migrations')
         for table in TABLES:
             if table not in tables:
@@ -91,6 +104,8 @@ def migrate(source_path, backup_dir, apply=False):
             if fingerprint(rows) != fingerprint(copied):
                 raise ValueError(f'Verifikasi nilai gagal pada {table}; transaksi dibatalkan.')
             report[table] = len(rows)
+        initialize_packages(target)
+        initialize_schedules(target)
         target.execute('INSERT INTO schema_migrations (version) VALUES (%s)', (MARKER,))
     result = {'mode': 'applied', 'backup': str(backup), 'verified_rows': report,
               'verification': 'all original columns and row counts match', 'marker': MARKER}

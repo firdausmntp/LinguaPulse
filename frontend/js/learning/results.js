@@ -25,7 +25,7 @@ async function loadResults() {
     const participantCode = data.participant_code || '';
 
     el.innerHTML = `
-      <p class="result-meta">${data.submitted_at ? escapeHtml(formatDateTime(data.submitted_at)) + ' / ' : ''}ID Sesi: ${escapeHtml(sid)}${participantCode ? ' / Responden: ' + escapeHtml(participantCode) : ''}</p>
+      <p class="result-meta">${data.exam_package?.name ? 'Paket: ' + escapeHtml(data.exam_package.name) + ' / ' : ''}${data.submitted_at ? escapeHtml(formatDateTime(data.submitted_at)) + ' / ' : ''}ID Sesi: ${escapeHtml(sid)}${participantCode ? ' / Responden: ' + escapeHtml(participantCode) : ''}</p>
       <div id="surveyContainer">${renderSurveySection(sid, surveyStatus)}</div>
       <section class="result-summary">
         <div>
