@@ -8,7 +8,9 @@
 .main-nav { display: flex; align-items: center; gap: 28px; margin-left: auto; }
 .main-nav a, .account-nav a { display: inline-flex; align-items: center; min-height: 28px; text-decoration: none; white-space: nowrap; font-size: 14px; font-weight: 500; }
 .main-nav a, .nav-login { color: var(--color-ink-2); }
-.main-nav a:hover, .nav-login:hover { color: var(--color-accent); }
+@media (hover: hover) {
+  .main-nav a:hover, .nav-login:hover { color: var(--color-accent); }
+}
 .account-nav { display: flex; gap: var(--space-md); align-items: center; margin-left: auto; }
 .main-nav + .account-nav { margin-left: var(--space-sm); }
 .main-nav.hidden + .account-nav { margin-left: auto; }
@@ -21,20 +23,15 @@
 .site-footer nav { display: grid; gap: var(--space-sm); padding-top: var(--space-sm); }
 .site-footer nav a { font-size: 14px; color: var(--color-ink-2); text-decoration: none; }
 .site-footer .footer-note { font-size: 12px; line-height: 1.8; }
-.btn-primary, .btn-secondary, .btn-outline-light, .btn-submit-exam { min-height: 46px; padding: var(--space-sm) 20px; text-decoration: none; white-space: nowrap; font-size: 14px; border-radius: var(--radius-sm); }
-.btn-primary:hover, .btn-primary:focus-visible { color: var(--color-accent-ink); transform: none; }
-.btn-secondary:hover { color: var(--color-ink); }
-.btn-submit-exam { background: var(--color-accent); color: var(--color-accent-ink); box-shadow: none; font-weight: 600; }
-.btn-submit-exam:hover { transform: none; box-shadow: none; background: var(--color-accent-hover); }
 button, input, select, textarea { font: inherit; }
 button { touch-action: manipulation; }
-button, a, input, select, textarea, summary { transition: background-color var(--dur-short), color var(--dur-short); }
+button, a, input, select, textarea, summary { transition: background-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out); }
+button, .btn-primary, .btn-secondary { transition: background-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out), transform var(--dur-micro) var(--ease-out); }
 :where(a, button, input, textarea, select, summary):focus-visible { outline: 3px solid var(--color-focus); outline-offset: 4px; transition: none; }
 main:focus { outline: none; }
-button:active, .btn-primary:active, .btn-secondary:active { transform: translateY(1px); }
+button:active, .btn-primary:active, .btn-secondary:active { transform: scale(0.97); }
 button:disabled { background: var(--color-paper-3); color: var(--color-muted); border-color: var(--color-rule-2); cursor: not-allowed; transform: none; }
 input:disabled, textarea:disabled, select:disabled { background: var(--color-paper-3); color: var(--color-muted); cursor: not-allowed; }
-input[type="text"], input[type="email"], input[type="password"], input[type="number"], select, textarea { border-color: var(--color-input-border); border-radius: var(--radius-sm); background: var(--color-paper-2); min-height: 46px; font-size: 16px; }
 input[type="checkbox"], input[type="radio"] { accent-color: var(--color-accent); }
 label { font-size: 14px; font-weight: 500; }
 h1, h2, h3, h4 { font-weight: 600; text-wrap: balance; }
@@ -51,7 +48,6 @@ p { text-wrap: pretty; }
 .empty-state p { margin-bottom: var(--space-lg); }
 .inline-error { background: var(--color-bad-soft); color: var(--color-bad); padding: var(--space-sm) var(--space-md); border-radius: var(--radius-sm); font-size: 14px; }
 .disclaimer { color: var(--color-muted); font-size: 14px; line-height: 1.7; }
-.btn-danger { color: var(--color-bad); background: var(--color-bad-soft); }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .skip-link { position: absolute; z-index: var(--z-toast); left: 16px; top: -80px; background: var(--color-paper-2); padding: var(--space-sm); }
 .skip-link:focus { top: 12px; }
@@ -110,9 +106,7 @@ p { text-wrap: pretty; }
   .site-brand { gap: var(--space-xs); }
   .nav-admin { font-size: 12px !important; }
 }
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-}
-
 .site-footer nav a { display: inline-flex; align-items: center; min-height: 28px; width: fit-content; padding-block: var(--space-2xs); }
-.site-footer nav a:hover { color: var(--color-accent); text-decoration: underline; }
+@media (hover: hover) {
+  .site-footer nav a:hover { color: var(--color-accent); text-decoration: underline; }
+}

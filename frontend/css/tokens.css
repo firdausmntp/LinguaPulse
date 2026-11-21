@@ -9,7 +9,7 @@
 
   --legacy-color-1: #ffffff;
 
-  --color-input-border: #94A3B8;
+  --color-input-border: #64748B;
   --color-index-rule: #CBD5E1;
   --color-ink: #0F172A;
   color-scheme: light;
@@ -51,6 +51,9 @@
   --space-3xl: 80px;
 
   /* Elevation & Borders */
+  --control-height: 46px;
+  --control-compact: 36px;
+  --heading-panel: clamp(1.125rem, 2vw, 1.375rem);
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
@@ -62,6 +65,10 @@
   --shadow-card: 0 1px 3px 0 rgb(15 23 42 / 0.05), 0 6px 16px -2px rgb(15 23 42 / 0.04);
   --shadow-md: 0 4px 6px -1px rgb(15 23 42 / 0.07), 0 10px 24px -3px rgb(15 23 42 / 0.06);
   --shadow-lg: 0 10px 15px -3px rgb(15 23 42 / 0.08), 0 20px 32px -4px rgb(15 23 42 / 0.08);
+  --shadow-border: 0 0 0 1px oklch(0 0 0 / 0.06), 0 1px 2px -1px oklch(0 0 0 / 0.06), 0 2px 4px 0 oklch(0 0 0 / 0.04);
+  --shadow-border-hover: 0 0 0 1px oklch(0 0 0 / 0.09), 0 1px 2px -1px oklch(0 0 0 / 0.08), 0 2px 6px 0 oklch(0 0 0 / 0.06);
+  --image-outline: oklch(0 0 0 / 0.1);
+  --image-outline-dark: oklch(1 0 0 / 0.1);
 
   /* Color Palette — Prestige Oxford Cobalt Editorial Theme */
   --color-paper: #F8FAFC;
@@ -70,7 +77,7 @@
 
   --color-ink: #0F172A;
   --color-ink-2: #334155;
-  --color-muted: #64748B;
+  --color-muted: #526176;
 
   --color-rule: #E2E8F0;
   --color-rule-2: #CBD5E1;
@@ -85,13 +92,14 @@
   --color-cool: #2563EB;
   --color-cool-soft: #F0F7FF;
 
-  --color-ok: #059669;
+  --color-ok: #047857;
   --color-ok-soft: #ECFDF5;
 
   --color-bad: #DC2626;
+  --color-danger-ink: #b91c1c;
   --color-bad-soft: #FEF2F2;
 
-  --color-warm: #D97706;
+  --color-warm: #92400E;
   --color-warm-soft: #FFFBEB;
 
   --color-overlay: rgba(15, 23, 42, 0.5);
@@ -121,7 +129,11 @@
   /* Motion */
   --dur-micro: 120ms;
   --dur-short: 180ms;
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-medium: 240ms;
+  --dur-drawer: 280ms;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 
   /* Z-index */
   --z-base: 1;

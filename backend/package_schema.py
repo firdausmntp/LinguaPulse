@@ -1,5 +1,6 @@
 """Additive package schema and one-time grouping of the existing active bank."""
 DEFAULT_PACKAGE_ID = 'PKG-EXPERIMENTAL'
+DEFAULT_PACKAGE_NAME = 'Simulasi TOEFL EPT'
 PACKAGE_TABLES = {
     'exam_packages': """
         package_id VARCHAR(40) NOT NULL PRIMARY KEY, name VARCHAR(100) NOT NULL,
@@ -29,7 +30,7 @@ def initialize_packages(conn):
     settings = conn.execute('SELECT duration_minutes FROM exam_settings WHERE id=1').fetchone()
     now = datetime.now(timezone.utc).isoformat()
     conn.execute('INSERT INTO exam_packages VALUES (%s,%s,%s,%s,%s,1,%s,%s)',
-                 (DEFAULT_PACKAGE_ID, 'Experimental', 'Paket awal dari bank soal yang sudah tersedia.',
+                 (DEFAULT_PACKAGE_ID, DEFAULT_PACKAGE_NAME, 'Listening, Structure, dan Reading dalam satu sesi.',
                   settings['duration_minutes'] if settings else 25,
                   int({'listening', 'grammar', 'reading'} <= sections), now, now))
     if rows:

@@ -24,18 +24,19 @@ async function loadResults() {
     const notes = review.summary ? [review.summary] : [review.grammar_review, review.essay_review, review.actionable_tip].filter(Boolean);
     const participantCode = data.participant_code || '';
 
+    const survey = renderSurveySection(sid, surveyStatus);
     el.innerHTML = `
       <p class="result-meta">${data.exam_package?.name ? 'Paket: ' + escapeHtml(data.exam_package.name) + ' / ' : ''}${data.submitted_at ? escapeHtml(formatDateTime(data.submitted_at)) + ' / ' : ''}ID Sesi: ${escapeHtml(sid)}${participantCode ? ' / Responden: ' + escapeHtml(participantCode) : ''}</p>
-      <div id="surveyContainer">${renderSurveySection(sid, surveyStatus)}</div>
       <section class="result-summary">
         <div>
           <h2>Ketepatan jawaban EPT</h2>
           <p>Gabungan Listening, Structure, dan Reading.</p>
+          ${result.listening_transcript_enabled ? '<p>Akses transkrip Listening diberikan pada sesi ini.</p>' : ''}
           <p class="disclaimer">Hasil latihan, bukan skor TOEFL resmi.</p>
         </div>
         <strong class="accuracy-value">${result.accuracy_percent}<span>%</span></strong>
       </section>
-      <div class="result-module-grid" aria-label="Pilih modul untuk melihat pembahasan">
+      <div class="result-module-grid" role="group" aria-label="Pilih modul untuk melihat pembahasan">
         ${resultModules.map(([key, label, symbol]) => `
           <button type="button" class="result-module-score" data-result-module="${key}" aria-pressed="${key === resultState.module}">
             ${icon(symbol)}
@@ -56,7 +57,7 @@ async function loadResults() {
       <section class="result-review-section">
         <div class="result-review-heading">
           <h2 id="resultReviewTitle">Pembahasan per soal</h2>
-          <div class="review-filters" aria-label="Filter pembahasan">
+          <div class="review-filters" role="group" aria-label="Filter pembahasan">
             <button type="button" data-review-filter="all" aria-pressed="true">Semua</button>
             <button type="button" data-review-filter="review" aria-pressed="false">Salah / belum dijawab</button>
           </div>
@@ -64,14 +65,15 @@ async function loadResults() {
         <div id="resultReviewList"></div>
       </section>
       <details class="research-result-notes">
-        <summary>Writing dan catatan tambahan riset</summary>
+        <summary>Catatan tugas riset</summary>
         <dl>
           <div><dt>Perbaikan kalimat</dt><dd>${result.rewrite_done || 0} terisi</dd></div>
-          <div><dt>Writing</dt><dd>${result.essay_word_count || 0} kata</dd></div>
+          <div><dt>Esai riset</dt><dd>${result.essay_word_count || 0} kata</dd></div>
         </dl>
         <p>Tugas ini terpisah dari ketepatan pilihan ganda EPT. Jumlah kata menunjukkan panjang tulisan, bukan kualitasnya.</p>
         ${notes.map(text => `<p>${escapeHtml(text)}</p>`).join('')}
       </details>
+      ${survey ? `<details class="results-survey-disclosure"><summary>${surveyStatus.submitted ? 'Survei riset tersimpan' : 'Isi survei riset (opsional)'}</summary><div id="surveyContainer">${survey}</div></details>` : ''}
       <div class="action-row result-bottom-actions">
         <a href="/exam" class="btn-secondary">Siapkan sesi ujian baru</a>
         <a href="/dashboard" class="text-link">Kembali ke dasbor</a>
@@ -171,6 +173,9 @@ function attachSurveyEvents(sid) {
         const container = document.getElementById('surveyContainer');
         if (container) {
           container.innerHTML = renderSurveySection(sid, { submitted: true, survey: { honest_label: res.label } });
+          const summary = container.parentElement.querySelector('summary');
+          summary.textContent = 'Survei riset tersimpan';
+          summary.focus();
         }
       } catch (err) {
         showToast(err.message);
@@ -183,7 +188,8 @@ function attachSurveyEvents(sid) {
   if (skipBtn) {
     skipBtn.addEventListener('click', () => {
       sessionStorage.setItem('skip_survey_' + sid, '1');
-      document.getElementById('researchSurveyCard')?.remove();
+      document.querySelector('.results-survey-disclosure')?.remove();
+      document.querySelector('.result-bottom-actions a')?.focus();
     });
   }
 }
@@ -210,6 +216,6 @@ function renderResultReview() {
 
 function renderReviewedQuestion(q, open) {
   const statuses = { correct: 'Benar', incorrect: 'Salah', unanswered: 'Belum dijawab' };
-  const context = q.passage ? `<details class="review-context"><summary>Baca wacana</summary><div>${escapeHtml(readablePassage(q.passage))}</div></details>` : q.audio_url ? `<audio controls preload="none" src="${escapeHtml(q.audio_url)}" aria-label="Audio soal yang ditinjau"></audio>` : '';
+  const context = q.passage ? `<details class="review-context"><summary>Baca wacana</summary><div>${escapeHtml(readablePassage(q.passage))}</div></details>` : q.audio_url ? `<audio controls preload="none" src="${escapeHtml(q.audio_url)}" aria-label="Audio soal yang ditinjau"></audio>${q.transcript ? `<details class="review-context"><summary>Transkrip audio</summary><div class="audio-transcript" lang="en">${escapeHtml(readablePassage(q.transcript))}</div></details>` : ''}` : '';
   return `<details class="review-question" ${open ? 'open' : ''}><summary><span class="review-number">${q.number}</span><span>${escapeHtml(q.title || 'Soal ' + q.number)}</span><span class="answer-status ${q.status}">${statuses[q.status]}</span></summary><div class="review-question-content"><h3>${escapeHtml(q.prompt)}</h3>${context}<ol class="review-options">${q.options.map((option, index) => `<li class="${index === q.correct_answer ? 'is-correct' : index === q.selected_answer ? 'is-incorrect' : ''}"><span class="review-letter">${String.fromCharCode(65 + index)}</span><span>${escapeHtml(choiceText(option))}</span><small>${index === q.correct_answer ? 'Kunci' : ''}${index === q.selected_answer ? (index === q.correct_answer ? ' / ' : '') + 'Pilihan Anda' : ''}</small></li>`).join('')}</ol>${q.status === 'unanswered' ? '<p class="review-unanswered">Anda belum memilih jawaban untuk soal ini.</p>' : ''}<div class="review-explanation"><h4>Alasan jawaban</h4><p>${escapeHtml(q.explanation || 'Pembahasan belum disediakan untuk soal ini.')}</p></div></div></details>`;
 }

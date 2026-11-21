@@ -74,9 +74,6 @@
   .review-section { padding: var(--space-lg); }
   .review-section > h2 { font-size: 25px; }
 }
-@media (prefers-reduced-motion: reduce) {
-  .ept-dashboard *, .auth-panel *, .prepare-form * { transition: none; }
-}
 
 .account-layout { row-gap: var(--space-lg); }
 .admin-console { display: grid; grid-template-columns: 184px minmax(0, 1fr); gap: 32px; align-items: start; }

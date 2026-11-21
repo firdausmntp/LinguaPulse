@@ -9,6 +9,7 @@ async function initAdminPage() {
 }
 
 async function switchAdminTab(tab, updateHistory = true) {
+  if (document.body.classList.contains('admin-menu-open')) closeAdminMenu(true);
   if (!await confirmAdminTransition()) return false;
   if (updateHistory) {
     history.pushState(null, '', `/admin/${tab}`);
@@ -28,6 +29,7 @@ async function switchAdminTab(tab, updateHistory = true) {
     const btn = document.getElementById(btnId);
     if (section) section.classList.toggle("hidden", key !== tab);
     if (btn) btn.classList.toggle("active", key === tab);
+    if (btn) btn.setAttribute('aria-current', key === tab ? 'page' : 'false');
   });
 
   const titles = { overview: 'Ringkasan', proctor: 'Pengawasan', questions: 'Bank soal', users: 'Akun pengguna', packages: 'Paket ujian', schedules: 'Sesi jadwal' };
@@ -40,6 +42,12 @@ async function switchAdminTab(tab, updateHistory = true) {
   if (typeof closeAdminMenu === 'function') closeAdminMenu();
   const operations = { overview: loadAdminOverview, proctor: loadProctorSessions, questions: loadAdminQuestionsTable, users: loadAdminUsersTable, packages: loadAdminPackages, schedules: loadAdminSchedules };
   if (operations[tab]) await operations[tab]();
+  document.title = (titles[tab] || 'Ringkasan') + ' | Panel pengawas | LinguaPulse';
+  if (updateHistory) {
+    pageTitle.tabIndex = -1;
+    pageTitle.focus({ preventScroll: true });
+    pageTitle.scrollIntoView({ block: 'start' });
+  }
   return true;
 }
 
@@ -99,14 +107,14 @@ function renderProctorList() {
   document.getElementById('proctorListCount').textContent = sessions.length + ' sesi';
   document.getElementById('proctorSessionsBody').innerHTML = sessions.map(({ session: s, index }) => `
     <tr id="proctorRow${index}" class="${s.session_id === proctorView.selected ? 'selected-row' : ''}">
-      <td data-label="Peserta"><strong>${escapeHtml(s.display_name || s.participant_code)}</strong><small>${escapeHtml(s.participant_code)}</small><small><time>${escapeHtml(formatDateTime(s.created_at))}</time></small><small class="monitor-session-code" title="${escapeHtml(s.session_id)}">Sesi ${escapeHtml(s.session_id.slice(-8))}</small></td>
-      <td data-label="Perangkat">${icon(s.device_profile === 'PC_PHYSICAL' ? 'laptop' : 'smartphone')}${s.device_profile === 'PC_PHYSICAL' ? 'Komputer' : 'Ponsel'}</td>
-      <td data-label="Sesi &amp; kondisi"><strong>${escapeHtml(s.session_code || 'Paket langsung')}</strong><small>${escapeHtml(proctorScenario(s.task_condition))}</small></td>
-      <td data-label="Status klasifikasi">${proctorTriageBadge(s)}</td>
-      <td data-label="Label riset">${proctorLabelBadge(s.ground_truth_label || s.survey_label)}</td>
-      <td data-label="Tindakan"><button type="button" class="btn-secondary" data-inspect-index="${index}" aria-label="Tinjau sesi ${escapeHtml(s.participant_code)} ${escapeHtml(s.session_id.slice(-8))}">Tinjau</button></td>
+      <td role="cell" data-label="Peserta"><strong>${escapeHtml(s.display_name || s.participant_code)}</strong><small>${escapeHtml(s.participant_code)}</small><small><time>${escapeHtml(formatDateTime(s.created_at))}</time></small><small class="monitor-session-code" title="${escapeHtml(s.session_id)}">Sesi ${escapeHtml(s.session_id.slice(-8))}</small></td>
+      <td role="cell" data-label="Perangkat">${icon(s.device_profile === 'PC_PHYSICAL' ? 'laptop' : 'smartphone')}${s.device_profile === 'PC_PHYSICAL' ? 'Komputer' : 'Ponsel'}</td>
+      <td role="cell" data-label="Sesi &amp; kondisi"><strong>${escapeHtml(s.session_code || 'Paket langsung')}</strong><small>${escapeHtml(proctorScenario(s.task_condition))}</small></td>
+      <td role="cell" data-label="Status klasifikasi">${proctorTriageBadge(s)}</td>
+      <td role="cell" data-label="Label riset">${proctorLabelBadge(s.ground_truth_label || s.survey_label)}</td>
+      <td role="cell" data-label="Tindakan"><button type="button" class="btn-secondary" data-inspect-index="${index}" aria-label="Tinjau sesi ${escapeHtml(s.participant_code)} ${escapeHtml(s.session_id.slice(-8))}">Tinjau</button></td>
     </tr>
-  `).join('') || '<tr class="monitor-empty-row"><td colspan="6"><h4>Belum ada sesi yang cocok</h4><p>Sesi muncul setelah peserta mengirim jawaban. Jika menggunakan filter, coba tampilkan semua sesi.</p></td></tr>';
+  `).join('') || '<tr role="row" class="monitor-empty-row"><td role="cell" colspan="6"><h4>Belum ada sesi yang cocok</h4><p>Sesi muncul setelah peserta mengirim jawaban. Jika menggunakan filter, coba tampilkan semua sesi.</p></td></tr>';
   document.querySelectorAll('[data-inspect-index]').forEach(button => button.addEventListener('click', () => inspectTelemetrySession(Number(button.dataset.inspectIndex), true)));
 }
 

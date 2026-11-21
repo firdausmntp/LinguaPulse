@@ -1,0 +1,96 @@
+/* Admin page hierarchy and small-screen records. Keep all actions inside the record. */
+.admin-top-bar h1 { font-size: clamp(1.125rem, 2vw, 1.5rem); line-height: 1.2; }
+.is-admin :is(.overview-heading, .workspace-heading, .users-heading, .question-bank-heading, .package-manager-heading) h2 {
+  font-size: var(--heading-panel);
+  line-height: 1.25;
+  font-weight: 700;
+}
+.is-admin :is(.workspace-heading, .users-heading, .question-bank-heading, .package-manager-heading) { flex-wrap: wrap; gap: 12px; }
+.is-admin :is(.workspace-heading, .users-heading, .question-bank-heading, .package-manager-heading) > div { flex: 1 1 17rem; min-width: 0; }
+.is-admin :is(.workspace-heading, .users-heading, .question-bank-heading, .package-manager-heading) > button { flex: 0 0 auto; max-width: 100%; }
+.schedule-time-fields { grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); }
+.is-admin :is(.admin-card, .bank-master, .bank-detail, .package-editor-panel, .kpi-card, .overview-panel, .admin-package-card) {
+  border-radius: var(--radius-card);
+  border-color: var(--color-rule);
+  box-shadow: var(--shadow-sm);
+}
+:is(.user-editor-dialog, .account-help-dialog) {
+  border-radius: var(--radius-card);
+  border-color: var(--color-rule);
+  background: var(--color-paper-2);
+  box-shadow: var(--shadow-lg);
+}
+:is(.user-editor-dialog, .account-help-dialog)::backdrop { background: var(--color-overlay); backdrop-filter: none; }
+.user-dialog-heading { padding: var(--space-md) var(--space-lg); }
+.user-dialog-actions { padding: var(--space-md); }
+#userEditorForm { padding: var(--space-md) var(--space-lg); }
+.question-bank-layout.is-editing { grid-template-columns: minmax(0, 1fr); }
+.question-bank-layout.is-editing .bank-master { display: none; }
+#adminTabQuestions:has(.question-bank-layout.is-editing) .bank-kpi-grid { display: none; }
+.question-bank-layout .bank-detail { width: 100%; max-width: 930px; margin-inline: auto; }
+.question-bank-layout .q-row-title, .question-bank-layout .q-id-badge { overflow-wrap: anywhere; }
+
+@media (max-width: 1100px) {
+  .table-scroll :is(.question-bank-table, .users-table, .monitor-table) {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+  .table-scroll:has(> :is(.question-bank-table, .users-table, .monitor-table)) { overflow: visible; }
+  :is(.question-bank-table, .users-table, .monitor-table) thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  :is(.question-bank-table, .users-table, .monitor-table) tbody { display: grid; gap: 8px; width: 100%; }
+  :is(.question-bank-table, .users-table, .monitor-table) tbody tr {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px 12px;
+    padding: 12px;
+    border: 1px solid var(--color-rule);
+    border-radius: var(--radius-md);
+    background: var(--color-paper-2);
+  }
+  :is(.question-bank-table, .users-table, .monitor-table) tbody td {
+    display: block;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  :is(.question-bank-table, .users-table, .monitor-table) td[data-label]:not(:first-child, :last-child)::before {
+    display: block;
+    content: attr(data-label);
+    margin-bottom: 2px;
+    color: var(--color-muted);
+    font-size: .75rem;
+  }
+  :is(.question-bank-table, .users-table, .monitor-table) :is(td:first-child, td:last-child, td[colspan]) { grid-column: 1 / -1; }
+  :is(.question-bank-table, .users-table, .monitor-table) td:last-child:not([colspan]) { padding-top: 8px; border-top: 1px solid var(--color-rule); }
+  .users-workspace > .table-scroll, .monitor-table-scroll { border: 0; box-shadow: none; }
+  .user-row-actions, .bank-row-actions { flex-direction: row; flex-wrap: wrap; }
+  .user-cell > div { min-width: 0; }
+}
+@media (max-width: 700px) {
+  .is-admin :is(.admin-menu-toggle, .admin-home-link, .admin-refresh-top, .admin-user-pill) { min-width: 36px; min-height: 36px; }
+  .is-admin .admin-refresh-top { padding: 0; }
+  .is-admin .admin-top-actions { gap: 4px; }
+  .is-admin .admin-top-bar { padding: 8px; }
+  #userEditorForm, .user-dialog-heading { padding-inline: var(--space-md); }
+  .is-admin .bank-kpi-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .is-admin .bank-kpi-grid .kpi-card { justify-content: center; gap: 2px; padding: 8px; min-height: 68px; }
+  .is-admin .bank-kpi-grid .kpi-card-head { display: none; }
+  .is-admin .bank-kpi-grid .kpi-value { font-size: 1.375rem; }
+  .is-admin .bank-kpi-grid .kpi-label { font-size: .75rem; overflow-wrap: anywhere; }
+}
+@media (max-width: 600px) {
+  .is-admin :is(.workspace-heading, .users-heading, .question-bank-heading, .package-manager-heading) > div {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}

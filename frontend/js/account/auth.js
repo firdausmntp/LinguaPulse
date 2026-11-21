@@ -41,21 +41,15 @@ function showAuthPage(path) {
   panel.querySelectorAll('input').forEach(input => input.addEventListener('input', () => {
     document.getElementById('authErrorMsg').classList.add('hidden');
   }));
-  document.getElementById('regPassword').addEventListener('input', updatePasswordMatch);
-  document.getElementById('regConfirm').addEventListener('input', updatePasswordMatch);
-}
-
-function updatePasswordMatch() {
-  const password = document.getElementById('regPassword');
-  const confirm = document.getElementById('regConfirm');
-  const hint = document.getElementById('passwordMatch');
-  if (!confirm.value) {
-    hint.className = 'hidden'; confirm.removeAttribute('aria-invalid'); return;
-  }
-  const same = password.value === confirm.value;
-  confirm.setAttribute('aria-invalid', String(!same));
-  hint.className = same ? 'is-valid' : 'is-invalid';
-  hint.textContent = same ? 'Kedua kata sandi sudah sama.' : 'Kedua kata sandi belum sama.';
+  enableFormErrors(document.getElementById('loginForm'));
+  enableFormErrors(document.getElementById('registerForm'), form => ({
+    regEmail: !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.querySelector('#regEmail').value.trim()) ? 'Masukkan alamat email seperti nama@contoh.id.' : '',
+    regConfirm: form.querySelector('#regPassword').value !== form.querySelector('#regConfirm').value ? 'Masukkan kembali kata sandi yang sama.' : ''
+  }));
+  document.getElementById('regPassword').addEventListener('input', () => {
+    const confirm = document.getElementById('regConfirm');
+    if (confirm.value === document.getElementById('regPassword').value) clearFieldError(confirm);
+  });
 }
 
 function openAccountHelp() { document.getElementById('accountHelpDialog').showModal(); }
@@ -91,9 +85,7 @@ async function submitAuth(event, path, payload) {
     updateProfileUI(data.user);
     await navigate(authDestination());
   } catch (err) {
-    error.textContent = err.message;
-    error.classList.remove('hidden');
-    error.focus();
+    showFormError(error, err.message);
   } finally {
     button.disabled = false;
     button.textContent = label;
@@ -111,14 +103,6 @@ function handleLogin(event) {
 function handleRegister(event) {
   event.preventDefault();
   const password = document.getElementById('regPassword').value;
-  if (password !== document.getElementById('regConfirm').value) {
-    const error = document.getElementById('authErrorMsg');
-    error.textContent = 'Kedua kata sandi belum sama. Periksa kembali.';
-    error.classList.remove('hidden');
-    document.getElementById('regConfirm').setAttribute('aria-invalid', 'true');
-    error.focus();
-    return;
-  }
   return submitAuth(event, '/api/auth/register', {
     display_name: document.getElementById('regDisplayName').value,
     username: document.getElementById('regUsername').value,

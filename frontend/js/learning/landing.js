@@ -101,7 +101,7 @@ async function answerSample(button, index) {
     document.getElementById('sampleContinue')?.classList.remove('hidden');
     feedback.textContent = correct ? 'Tepat. ' + (result.explanation || 'Jawaban Anda benar.') : 'Belum tepat. Coba pilihan lain.';
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches && feedback.animate) {
-      feedback.animate([{ opacity: 0.35, transform: 'translateY(4px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 240, easing: 'ease-out' });
+      feedback.animate([{ opacity: 0.35, transform: 'translateY(4px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 200, easing: 'cubic-bezier(0.23, 1, 0.32, 1)' });
     }
   } catch (error) {
     if (feedback?.isConnected) feedback.textContent = error.message || 'Jawaban belum dapat diperiksa.';

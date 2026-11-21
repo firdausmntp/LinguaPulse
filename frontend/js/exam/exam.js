@@ -17,10 +17,10 @@ function saveExamDraft() {
       telemetry: getTelemetrySnapshot()
     }));
     const status = document.getElementById('examDraftStatus');
-    if (status) status.textContent = 'Tersimpan di perangkat';
+    if (status && status.textContent !== 'Tersimpan di perangkat') status.textContent = 'Tersimpan di perangkat';
   } catch (_) {
     const status = document.getElementById('examDraftStatus');
-    if (status) status.textContent = 'Draf belum tersimpan';
+    if (status && status.textContent !== 'Draf belum tersimpan') status.textContent = 'Draf belum tersimpan';
     showToast('Penyimpanan perangkat penuh. Biarkan halaman terbuka sampai jawaban terkirim.');
   }
 }
@@ -34,6 +34,7 @@ function clearExamDraft() {
 }
 
 async function initExamPreparation() {
+  enableFormErrors(document.getElementById('prepareForm'));
   const draft = readExamDraft();
   const isMobile = /Android|iPhone|iPad|Mobile/i.test(navigator.userAgent);
   document.getElementById('deviceProfile').value = draft?.exam?.device || (isMobile ? 'MOBILE_VIRTUAL' : 'PC_PHYSICAL');
@@ -48,13 +49,18 @@ async function initExamPreparation() {
 async function beginExam(event) {
   event.preventDefault();
   const button = document.getElementById('beginExamButton');
+  const codeInput = document.getElementById('sessionCodeInput');
+  const typedCode = codeInput.value.trim().toUpperCase();
+  if (typedCode !== (preparationPackages.selectedSchedule?.session_code || '')) {
+    setFieldError(codeInput, 'Periksa kembali kode sesi atau pilih paket latihan langsung.');
+    return;
+  }
   if (readExamDraft()?.exam && !confirm('Hapus draf sesi sebelumnya dan mulai sesi baru?')) return;
   button.disabled = true;
   const error = document.getElementById('prepareError');
   error.classList.add('hidden');
   try {
     await initSecurityHandshake();
-    const typedCode = (document.getElementById('sessionCodeInput')?.value || '').trim().toUpperCase();
     const startBody = {
       package_id: preparationPackages.selected,
       device_profile: document.getElementById('deviceProfile').value,
@@ -64,8 +70,6 @@ async function beginExam(event) {
     if (preparationPackages.selectedSchedule) {
       startBody.schedule_id = preparationPackages.selectedSchedule.schedule_id;
       startBody.session_code = preparationPackages.selectedSchedule.session_code;
-    } else if (typedCode) {
-      startBody.session_code = typedCode;
     }
     const started = await api('/api/exam/start', { method: 'POST', body: JSON.stringify(startBody) });
     clearExamDraft();
@@ -79,8 +83,7 @@ async function beginExam(event) {
     saveExamDraft();
     await navigate('/exam/session');
   } catch (err) {
-    error.textContent = err.message;
-    error.classList.remove('hidden');
+    showFormError(error, err.message);
   } finally { button.disabled = false; }
 }
 
@@ -100,44 +103,40 @@ async function initExamPage() {
     resetTelemetry(draft.telemetry);
   }
   if (!appState.exam?.consent) return navigate('/exam', true);
+  const exam = appState.exam;
+  const view = document.getElementById('viewExam');
+  const stillInSession = () => view.isConnected && appState.exam === exam && appState.route === '/exam/session';
   let resumed;
   try {
-    resumed = await api('/api/exam/resume?id=' + encodeURIComponent(appState.exam.attemptId));
+    resumed = await api('/api/exam/resume?id=' + encodeURIComponent(exam.attemptId));
   } catch (error) {
-    if (!appState.currentUser) return;
+    if (!stillInSession() || !appState.currentUser) return;
     clearExamDraft(); showToast(error.message); return navigate('/exam', true);
   }
+  if (!stillInSession()) return;
   appState.questionsBank = resumed.bank;
-  appState.exam.deadline = resumed.deadline;
+  exam.deadline = resumed.deadline;
   renderExamQuestions(resumed.bank);
-  if (appState.route !== '/exam/session') return;
   await initSecurityHandshake();
-  const exit = document.createElement('button');
-  exit.type = 'button'; exit.className = 'btn-secondary'; exit.textContent = 'Keluar sesi';
-  exit.addEventListener('click', () => {
-    if (appState.submitting) return;
-    if (!confirm('Hentikan sesi dan hapus draf jawaban di perangkat ini?')) return;
-    clearExamDraft(); navigate('/dashboard');
-  });
-  document.querySelector('.exam-heading').append(exit);
-  document.getElementById('viewExam').addEventListener('input', event => {
+  if (!stillInSession()) return;
+  document.getElementById('examExit').addEventListener('click', () => navigate('/dashboard'));
+  view.addEventListener('input', event => {
     let key = null, val = null;
     if (event.target.type === 'radio') {
       key = event.target.name; val = Number(event.target.value);
     } else if (event.target.dataset.answer) {
       key = event.target.dataset.answer; val = event.target.value;
     }
-    if (key) {
-      const prev = appState.selectedAnswers[key];
-      if (prev !== undefined && prev !== null && String(prev).trim() !== '' && String(prev) !== String(val)) {
-        if (typeof recordAnswerChange === 'function') recordAnswerChange(key);
-      }
-      if (typeof recordItemAnswer === 'function') recordItemAnswer(key);
-      appState.selectedAnswers[key] = val;
+    if (!key) return;
+    const prev = appState.selectedAnswers[key];
+    if (prev !== undefined && prev !== null && String(prev).trim() !== '' && String(prev) !== String(val)) {
+      recordAnswerChange(key);
     }
-    queueMicrotask(() => { refreshExamProgress(); saveExamDraft(); });
+    recordItemAnswer(key);
+    appState.selectedAnswers[key] = val;
+    syncExamAnswerState(key);
+    saveExamDraft();
   });
-  displayExamQuestion(appState.exam.currentQuestionId || examRenderState.questions[0]?.id);
   refreshTelemetryMeters();
   setTelemetryActive(true);
   startExamCountdown();
@@ -153,7 +152,8 @@ async function submitExamSession(automatic = false) {
   stopExamCountdown();
   setTelemetryActive(false);
   saveExamDraft();
-  document.querySelectorAll('#viewExam input, #viewExam textarea, #viewExam button').forEach(el => el.disabled = true);
+  const controls = document.querySelectorAll('#viewExam :is(input, textarea, button, select):enabled');
+  controls.forEach(el => { el.disabled = true; });
   const button = document.getElementById('submitExamButton');
   button.textContent = 'Mengirim jawaban…';
   try {
@@ -188,7 +188,7 @@ async function submitExamSession(automatic = false) {
     button.textContent = 'Coba kirim kembali';
     document.getElementById('examSubmitErrorText').textContent = error.message + ' Draf tetap tersimpan di perangkat ini.';
     document.getElementById('examSubmitError').classList.remove('hidden');
-    document.querySelectorAll('#viewExam input, #viewExam textarea, #viewExam button').forEach(el => el.disabled = false);
+    controls.forEach(el => { el.disabled = false; });
     if (Date.now() < appState.exam.deadline) {
       setTelemetryActive(true); startExamCountdown();
     } else {
@@ -201,10 +201,17 @@ async function submitExamSession(automatic = false) {
 function stopExamCountdown() { clearInterval(examTimerId); examTimerId = null; }
 function startExamCountdown() {
   stopExamCountdown();
+  const announced = new Set();
   const tick = () => {
     if (!appState.exam) return stopExamCountdown();
     const remaining = Math.max(0, Math.ceil((appState.exam.deadline - Date.now()) / 1000));
+    document.querySelector('.exam-time-block').classList.toggle('is-ending', remaining <= 60);
     document.getElementById('examTimer').textContent = `${String(Math.floor(remaining / 60)).padStart(2, '0')}:${String(remaining % 60).padStart(2, '0')}`;
+    const milestone = remaining <= 60 ? 1 : remaining <= 300 ? 5 : null;
+    if (remaining && milestone && !announced.has(milestone)) {
+      announced.add(milestone);
+      document.getElementById('examTimeWarning').textContent = `Sisa waktu ${milestone === 1 ? 'kurang dari atau sama dengan satu menit' : 'kurang dari atau sama dengan lima menit'}. Jawaban akan dikirim ketika waktu habis.`;
+    }
     if (!remaining) submitExamSession(true);
   };
   examTimerId = setInterval(tick, 1000);

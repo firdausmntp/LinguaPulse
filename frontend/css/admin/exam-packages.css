@@ -3,8 +3,12 @@
 .package-manager-heading p, .package-picker-heading p { color: var(--color-muted); font-size: 13px; margin-top: 6px; }
 .package-manager-layout { display: grid; grid-template-columns: 290px minmax(0, 1fr); gap: 22px; align-items: start; }
 .admin-package-list { display: flex; flex-direction: column; gap: 12px; }
-.admin-package-card { border: 1px solid var(--color-rule); background: #fff; border-radius: 14px; padding: 18px; text-align: left; display: flex; flex-direction: column; gap: 10px; color: var(--color-ink); font: 14px var(--font-body); cursor: pointer; min-width: 0; }
+.admin-package-card { border: 1px solid var(--color-rule); background: #fff; border-radius: 14px; padding: 18px; text-align: left; display: flex; flex-direction: column; gap: 10px; color: var(--color-ink); font: 14px var(--font-body); cursor: pointer; min-width: 0; transition: border-color var(--dur-short) var(--ease-out), background-color var(--dur-short) var(--ease-out), transform var(--dur-micro) var(--ease-out); }
+.admin-package-card:active { transform: scale(0.99); }
 .admin-package-card.is-selected { border-color: var(--color-accent); background: var(--color-accent-soft); }
+@media (hover: hover) {
+  .admin-package-card:hover { border-color: var(--color-accent); }
+}
 .admin-package-card .package-card-top strong { font-size: 18px; }
 .package-status, .admin-package-card small { color: var(--color-muted); font-size: 11px; }
 .package-editor-panel { background: #fff; border: 1px solid var(--color-rule); border-radius: 16px; padding: 24px; min-width: 0; }
@@ -14,11 +18,12 @@
 .package-editor-panel input:not([type="checkbox"]), .package-editor-panel textarea, .package-editor-panel select { width: 100%; }
 .package-settings-row { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 20px; align-items: end; margin: 20px 0 26px; }
 .package-settings-row label:not(.package-publish) { display: block; font-size: 13px; margin-bottom: 7px; }
-.package-publish { align-self: center; font-size: 13px; margin-top: 22px; }
-.package-publish input { width: 18px; height: 18px; }
+.package-editor-panel fieldset > label.package-publish,
+.package-publish { display: flex; align-items: center; gap: 10px; align-self: center; font-size: 13px; margin-top: 20px; cursor: pointer; }
+.package-publish input { width: 24px; height: 24px; margin: 0; flex-shrink: 0; }
 .package-question-filters { display: grid; grid-template-columns: minmax(0, 1fr) 160px; gap: 12px; margin-bottom: 14px; }
 .package-question-filters label > span { display: block; font-size: 12px; margin-bottom: 6px; }
-.package-question-picker { max-height: 430px; overflow: auto; border: 1px solid var(--color-rule); border-radius: 12px; }
+.package-question-picker { max-height: 430px; overflow: auto; overscroll-behavior: contain; border: 1px solid var(--color-rule); border-radius: 12px; }
 .package-question-row { display: flex; align-items: start; gap: 12px; padding: 15px; border-bottom: 1px solid var(--color-rule); cursor: pointer; }
 .package-question-row:last-child { border-bottom: 0; }
 .package-question-row > input { width: 18px; height: 18px; flex: 0 0 18px; margin-top: 3px; }
@@ -34,7 +39,8 @@
   .admin-package-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
 }
 @media (max-width: 600px) {
-  .package-manager-heading, .package-picker-heading { align-items: flex-start; flex-direction: column; }
+  .package-manager-heading, .package-picker-heading { align-items: flex-start; flex-direction: column; gap: 12px; }
+  .package-manager-heading > div, .package-picker-heading > div { flex: 0 0 auto; width: 100%; }
   .package-manager-heading h2 { font-size: 24px; }
   .package-editor-panel { padding: 16px; }
   .package-settings-row, .package-question-filters { grid-template-columns: minmax(0, 1fr); }

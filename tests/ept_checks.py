@@ -199,7 +199,7 @@ def check_ept_browser(admin, context, origin, artifacts):
 
     learner.screenshot(path=str(artifacts / 'listening-desktop.png'), full_page=True)
     learner.set_viewport_size({'width': 375, 'height': 812})
-    assert learner.locator('.pane-right').bounding_box()['width'] >= 300
+    assert learner.locator('.exam-sheet').bounding_box()['width'] >= 300
     assert not learner.locator('.question-navigation').evaluate('element => element.open')
     learner.locator('#listeningMcContainer').scroll_into_view_if_needed()
     assert learner.locator('.exam-session-header').bounding_box()['y'] <= 2

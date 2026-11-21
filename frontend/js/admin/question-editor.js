@@ -1,7 +1,7 @@
 // Custom EPT authoring: live bank, atomic imports and accessible answer choices.
 const questionEditor = { original: null, options: ['', '', '', ''], busy: false, dirty: false };
 const questionPagination = { page: 1, pageSize: 15 };
-const questionModuleLabels = { listening: 'Listening', grammar: 'Structure', reading: 'Reading', writing: 'Writing riset' };
+const questionModuleLabels = { listening: 'Listening', grammar: 'Structure', reading: 'Reading', writing: 'Esai riset' };
 if (typeof qField === 'undefined') {
   window.qField = id => document.getElementById(id);
 }
@@ -37,6 +37,7 @@ function initQuestionEditor() {
   const form = qField('questionForm');
   if (!form || form.dataset.initialized) return;
   form.dataset.initialized = 'true';
+  enableFormErrors(form, questionFieldErrors);
   ['input', 'change'].forEach(ev => form.addEventListener(ev, () => questionEditor.dirty = true));
   ['questionSearch', 'questionSectionFilter', 'questionStatusFilter', 'questionTypeFilter'].forEach(id => {
     qField(id)?.addEventListener(id === 'questionSearch' ? 'input' : 'change', () => { questionPagination.page = 1; renderQuestionBank(); });
@@ -67,7 +68,7 @@ async function loadAdminQuestionsTable() {
     questionMessage('Perubahan bank soal berlaku untuk sesi baru.');
   } catch (error) {
     questionMessage(error.message, true);
-    qField('adminQuestionsBody').innerHTML = '<tr><td colspan="4">Bank soal belum dapat dimuat. Gunakan tombol Segarkan untuk mencoba kembali.</td></tr>';
+    qField('adminQuestionsBody').innerHTML = '<tr role="row"><td role="cell" colspan="4">Bank soal belum dapat dimuat. Gunakan tombol Segarkan untuk mencoba kembali.</td></tr>';
   }
 }
 
@@ -141,18 +142,18 @@ function renderQuestionBank() {
     const keyIndex = Number(q.correct_answer);
     const keyLabel = !isNaN(keyIndex) ? String.fromCharCode(65 + keyIndex) : escapeHtml(String(q.correct_answer || '-'));
     const answerSnippet = q.question_type === 'multiple_choice' ? `<div class="q-row-key">Kunci: <strong>${keyLabel}</strong></div>` : '';
-    return `<tr class="${questionEditor.original === q.question_id ? 'selected-row' : ''}">
-      <td>
+    return `<tr role="row" class="${questionEditor.original === q.question_id ? 'selected-row' : ''}">
+      <td role="cell">
         <div class="q-row-meta"><span class="q-id-badge">${escapeHtml(q.question_id)}</span>${audioBadge}${passageBadge}<span class="q-type-badge">${escapeHtml(typeLabel)}</span></div>
         <strong class="q-row-title">${escapeHtml(q.title || q.question_id)}</strong>
-        <p class="q-row-prompt">${escapeHtml(q.prompt.slice(0, 110))}</p>
+        <p class="q-row-prompt">${escapeHtml(q.prompt)}</p>
         ${answerSnippet}
       </td>
-      <td><span class="q-sec-badge q-sec-${escapeHtml(q.section)}">${escapeHtml(questionModuleLabels[q.section] || q.section)}</span></td>
-      <td><button type="button" class="question-status ${q.is_active ? 'is-active' : ''}" onclick="toggleQuestionActive(${index})" aria-label="${q.is_active ? 'Nonaktifkan' : 'Aktifkan'} soal ${escapeHtml(q.question_id)}"><span class="status-dot" aria-hidden="true"></span>${q.is_active ? 'Aktif' : 'Nonaktif'}</button></td>
-      <td><div class="bank-row-actions"><button type="button" class="btn-sm" onclick="editQuestionRow(${index})">Edit</button><button type="button" class="btn-sm" onclick="duplicateQuestion(${index})">Salin</button><button type="button" class="btn-sm btn-danger" onclick="deleteQuestionRow(appState.adminQuestionsList[${index}].question_id)">Hapus</button></div></td>
+      <td role="cell" data-label="Modul"><span class="q-sec-badge q-sec-${escapeHtml(q.section)}">${escapeHtml(questionModuleLabels[q.section] || q.section)}</span></td>
+      <td role="cell" data-label="Status"><button type="button" class="question-status ${q.is_active ? 'is-active' : ''}" onclick="toggleQuestionActive(${index})" aria-label="${q.is_active ? 'Nonaktifkan' : 'Aktifkan'} soal ${escapeHtml(q.question_id)}"><span class="status-dot" aria-hidden="true"></span>${q.is_active ? 'Aktif' : 'Nonaktif'}</button></td>
+      <td role="cell"><div class="bank-row-actions"><button type="button" class="btn-sm" onclick="editQuestionRow(${index})">Edit</button><button type="button" class="btn-sm" onclick="duplicateQuestion(${index})">Salin</button><button type="button" class="btn-sm btn-danger" onclick="deleteQuestionRow(appState.adminQuestionsList[${index}].question_id)">Hapus</button></div></td>
     </tr>`;
-  }).join('') || '<tr class="monitor-empty-row"><td colspan="4"><h4>Tidak ada soal yang cocok</h4><p>Ubah kata kunci atau filter untuk menampilkan soal lain.</p></td></tr>';
+  }).join('') || '<tr role="row" class="monitor-empty-row"><td role="cell" colspan="4"><h4>Tidak ada soal yang cocok</h4><p>Ubah kata kunci atau filter untuk menampilkan soal lain.</p></td></tr>';
 }
 
 function filterByModule(mod) {
@@ -171,7 +172,7 @@ function resetQuestionFilters() {
 
 function renderQuestionOptions(selected = qField('qFormCorrect')?.value || '0') {
   const count = questionEditor.options.length;
-  qField('questionOptionsEditor').innerHTML = questionEditor.options.map((value, index) => `<div class="question-option-edit"><label for="questionOption${index}">${String.fromCharCode(65 + index)}</label><input type="text" id="questionOption${index}" maxlength="2000" value="${escapeHtml(value)}" aria-label="Teks opsi ${String.fromCharCode(65 + index)}"><button type="button" class="btn-subtle" onclick="removeQuestionOption(${index})" aria-label="Hapus opsi ${String.fromCharCode(65 + index)}" ${count <= 2 ? 'disabled' : ''}>Hapus</button></div>`).join('');
+  qField('questionOptionsEditor').innerHTML = questionEditor.options.map((value, index) => `<div class="question-option-edit"><label for="questionOption${index}">${String.fromCharCode(65 + index)}</label><input type="text" id="questionOption${index}" maxlength="2000" ${qField('qFormType').value === 'multiple_choice' ? 'required' : ''} value="${escapeHtml(value)}" aria-label="Teks opsi ${String.fromCharCode(65 + index)}"><button type="button" class="btn-subtle" onclick="removeQuestionOption(${index})" aria-label="Hapus opsi ${String.fromCharCode(65 + index)}" ${count <= 2 ? 'disabled' : ''}>Hapus</button></div>`).join('');
   qField('qFormCorrect').innerHTML = questionEditor.options.map((_, index) => `<option value="${index}">Opsi ${String.fromCharCode(65 + index)}</option>`).join('');
   qField('qFormCorrect').value = Number(selected) < count ? selected : '0';
   qField('addQuestionOption').disabled = count >= 6;
@@ -209,9 +210,11 @@ function updateQuestionFields(resetType = false) {
   qField('questionAudioFields').classList.toggle('hidden', section !== 'listening');
   qField('questionPassageFields').classList.toggle('hidden', !['reading', 'listening'].includes(section));
   qField('questionSampleFields').classList.toggle('hidden', section !== 'writing');
-  qField('questionPassageLabel').textContent = section === 'listening' ? 'Transkrip untuk pengawas (opsional)' : 'Wacana bacaan';
-  qField('questionPassageHelp').textContent = section === 'listening' ? 'Transkrip tidak ditampilkan saat peserta mengerjakan Listening.' : 'Wacana ini ditampilkan bersama pertanyaan Reading.';
+  qField('questionPassageLabel').textContent = section === 'listening' ? 'Transkrip audio (opsional)' : 'Wacana bacaan';
+  qField('questionPassageHelp').textContent = section === 'listening' ? 'Tulis ucapan, pembicara, dan bunyi yang bermakna. Transkrip tersedia di latihan bebas dan setelah jawaban ujian dikirim.' : 'Wacana ini ditampilkan bersama pertanyaan Reading.';
   qField('qFormPassage').required = section === 'reading';
+  qField('qFormAudio').required = section === 'listening';
+  for (const input of qField('questionOptionsEditor').querySelectorAll('input')) input.required = isChoice;
 }
 
 async function editQuestionRow(index, duplicate = false) {
@@ -236,6 +239,7 @@ async function editQuestionRow(index, duplicate = false) {
   qField('qFormTextCorrect').value = q.correct_answer ?? '';
   qField('qFormActive').checked = q.is_active !== 0;
   qField('questionEditorTitle').textContent = duplicate ? 'Salinan soal baru' : 'Edit soal ' + q.question_id;
+  for (const field of qField('questionForm').elements) if (field.id) clearFieldError(field);
   qField('questionFormError').classList.add('hidden');
   qField('questionPreview').classList.add('hidden');
   updateAudioPreview(); renderQuestionBank();
@@ -248,7 +252,7 @@ async function editQuestionRow(index, duplicate = false) {
   openQuestionEditor('qFormTitle');
 }
 
-function openQuestionEditor(focusId = 'qFormId') {
+function openQuestionEditor(focusId = 'qFormTitle') {
   document.querySelector('.question-bank-layout').classList.add('is-editing');
   document.querySelector('.bank-detail').scrollIntoView({ block: 'start' });
   qField(focusId).focus({ preventScroll: true });

@@ -15,12 +15,12 @@
   <meta name="theme-color" content="#0A1322">
   <link rel="stylesheet" href="css/tokens.css?v=18">
   <link rel="stylesheet" href="css/base.css?v=18">
-  <link rel="stylesheet" href="css/exam/exam.css?v=18">
+  <link rel="stylesheet" href="css/exam/exam.css?v=19">
   <link rel="stylesheet" href="css/admin/admin.css?v=19">
   <link rel="stylesheet" href="css/shell.css?v=18">
-  <link rel="stylesheet" href="css/learning/landing.css?v=18">
+  <link rel="stylesheet" href="css/learning/landing.css?v=20">
   <link rel="stylesheet" href="css/account/account.css?v=18">
-  <link rel="stylesheet" href="css/exam/ept-exam.css?v=20">
+  <link rel="stylesheet" href="css/exam/ept-exam.css?v=22">
   <link rel="stylesheet" href="css/admin/question-editor.css?v=19">
   <link rel="stylesheet" href="css/admin/question-preview.css?v=19">
   <link rel="stylesheet" href="css/admin/question-bank.css?v=19">
@@ -36,8 +36,12 @@
   <link rel="stylesheet" href="css/account/account-info.css?v=18">
   <link rel="stylesheet" href="css/admin/admin-monitor.css?v=19">
   <link rel="stylesheet" href="css/site-finish.css?v=18">
-  <link rel="stylesheet" href="/css/exam/exam-session.css?v=2">
+  <link rel="stylesheet" href="/css/exam/exam-session.css?v=5">
+  <link rel="stylesheet" href="/css/exam/exam-preparation.css?v=1">
   <link rel="stylesheet" href="/css/admin/exam-packages.css?v=2">
+  <link rel="stylesheet" href="/css/accessibility.css?v=2">
+  <link rel="stylesheet" href="/css/controls.css?v=1">
+  <link rel="stylesheet" href="/css/admin/admin-components.css?v=1">
 </head>
 <body>
   <a class="skip-link" href="#mainContent">Lewati navigasi</a>
@@ -49,12 +53,12 @@
       <a href="/practice">Latihan Bebas</a>
     </nav>
     <div class="account-nav" id="accountNav"><a href="/login" class="nav-login">Masuk</a><a href="/register" class="btn-primary">Daftar</a></div>
-    <button type="button" id="siteMenuToggle" class="site-menu-toggle" onclick="toggleSiteMenu()" aria-controls="sitePublicNav" aria-expanded="false" aria-label="Buka navigasi"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    <button type="button" id="siteMenuToggle" class="site-menu-toggle" onclick="toggleSiteMenu()" aria-controls="sitePublicNav" aria-expanded="false" aria-label="Buka navigasi"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
   </div></header>
   <div id="app"><main id="mainContent" class="landing" tabindex="-1">
   <section class="ept-hero"><div class="container ept-hero-layout">
-    <div class="hero-copy"><h1>Lebih paham.<br>Lebih siap EPT.</h1><p>Persiapkan TOEFL EPT melalui latihan Listening, Structure, dan Reading, dari satu soal hingga satu sesi utuh.</p><div class="action-row"><a href="/register" class="btn-primary">Mulai persiapan EPT <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a><a href="/#sample" class="hero-secondary"><span data-icon="chevronRight"></span>Coba satu soal</a></div><div class="hero-skill-list" aria-label="Modul EPT"><span><span data-icon="headphones"></span>Listening</span><span><span data-icon="layers"></span>Structure</span><span><span data-icon="book"></span>Reading</span></div></div>
-    <figure class="workspace-preview"><div class="hero-product-caption"><span data-icon="headphones"></span><span>Dari mendengar, sampai memahami.</span></div><div class="hero-product-crop"><img src="/assets/previews/ept-workspace.svg" alt="Simulasi interaktif ruang ujian Listening EPT: pemutar audio dan pilihan jawaban" width="800" height="520" fetchpriority="high"></div><figcaption><span>Tampilan ruang ujian LinguaPulse</span><a href="/exam">Siapkan sesi ujian <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 18 18 6M6 6h12v12"/></svg></a></figcaption></figure>
+    <div class="hero-copy"><h1>Lebih paham.<br>Lebih siap EPT.</h1><p>Persiapkan TOEFL EPT melalui latihan Listening, Structure, dan Reading, dari satu soal hingga satu sesi utuh.</p><div class="action-row"><a href="/register" class="btn-primary">Mulai persiapan EPT <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a><a href="/#sample" class="hero-secondary"><span data-icon="chevronRight"></span>Coba satu soal</a></div><div class="hero-skill-list" role="group" aria-label="Modul EPT"><span><span data-icon="headphones"></span>Listening</span><span><span data-icon="layers"></span>Structure</span><span><span data-icon="book"></span>Reading</span></div></div>
+    <figure class="workspace-preview"><div class="hero-product-caption"><span data-icon="headphones"></span><span>Dari mendengar, sampai memahami.</span></div><div class="hero-product-crop"><img src="/assets/previews/ept-workspace.png?v=2" alt="Lembar Listening dengan pemutar audio di atas pertanyaan dan pilihan jawaban." width="758" height="494" fetchpriority="high"></div><figcaption><span>Tampilan ruang ujian LinguaPulse</span><a href="/exam">Siapkan sesi ujian <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a></figcaption></figure>
   </div></section>
   <section id="modules" class="container ept-modules"><div class="section-intro"><h2>Tiga bagian.<br>Satu langkah lebih siap.</h2><p>Kenali bentuk latihan, lalu fokus pada keterampilan yang ingin Anda perkuat.</p></div>
     <div class="module-switcher"><div class="module-tabs" role="tablist" aria-label="Materi TOEFL EPT"><button type="button" id="moduleTab0" role="tab" aria-selected="true" aria-controls="modulePanel0" onclick="selectLandingModule(0)"><span data-icon="headphones"></span>Listening</button><button type="button" id="moduleTab1" role="tab" aria-selected="false" aria-controls="modulePanel1" tabindex="-1" onclick="selectLandingModule(1)"><span data-icon="layers"></span>Structure</button><button type="button" id="moduleTab2" role="tab" aria-selected="false" aria-controls="modulePanel2" tabindex="-1" onclick="selectLandingModule(2)"><span data-icon="book"></span>Reading</button></div>
@@ -63,37 +67,40 @@
       <article id="modulePanel2" class="hidden" role="tabpanel" aria-labelledby="moduleTab2"><div><h3>Baca lebih teliti.<br>Temukan gagasan utamanya.</h3><p>Latih pemahaman teks akademik, informasi rinci, dan makna kata dalam konteks.</p></div><ul><li><span data-icon="check"></span>Bacaan dan jawaban berdampingan</li><li><span data-icon="check"></span>Pertanyaan berdasarkan wacana akademik</li><li><span data-icon="check"></span>Navigasi soal tanpa kehilangan jawaban</li></ul></article>
     </div><p class="research-note"><span data-icon="pen"></span>Writing tersedia sebagai tugas tambahan penelitian, terpisah dari ketepatan jawaban EPT.</p>
   </section>
-  <section class="sample-section" id="sample"><div class="container sample-layout"><div class="sample-intro"><h2>Satu soal.<br>Satu pemahaman baru.</h2><p>Mulai dengan Structure. Pilih jawaban dan lihat alasan di balik pilihan yang tepat.</p><ol class="sample-guide"><li><span data-icon="edit"></span>Coba jawab dengan pemahaman Anda.</li><li><span data-icon="book"></span>Pelajari pembahasan secara langsung.</li></ol><div class="sample-intro-note"><span data-icon="layers"></span><span>Diambil dari bank soal aktif. Tanpa masuk akun.</span></div></div><div class="sample-question" aria-labelledby="samplePrompt"><div class="sample-topline"><span><span data-icon="layers"></span>Latihan Structure</span><span>Contoh soal</span></div><h3 id="samplePrompt">Memuat contoh soal…</h3><div class="sample-options" id="sampleOptions"></div><p id="sampleFeedback" class="sample-feedback" role="status" aria-live="polite">Pilih jawaban untuk melihat pembahasan.</p><a href="/practice" id="sampleContinue" class="sample-continue hidden">Lanjut ke latihan bebas <span data-icon="chevronRight"></span></a></div></div></section>
+  <section class="sample-section" id="sample"><div class="container sample-layout"><div class="sample-intro"><h2>Satu soal.<br>Satu pemahaman baru.</h2><p>Mulai dengan Structure. Pilih jawaban dan lihat alasan di balik pilihan yang tepat.</p><ol class="sample-guide"><li><span data-icon="edit"></span>Coba jawab dengan pemahaman Anda.</li><li><span data-icon="book"></span>Pelajari pembahasan secara langsung.</li></ol><div class="sample-intro-note"><span data-icon="layers"></span><span>Diambil dari bank soal aktif. Tanpa masuk akun.</span></div></div><div class="sample-question" role="group" aria-labelledby="samplePrompt"><div class="sample-topline"><span><span data-icon="layers"></span>Latihan Structure</span><span>Contoh soal</span></div><h3 id="samplePrompt">Memuat contoh soal…</h3><div class="sample-options" id="sampleOptions"></div><p id="sampleFeedback" class="sample-feedback" role="status" aria-live="polite">Pilih jawaban untuk melihat pembahasan.</p><a href="/practice" id="sampleContinue" class="sample-continue hidden">Lanjut ke latihan bebas <span data-icon="chevronRight"></span></a></div></div></section>
   <section class="custom-section"><div class="container custom-layout"><div><h2>Belajar fleksibel.<br>Sesuai kebutuhan Anda.</h2><p>Pilih mode mandiri tanpa beban timer, atau uji simulasi format EPT utuh dengan durasi yang diatur pengawas dengan pengawasan integritas riset.</p></div><dl class="custom-capabilities"><div><dt><span data-icon="book"></span>Latihan bebas</dt><dd>Latihan Listening, Structure, atau Reading per soal tanpa timer. Periksa jawaban dan pelajari pembahasan seketika. <a href="/practice">Mulai sekarang <span data-icon="arrowUpRight"></span></a></dd></div><div><dt><span data-icon="clock"></span>Sesi ujian</dt><dd>Paket EPT lengkap dengan durasi yang diatur pengawas dan navigasi soal lengkap. <a href="/exam">Siapkan sesi <span data-icon="arrowUpRight"></span></a></dd></div><div><dt><span data-icon="shield"></span>Riset telemetri</dt><dd>Mendukung riset model XGBoost &amp; 1D-CNN untuk deteksi integritas pengerjaan secara privasi-sadar. <a href="/privacy">Info privasi <span data-icon="arrowUpRight"></span></a></dd></div></dl></div></section>
   <section class="container ept-workflow"><h2>Belajar dengan<br>alur yang jelas.</h2><ol><li><h3>Siapkan sesi</h3><p>Masuk, baca petunjuk, dan periksa perangkat serta audio sebelum mulai.</p></li><li><h3>Kerjakan dengan fokus</h3><p>Gunakan navigasi nomor soal, tandai yang perlu ditinjau, dan pantau sisa waktu.</p></li><li><h3>Tinjau hasil pribadi</h3><p>Lihat rincian Listening, Structure, Reading, serta catatan Writing tambahan.</p></li></ol></section>
   <section class="container ept-privacy"><div><span data-icon="shield"></span><h2>Fokus pada latihan.<br>Tetap pahami privasinya.</h2></div><div><p>Sensor hanya aktif selama sesi ujian. Kamera, mikrofon, rekaman layar, dan isi papan klip tidak direkam.</p><a href="/privacy" class="text-link">Baca informasi privasi dan riset</a></div></section>
   <section class="faq-section container"><h2>Sebelum memulai.</h2><div class="faq-list"><details><summary>Apakah ini tes TOEFL EPT resmi?</summary><p>LinguaPulse adalah prototipe latihan dan riset, bukan penerbit sertifikat TOEFL. Hasil yang ditampilkan berupa ketepatan jawaban latihan.</p></details><details><summary>Apakah Writing termasuk nilai EPT?</summary><p>Tidak. Writing dan perbaikan kalimat merupakan tugas tambahan untuk penelitian. Ketepatan pilihan ganda EPT dihitung dari Listening, Structure, dan Reading.</p></details><details><summary>Bisakah pengawas memakai soal sendiri?</summary><p>Bisa. Editor mendukung pertanyaan custom, audio Listening, bacaan, pilihan jawaban, kunci, dan pembahasan.</p></details><details><summary>Bagaimana jika koneksi terputus?</summary><p>Draf tersimpan di perangkat selama sesi. Jika pengiriman gagal, Anda dapat mencoba mengirim kembali.</p></details></div></section>
 </main></div>
   <footer class="site-footer" id="siteFooter"><div class="container footer-inner"><div><a class="footer-brand" href="/">LinguaPulse</a><p>Persiapan TOEFL EPT. <br>Prototipe untuk pembelajaran dan penelitian.</p></div><nav aria-label="Tautan lainnya"><a href="/#modules">Materi latihan</a><a href="/practice">Latihan bebas</a><a href="/exam">Sesi ujian</a><a href="/dashboard">Dasbor peserta</a><a href="/privacy">Privasi &amp; riset</a><a href="/terms">Syarat &amp; ketentuan</a><a href="/login">Akun peserta</a></nav><p class="footer-note">TOEFL adalah merek dagang ETS. <br>LinguaPulse tidak berafiliasi dengan ETS.</p></div></footer>
-  <div id="toastBox" class="toast hidden" role="status" aria-live="polite"></div>
+  <div id="toastBox" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
   <noscript><div class="noscript-note">Aktifkan JavaScript untuk masuk dan mengerjakan latihan.</div></noscript>
   <script src="/js/core/icons.js?v=18"></script>
   <script src="/js/core/state.js?v=18"></script>
   <script src="/js/exam/security.js?v=18"></script>
   <script src="/js/account/auth.js?v=18"></script>
   <script src="/js/exam/telemetry.js?v=18"></script>
-  <script src="/js/exam/exam-render.js?v=21"></script>
-  <script src="/js/exam/exam-packages.js?v=1"></script>
-  <script src="/js/exam/exam.js?v=20"></script>
-  <script src="/js/learning/results.js?v=20"></script>
+  <script src="/js/exam/exam-render.js?v=23"></script>
+  <script src="/js/exam/exam-packages.js?v=2"></script>
+  <script src="/js/exam/exam.js?v=23"></script>
+  <script src="/js/learning/results.js?v=22"></script>
   <script src="/js/learning/dashboard.js?v=18"></script>
-  <script src="/js/admin/admin-packages.js?v=2"></script>
-  <script src="/js/admin/admin-schedules.js?v=1"></script>
-  <script src="/js/admin/admin.js?v=20"></script>
+  <script src="/js/admin/admin-packages.js?v=3"></script>
+  <script src="/js/admin/admin-schedules.js?v=4"></script>
+  <script src="/js/admin/time-accommodations.js?v=2"></script>
+  <script src="/js/admin/admin.js?v=21"></script>
   <script src="/js/admin/question-io.js?v=18"></script>
-  <script src="/js/admin/question-editor.js?v=19"></script>
-  <script src="/js/admin/question-actions.js?v=19"></script>
+  <script src="/js/admin/question-editor.js?v=21"></script>
+  <script src="/js/admin/question-actions.js?v=20"></script>
   <script src="/js/learning/landing.js?v=18"></script>
-  <script src="/js/admin/admin-combobox.js?v=18"></script>
-  <script src="/js/admin/admin-users.js?v=18"></script>
+  <script src="/js/admin/admin-combobox.js?v=19"></script>
+  <script src="/js/admin/admin-users.js?v=19"></script>
   <script src="/js/admin/admin-shell.js?v=18"></script>
-  <script src="/js/admin/admin-overview.js?v=20"></script>
+  <script src="/js/admin/admin-overview.js?v=21"></script>
   <script src="/js/learning/practice.js?v=18"></script>
-  <script src="/js/core/router.js?v=20"></script>
+  <script src="/js/core/accessibility.js?v=1"></script>
+  <script src="/js/core/form-errors.js?v=1"></script>
+  <script src="/js/core/router.js?v=22"></script>
 </body>
 </html>

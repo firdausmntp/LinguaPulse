@@ -20,7 +20,10 @@ async function uploadQuestionAudio(event) {
   try {
     const encoded = await new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(reader.result.split(',')[1]); reader.onerror = () => reject(new Error('Berkas audio tidak dapat dibaca.')); reader.readAsDataURL(file); });
     const data = await api('/api/admin/audio', { method: 'POST', body: JSON.stringify({ filename: file.name, data_base64: encoded }) });
-    qField('qFormAudio').value = data.audio_url; updateAudioPreview();
+    const input = qField('qFormAudio');
+    input.value = data.audio_url;
+    clearFieldError(input);
+    updateAudioPreview();
     questionMessage('Audio diunggah. Simpan soal untuk menghubungkan audio ini.');
   } catch (error) { questionMessage(error.message, true); }
   finally { setQuestionBusy(false); event.target.value = ''; }

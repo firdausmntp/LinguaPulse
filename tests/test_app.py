@@ -169,7 +169,7 @@ def run():
             page.screenshot(path=str(artifacts / 'exam-desktop.png'), full_page=True)
             page.set_viewport_size({'width': 375, 'height': 812})
             assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
-            assert page.locator('.pane-right').bounding_box()['width'] >= 300
+            assert page.locator('.exam-sheet').bounding_box()['width'] >= 300
             page.screenshot(path=str(artifacts / 'exam-mobile.png'), full_page=True)
             page.set_viewport_size({'width': 1440, 'height': 900})
             page.locator('#submitExamButton').click()
@@ -202,7 +202,8 @@ def run():
             other.locator('#regTerms').check()
             other.locator('#regConfirm').fill('notmatching')
             other.get_by_role('button', name='Buat akun peserta', exact=True).click()
-            expect(other.locator('#authErrorMsg')).to_contain_text('belum sama')
+            expect(other.locator('#regConfirm')).to_be_focused()
+            expect(other.locator('#regConfirm-error')).to_contain_text('kata sandi yang sama')
             other.locator('#regConfirm').fill('browserpassword123')
             other.get_by_role('button', name='Buat akun peserta', exact=True).click()
             other.wait_for_url('**/dashboard')
@@ -234,8 +235,9 @@ def run():
             other.locator('#beginExamButton').click()
             other.wait_for_url('**/exam/session')
             expect(other.locator('#listeningMcContainer input').first).to_be_visible()
-            other.locator('.nav-account').click()
+            other.locator('#examExit').click()
             other.wait_for_url('**/dashboard')
+            assert other.evaluate('!!localStorage.getItem(draftKey())')
             other.locator('.participant-identity summary').click()
             expect(other.locator('#participantDetails')).to_be_visible()
             before = other.evaluate('telemetryState.totalKeydowns + telemetryState.focusLossEpisodes + telemetryState.heatmapPoints.length')
@@ -275,7 +277,7 @@ def run():
             page.get_by_role('button', name='Bank soal').click()
             expect(page.locator('#adminQuestionsBody tr').first).to_be_visible()
             page.locator('#adminQuestionsBody .btn-sm').first.click()
-            expect(page.locator('#qFormId')).not_to_have_value('')
+            expect(page.locator('#questionEditorTitle')).to_contain_text('Edit soal')
             page.get_by_role('button', name='Akun pengguna').click()
             expect(page.locator('#adminUsersBody')).to_contain_text('<script>alert(1)</script>')
             # Real text must remain escaped, never execute or become markup.

@@ -1,0 +1,75 @@
+/* Shared action sizes and field styling. Feature CSS supplies layout. */
+:is(.btn-primary, .btn-secondary, .btn-subtle, .btn-outline-light, .btn-submit-exam, .btn-sm) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: var(--control-height);
+  padding: 8px 16px;
+  border: 1px solid var(--color-input-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-paper-2);
+  color: var(--color-ink);
+  font: 600 .875rem/1.35 var(--font-body);
+  text-align: center;
+  text-decoration: none;
+  white-space: normal;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+}
+:is(.btn-primary, .btn-secondary, .btn-subtle, .btn-outline-light, .btn-submit-exam, .btn-sm):not(.admin-refresh-top):has(> svg:first-child, > [data-icon]:first-child) {
+  padding-inline-start: 14px;
+}
+:is(.btn-primary, .btn-secondary, .btn-subtle, .btn-outline-light, .btn-submit-exam, .btn-sm):not(.admin-refresh-top):has(> svg:last-child, > [data-icon]:last-child) {
+  padding-inline-end: 14px;
+}
+:is(.btn-primary, .btn-secondary, .btn-subtle, .btn-outline-light, .btn-submit-exam, .btn-sm):active:not(:disabled) {
+  transform: scale(0.97);
+}
+:is(.btn-primary, .btn-submit-exam) { border-color: var(--color-accent); background: var(--color-accent); color: var(--color-accent-ink); }
+.btn-subtle { background: transparent; border-color: transparent; color: var(--color-accent); }
+.btn-outline-light { background: transparent; }
+:is(.btn-compact, .btn-sm) { min-height: var(--control-compact); padding: 5px 10px; font-size: .8125rem; }
+:is(.btn-compact, .btn-sm):has(> svg:first-child, > [data-icon]:first-child) { padding-inline-start: 8px; }
+:is(.btn-compact, .btn-sm):has(> svg:last-child, > [data-icon]:last-child) { padding-inline-end: 8px; }
+:is(.btn-primary, .btn-secondary, .btn-subtle, .btn-outline-light, .btn-submit-exam, .btn-sm):disabled {
+  border-color: var(--color-rule-2);
+  background: var(--color-paper-3);
+  color: var(--color-muted);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.btn-danger:not(:disabled) { border-color: var(--color-bad); background: var(--color-bad-soft); color: var(--color-danger-ink); }
+@media (hover: hover) {
+  :is(.btn-primary, .btn-submit-exam):hover:not(:disabled) { border-color: var(--color-accent-hover); background: var(--color-accent-hover); color: var(--color-accent-ink); }
+  :is(.btn-secondary, .btn-outline-light, .btn-subtle, .btn-sm):hover:not(:disabled) { border-color: var(--color-accent); background: var(--color-accent-soft); color: var(--color-accent); }
+  .btn-danger:not(:disabled):hover { border-color: var(--color-danger-ink); background: #fee2e2; color: var(--color-danger-ink); }
+}
+
+#app :is(input:not([type]), input[type="text"], input[type="password"], input[type="email"], input[type="number"], input[type="search"], input[type="datetime-local"], select, textarea) {
+  width: 100%;
+  min-width: 0;
+  min-height: var(--control-height);
+  padding-block: 8px;
+  padding-inline: 12px var(--field-end-space, 12px);
+  border: 1px solid var(--color-input-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-paper-2);
+  color: var(--color-ink);
+  font: 400 1rem/1.5 var(--font-body);
+}
+#app :is(input, select, textarea):disabled { background: var(--color-paper-3); color: var(--color-muted); }
+#app .listening-practice-mode select { width: auto; max-width: 100%; }
+#app :is(input, textarea, select)[aria-invalid="true"] { border-color: var(--color-danger-ink); }
+#app .field-error { color: var(--color-danger-ink); font-size: .8125rem; font-weight: 600; }
+.password-field { --field-end-space: 104px; }
+.admin-combobox { --field-end-space: 32px; }
+#app input[type="file"] { max-width: 100%; font: inherit; }
+#app input::file-selector-button { min-height: var(--control-compact); margin-inline-end: 8px; padding: 5px 10px; border: 1px solid var(--color-input-border); border-radius: var(--radius-sm); background: var(--color-paper-2); color: var(--color-ink); font: inherit; cursor: pointer; }
+.site-header .account-nav .btn-primary, .site-header .account-nav .btn-secondary { min-height: var(--control-height); padding-inline: 12px; }
+.hero-copy .btn-primary { min-height: 48px; }
+@media (max-width: 700px) {
+  :is(.btn-compact, .btn-sm) { min-height: 44px; }
+  .site-header .account-nav .btn-primary, .site-header .account-nav .btn-secondary { min-height: 36px; padding-inline: 8px; }
+}

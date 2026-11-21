@@ -1,6 +1,7 @@
 // Admin-only account management; text is always rendered through escaping.
 const userManagement = { users: [], editing: null, busy: false };
 function initUserManagement() {
+  enableFormErrors(document.getElementById('userEditorForm'));
   document.getElementById('userSearch').addEventListener('input', renderAdminUsers);
   document.getElementById('userRoleFilter').addEventListener('change', renderAdminUsers);
   document.getElementById('userEditorDialog').addEventListener('cancel', event => { if (userManagement.busy) event.preventDefault(); });
@@ -22,7 +23,7 @@ function renderAdminUsers() {
   const counts = [ ['Total akun', userManagement.users.length], ['Admin', userManagement.users.filter(u => u.role === 'admin').length], ['Peserta', userManagement.users.filter(u => u.role === 'student').length] ];
   document.getElementById('usersSummary').innerHTML = counts.map(([label, number]) => `<div><span>${label}</span><strong>${number}</strong></div>`).join('');
   document.getElementById('userListStatus').textContent = `${users.length} akun ditampilkan`;
-  document.getElementById('adminUsersBody').innerHTML = users.map(user => `<tr><td data-label="Pengguna"><div class="user-cell"><span class="user-initials" aria-hidden="true">${escapeHtml(getInitials(user.display_name))}</span><div><strong>${escapeHtml(user.display_name)}</strong><small>${escapeHtml(user.username)}${user.user_id === appState.currentUser.user_id ? ' (Anda)' : ''}</small><small>${escapeHtml(user.participant_code)}</small></div></div></td><td data-label="Kontak">${escapeHtml(user.email)}</td><td data-label="Peran"><span class="user-role-badge">${user.role === 'admin' ? 'Admin' : 'Peserta'}</span></td><td data-label="Dibuat"><time datetime="${escapeHtml(user.created_at.replace(' ', 'T'))}">${escapeHtml(formatDateTime(user.created_at))}</time></td><td data-label="Aksi"><div class="user-row-actions"><button type="button" class="btn-secondary" data-edit-user="${user.user_id}">Edit</button><button type="button" class="btn-secondary user-delete" data-delete-user="${user.user_id}" ${user.user_id === appState.currentUser.user_id ? 'disabled title="Akun yang sedang digunakan"' : ''}>Hapus</button></div></td></tr>`).join('') || '<tr><td colspan="5">Tidak ada akun yang cocok. Ubah pencarian atau tambahkan akun.</td></tr>';
+  document.getElementById('adminUsersBody').innerHTML = users.map(user => `<tr role="row"><td role="cell" data-label="Pengguna"><div class="user-cell"><span class="user-initials" aria-hidden="true">${escapeHtml(getInitials(user.display_name))}</span><div><strong>${escapeHtml(user.display_name)}</strong><small>${escapeHtml(user.username)}${user.user_id === appState.currentUser.user_id ? ' (Anda)' : ''}</small><small>${escapeHtml(user.participant_code)}</small></div></div></td><td role="cell" data-label="Kontak">${escapeHtml(user.email)}</td><td role="cell" data-label="Peran"><span class="user-role-badge">${user.role === 'admin' ? 'Admin' : 'Peserta'}</span></td><td role="cell" data-label="Dibuat"><time datetime="${escapeHtml(user.created_at.replace(' ', 'T'))}">${escapeHtml(formatDateTime(user.created_at))}</time></td><td role="cell" data-label="Aksi"><div class="user-row-actions"><button type="button" class="btn-secondary btn-compact" data-edit-user="${user.user_id}">Edit</button><button type="button" class="btn-secondary btn-danger btn-compact" data-delete-user="${user.user_id}" ${user.user_id === appState.currentUser.user_id ? 'disabled title="Akun yang sedang digunakan"' : ''}>Hapus</button></div></td></tr>`).join('') || '<tr role="row"><td role="cell" colspan="5">Tidak ada akun yang cocok. Ubah pencarian atau tambahkan akun.</td></tr>';
   document.querySelectorAll('[data-edit-user]').forEach(button => button.addEventListener('click', () => openUserEditor(Number(button.dataset.editUser))));
   document.querySelectorAll('[data-delete-user]').forEach(button => button.addEventListener('click', () => deleteAdminUser(Number(button.dataset.deleteUser))));
 }
@@ -56,12 +57,12 @@ async function saveAdminUser(event) {
     if (data.user.user_id === appState.currentUser.user_id) updateProfileUI(data.user);
     await loadAdminUsersTable();
     document.getElementById('userListStatus').textContent = 'Akun ' + data.user.username + ' tersimpan.';
-  } catch (err) { error.textContent = err.message; error.classList.remove('hidden'); }
+  } catch (err) { showFormError(error, err.message); }
   finally { userManagement.busy = false; button.disabled = false; button.textContent = 'Simpan akun'; }
 }
 async function deleteAdminUser(id) {
   const user = userManagement.users.find(item => item.user_id === id);
-  if (!user || userManagement.busy || !await adminConfirm('Hapus akun ' + user.username + '?', 'Akses login dan sesi aktif akun ini akan dihapus. Riwayat ujian yang telah dikirim tetap tersimpan.', 'Hapus akun')) return;
+  if (!user || userManagement.busy || !await adminConfirm('Hapus akun ' + user.username + '?', 'Akses login dan sesi aktif akun ini akan dihapus. Riwayat ujian yang telah dikirim tetap tersimpan.', 'Hapus akun', true)) return;
   userManagement.busy = true;
   try {
     await api('/api/admin/users?id=' + id, { method: 'DELETE' });
@@ -71,13 +72,15 @@ async function deleteAdminUser(id) {
   finally { userManagement.busy = false; }
 }
 
-function adminConfirm(title, message, accept = 'Lanjutkan') {
+function adminConfirm(title, message, accept = 'Lanjutkan', danger = false) {
   const dialog = document.getElementById('adminConfirmDialog');
   if (!dialog || dialog.open) return Promise.resolve(false);
   const previousFocus = document.activeElement;
   document.getElementById('adminConfirmTitle').textContent = title;
   document.getElementById('adminConfirmMessage').textContent = message;
-  document.getElementById('adminConfirmAccept').textContent = accept;
+  const action = document.getElementById('adminConfirmAccept');
+  action.textContent = accept;
+  action.classList.toggle('btn-danger', danger);
   dialog.returnValue = 'cancel';
   return new Promise(resolve => {
     dialog.addEventListener('close', () => {

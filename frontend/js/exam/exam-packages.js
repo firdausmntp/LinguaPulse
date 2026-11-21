@@ -16,7 +16,7 @@ function renderScheduleChoices() {
     const statusLabel = s.window_state === 'upcoming' ? 'Belum dibuka' : s.window_state === 'closed' ? 'Ditutup' : (s.joinable ? 'Dibuka' : 'Belum siap');
     return `<button type="button" class="exam-package-card" data-schedule="${escapeHtml(s.schedule_id)}" aria-pressed="${String(active)}">
       <span class="package-card-top"><strong>${escapeHtml(s.title)}</strong><span>${escapeHtml(s.session_code)}</span></span>
-      <span class="package-description">${escapeHtml(s.package_name)} · ${s.duration_minutes} menit · Batas waktu: ${escapeHtml(formatScheduleDeadline(s.closes_at))}</span>
+      <span class="package-description">${escapeHtml(s.package_name)} · ${s.duration_minutes} menit${s.extra_minutes ? ` + ${s.extra_minutes} menit tambahan` : ''} · Batas waktu: ${escapeHtml(formatScheduleDeadline(s.closes_at))}</span>
       <span class="package-card-bottom">${s.question_count} soal &amp; tugas <span>${statusLabel}</span></span>
     </button>`;
   }).join('') || '<div class="package-empty"><strong>Belum ada sesi terjadwal</strong><p>Anda tetap dapat memilih paket latihan langsung di bawah bila tersedia.</p></div>';
@@ -29,7 +29,9 @@ async function selectPreparationSchedule(scheduleId) {
   if (!sched) return;
   preparationPackages.selectedSchedule = sched;
   document.getElementById('sessionCodeInput').value = sched.session_code;
+  const focusWasOnCard = document.activeElement?.dataset.schedule === scheduleId;
   renderScheduleChoices();
+  if (focusWasOnCard) document.querySelector(`[data-schedule="${CSS.escape(scheduleId)}"]`)?.focus();
   if (feedback) feedback.textContent = `Sesi ${sched.session_code} (${sched.title}) · Batas waktu: ${formatScheduleDeadline(sched.closes_at)}`;
   await selectPreparationPackage(sched.package_id, sched);
 }
@@ -38,21 +40,22 @@ function applySessionCode() {
   const input = document.getElementById('sessionCodeInput');
   const feedback = document.getElementById('sessionCodeFeedback');
   const code = (input?.value || '').trim().toUpperCase();
+  clearFieldError(input);
   if (!code) {
     preparationPackages.selectedSchedule = null;
     renderScheduleChoices();
-    if (feedback) feedback.textContent = 'Masukkan kode sesi atau pilih jadwal yang tersedia.';
+    setFieldError(input, 'Masukkan kode sesi atau pilih jadwal yang tersedia.');
+    if (preparationPackages.selected) selectPreparationPackage(preparationPackages.selected);
     return;
   }
   const match = preparationPackages.schedules.find(s => s.session_code.toUpperCase() === code);
   if (!match) {
     preparationPackages.selectedSchedule = null;
     renderScheduleChoices();
-    if (feedback) feedback.textContent = `Kode "${code}" tidak ditemukan di jadwal aktif. Anda tetap dapat memverifikasi lewat Mulai sesi.`;
-    preparationPackages.manualSessionCode = code;
+    if (feedback) feedback.textContent = '';
+    setFieldError(input, 'Kode tidak ditemukan. Periksa kode dari pengawas atau pilih jadwal yang tersedia.');
     return;
   }
-  preparationPackages.manualSessionCode = null;
   selectPreparationSchedule(match.schedule_id);
 }
 
@@ -60,12 +63,16 @@ async function loadPreparationPackages() {
   const error = document.getElementById('prepareError');
   const button = document.getElementById('beginExamButton');
   button.disabled = true;
-  document.getElementById('applySessionCodeButton')?.addEventListener('click', applySessionCode);
+  document.getElementById('applySessionCodeButton').addEventListener('click', applySessionCode);
+  const codeInput = document.getElementById('sessionCodeInput');
+  codeInput.addEventListener('input', () => clearFieldError(codeInput));
+  codeInput.addEventListener('keydown', event => { if (event.key === 'Enter') applySessionCode(); });
   try {
     const [pkgData, schedData] = await Promise.all([api('/api/exam/packages'), api('/api/exam/schedules')]);
     if (!document.getElementById('packageChoices')) return;
     preparationPackages.items = pkgData.packages;
     preparationPackages.schedules = schedData.schedules || [];
+    preparationPackages.selectedSchedule = null;
     renderScheduleChoices();
     document.getElementById('packageChoices').innerHTML = pkgData.packages.map(p => `
       <button type="button" class="exam-package-card" data-package="${escapeHtml(p.package_id)}" aria-pressed="false">
@@ -75,9 +82,9 @@ async function loadPreparationPackages() {
       </button>`).join('') || '<div class="package-empty"><strong>Belum ada paket yang tersedia</strong><p>Admin perlu menyiapkan dan memublikasikan paket terlebih dahulu.</p></div>';
     document.querySelectorAll('[data-package]').forEach(el => el.addEventListener('click', () => {
       preparationPackages.selectedSchedule = null;
-      preparationPackages.manualSessionCode = null;
       const codeInput = document.getElementById('sessionCodeInput');
-      if (codeInput) codeInput.value = '';
+      codeInput.value = '';
+      clearFieldError(codeInput);
       renderScheduleChoices();
       const fb = document.getElementById('sessionCodeFeedback');
       if (fb) fb.textContent = '';
@@ -101,9 +108,16 @@ async function selectPreparationPackage(id, sched = null) {
     if (request !== preparationPackages.request || !button.isConnected) return;
     appState.questionsBank = bank;
     document.getElementById('preparePackageName').textContent = sched ? `${selected.name} (${sched.session_code})` : selected.name;
-    document.getElementById('prepareDuration').textContent = `${selected.duration_minutes} menit, dimulai setelah Anda menekan Mulai`;
+    const extra = sched?.extra_minutes || 0;
+    const total = selected.duration_minutes + extra;
+    const duration = `${total} menit${extra ? ` (${selected.duration_minutes} menit paket + ${extra} menit tambahan)` : ''}`;
+    const available = sched?.closes_at ? Math.max(0, Math.floor((Date.parse(sched.closes_at) - Date.now()) / 1000)) : Infinity;
+    const availableLabel = available < total * 60 ? ` Saat ini tersisa sekitar ${Math.floor(available / 60)} menit ${available % 60} detik sebelum jam tutup.` : '';
+    const cutoff = sched?.closes_at ? ` Sesi berakhir paling lambat ${formatScheduleDeadline(sched.closes_at)}. Jika mulai mendekati jam tutup, waktu Anda lebih singkat.` : '';
+    document.getElementById('prepareDuration').textContent = `${duration}, dimulai setelah Anda menekan Mulai.${cutoff}${availableLabel}`;
+    document.getElementById('prepareListeningAccommodation').hidden = !sched?.listening_transcript;
     document.getElementById('prepareBankSummary').innerHTML = [['Listening', 'listening'], ['Structure', 'grammar'], ['Reading', 'reading']].map(([name, key]) => `<div><dt>${name}</dt><dd>${selected.counts[key]} soal</dd></div>`).join('');
-    document.getElementById('prepareWritingSelect').innerHTML = bank.writing_tasks.map(q => `<option value="${escapeHtml(q.id)}">${escapeHtml(q.title)}</option>`).join('') || '<option value="">Tanpa Writing tambahan</option>';
+    document.getElementById('prepareWritingSelect').innerHTML = bank.writing_tasks.map(q => `<option value="${escapeHtml(q.id)}">${escapeHtml(q.title)}</option>`).join('') || '<option value="">Tanpa esai riset</option>';
     document.getElementById('prepareWritingSelect').disabled = !bank.writing_tasks.length;
     if (!selected.ready) throw new Error(selected.problems.join(' ') + ' Hubungi admin untuk menyiapkan paket ini.');
     if (sched && sched.window_state !== 'open') {

@@ -1,3 +1,13 @@
+function questionFieldErrors(form) {
+  const audio = form.querySelector('#qFormAudio');
+  const value = audio.value.trim();
+  const errors = {};
+  if (audio.required && value && !/^https:\/\/[^\s/]+|^\/media\//i.test(value)) {
+    errors.qFormAudio = 'Unggah rekaman atau masukkan alamat audio HTTPS.';
+  }
+  return errors;
+}
+
 async function saveQuestionCrud(event) {
   event.preventDefault();
   if (questionEditor.busy) return;
@@ -10,7 +20,7 @@ async function saveQuestionCrud(event) {
     setQuestionBusy(false); resetQuestionForm();
     await loadAdminQuestionsTable();
     questionMessage('Soal ' + payload.question_id.toLowerCase() + ' tersimpan dan tersinkron ke bank soal.');
-  } catch (error) { questionMessage(error.message, true); }
+  } catch (error) { showFormError(qField('questionFormError'), error.message); }
   finally { setQuestionBusy(false); }
 }
 
@@ -26,7 +36,7 @@ async function toggleQuestionActive(index) {
 }
 
 async function deleteQuestionRow(id) {
-  if (questionEditor.busy || !await adminConfirm('Hapus soal ' + id + '?', 'Soal ini tidak tersedia untuk sesi baru setelah dihapus. Soal pada sesi yang telah tersimpan tetap dipertahankan.' + (questionEditor.original === id && questionEditor.dirty ? ' Perubahan editor yang belum disimpan untuk soal ini juga akan dibuang.' : ''), 'Hapus soal')) return;
+  if (questionEditor.busy || !await adminConfirm('Hapus soal ' + id + '?', 'Soal ini tidak tersedia untuk sesi baru setelah dihapus. Soal pada sesi yang telah tersimpan tetap dipertahankan.' + (questionEditor.original === id && questionEditor.dirty ? ' Perubahan editor yang belum disimpan untuk soal ini juga akan dibuang.' : ''), 'Hapus soal', true)) return;
   setQuestionBusy(true);
   try {
     await api('/api/admin/questions?id=' + encodeURIComponent(id), { method: 'DELETE' });
@@ -50,7 +60,7 @@ function previewQuestion() {
       </div>`;
   }
 
-  let passageHtml = '';
+  let passageHtml = q.section === 'listening' && q.passage ? `<details><summary>Transkrip audio</summary><p class="audio-transcript" lang="en">${escapeHtml(readablePassage(q.passage))}</p></details>` : '';
   if (q.section === 'reading' && q.passage) {
     passageHtml = `
       <div class="preview-passage-card">

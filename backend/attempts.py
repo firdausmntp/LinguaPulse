@@ -3,6 +3,7 @@ import json
 import secrets
 import time
 from .database import get_connection
+from .exam_accommodations import listening_transcripts
 from .exam_packages import start_package_bank
 from .exam_schedules import VALID_CONDITIONS, resolve_schedule_for_attempt
 from questions.loader import public_bank
@@ -19,14 +20,17 @@ def start_attempt(user, payload):
     session_code = payload.get('session_code')
     now = time.time()
     if schedule_id or session_code:
-        sched, bank = resolve_schedule_for_attempt(schedule_id, session_code)
+        sched, bank = resolve_schedule_for_attempt(schedule_id, session_code, user['user_id'])
         condition = sched['task_condition']
         sid = sched['schedule_id']
         scode = sched['session_code']
         bank['schedule'] = {
-            k: sched[k] for k in ('schedule_id', 'session_code', 'title', 'opens_at', 'closes_at')
+            k: sched[k] for k in ('schedule_id', 'session_code', 'title', 'opens_at', 'closes_at',
+                                  'extra_minutes', 'listening_transcript')
         }
-        deadline = now + bank['package']['duration_minutes'] * 60
+        if sched['listening_transcript']:
+            bank['listening_transcripts'] = listening_transcripts(bank)
+        deadline = now + (bank['package']['duration_minutes'] + sched['extra_minutes']) * 60
         if sched['closes_ts'] is not None:
             deadline = min(deadline, sched['closes_ts'])
         if deadline <= now:
@@ -62,7 +66,8 @@ def start_attempt(user, payload):
             'VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)',
             (attempt_id, user['user_id'], json.dumps(bank), device, condition, deadline, now, sid, scode),
         )
-    return {'attempt_id': attempt_id, 'deadline': round(deadline * 1000), 'bank': public_bank(bank, condition=condition)}
+    return {'attempt_id': attempt_id, 'deadline': round(deadline * 1000),
+            'bank': public_bank(bank, condition=condition, transcripts=bank.get('listening_transcripts'))}
 
 
 def get_attempt(user, attempt_id):
@@ -76,5 +81,11 @@ def resume_attempt(user, attempt_id):
     row = get_attempt(user, attempt_id)
     if not row:
         raise ValueError('Sesi tidak ditemukan. Mulai sesi baru dari halaman persiapan.')
+    bank = json.loads(row['bank_json'])
+    transcripts = bank.get('listening_transcripts') if row['expires_at'] > time.time() else None
+    if transcripts:
+        with get_connection() as conn:
+            if conn.execute('SELECT 1 FROM exam_submissions WHERE session_id=%s', ('SES-' + attempt_id,)).fetchone():
+                transcripts = None
     return {'attempt_id': attempt_id, 'deadline': round(row['expires_at'] * 1000),
-            'bank': public_bank(json.loads(row['bank_json']), condition=row['task_condition'])}
+            'bank': public_bank(bank, condition=row['task_condition'], transcripts=transcripts)}

@@ -1,7 +1,9 @@
 """InnoDB schema. Parents precede their foreign-key dependants."""
 import json
-from .package_schema import PACKAGE_TABLES, initialize_packages
-from .exam_schedules import SCHEDULE_TABLES, initialize_schedules
+from datetime import datetime, timezone
+from .package_schema import DEFAULT_PACKAGE_ID, DEFAULT_PACKAGE_NAME, PACKAGE_TABLES, initialize_packages
+from .exam_schedules import DEFAULT_SCHEDULE_ID, DEFAULT_SCHEDULE_TITLE, SCHEDULE_TABLES, initialize_schedules
+from .exam_accommodations import ACCOMMODATION_TABLES
 
 TABLES = {
     'users': """
@@ -105,7 +107,7 @@ TABLES = {
 
 
 def initialize_schema(conn):
-    for name, definition in {**TABLES, **PACKAGE_TABLES, **SCHEDULE_TABLES}.items():
+    for name, definition in {**TABLES, **PACKAGE_TABLES, **SCHEDULE_TABLES, **ACCOMMODATION_TABLES}.items():
         conn.execute(f'CREATE TABLE IF NOT EXISTS `{name}` ({definition}) '
                      'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin')
     # Retain legacy options_json for lossless import; reads use question_options.
@@ -126,3 +128,13 @@ def initialize_schema(conn):
         conn.execute('INSERT INTO schema_migrations (version) VALUES (%s)', (marker,))
     initialize_packages(conn)
     initialize_schedules(conn)
+    marker = 'default_exam_names_v1'
+    if not conn.execute('SELECT 1 FROM schema_migrations WHERE version=%s', (marker,)).fetchone():
+        now = datetime.now(timezone.utc).isoformat()
+        conn.execute('UPDATE exam_packages SET name=%s, version=version+1, updated_at=%s '
+                     'WHERE package_id=%s AND name=%s',
+                     (DEFAULT_PACKAGE_NAME, now, DEFAULT_PACKAGE_ID, 'Experimental'))
+        conn.execute('UPDATE exam_schedules SET title=%s, version=version+1, updated_at=%s '
+                     'WHERE schedule_id=%s AND title=%s',
+                     (DEFAULT_SCHEDULE_TITLE, now, DEFAULT_SCHEDULE_ID, 'Gelombang Terbuka Experimental'))
+        conn.execute('INSERT INTO schema_migrations (version) VALUES (%s)', (marker,))

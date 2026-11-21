@@ -16,7 +16,7 @@ Brand sendiri — bukan template pihak ketiga. Cobalt Modern, Familjen Grotesk h
 ## Halaman
 
 - **Landing (`/`):** hero gelap dengan screenshot nyata workspace Listening, switcher tiga modul EPT, sampel Structure interaktif tanpa login, feedback hijau/merah dengan label teks.
-- **Ruang ujian (`/exam/session`):** empat tab (Listening, Structure, Reading, Writing riset), progres nyata, navigator soal, penanda ragu-ragu, audio Listening, Reading per wacana, timer sticky di mobile, minim chrome.
+- **Ruang ujian (`/exam/session`):** satu header netral untuk nama paket, timer, dan progres total. Lembar soal menempatkan pemutar Listening di atas pertanyaan dan instruksi Esai riset di dekat editor. Reading berdampingan di desktop dan dapat dibuka dalam alur halaman pada layar sempit. Navigator dan penanda soal memberi status tanpa mengulang progres. Kobalt menandai fokus, pilihan aktif, dan aksi utama.
 - **Panel pengawas (`/admin`):** sidebar collapsible, ringkasan operasional dengan hierarchy jelas, detail inspeksi di tab Pengawasan (tanpa klaim live monitoring), editor soal master/detail dengan pratinjau, unggah audio, impor/ekspor.
 - **Hasil & riwayat (`/results`, `/history`):** breakdown akurasi per modul, pembahasan terstruktur, riwayat tanpa scroll samping di mobile.
 - **Dasbor peserta (`/dashboard`):** dua jalur jelas — latihan tanpa timer dan ujian berwaktu.

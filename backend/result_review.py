@@ -27,6 +27,7 @@ def build_section_reviews(bank, answers):
                           'options': options, 'correct_answer': int(answer), 'selected_answer': selected_index,
                           'status': status, 'explanation': q.get('explanation', ''),
                           'passage': passage if section == 'reading' else '',
+                          'transcript': passage if section == 'listening' else '',
                           'audio_url': q.get('audio_url', '') if section == 'listening' else ''})
         reviews[section] = items
     return reviews
@@ -35,7 +36,9 @@ def build_section_reviews(bank, answers):
 def enrich_saved_review(data, session_id, user):
     """Add reviews to older saved results only when their original snapshot survives."""
     result = data.get('toefl_practice_result', {})
-    if result.get('section_reviews'):
+    reviews = result.get('section_reviews')
+    missing_transcript = reviews and any('transcript' not in item for item in reviews.get('listening', []))
+    if reviews and not missing_transcript:
         return data
     with get_connection() as conn:
         row = conn.execute("""SELECT a.bank_json, s.answers_json, s.submitted_at
@@ -43,6 +46,12 @@ def enrich_saved_review(data, session_id, user):
             WHERE a.user_id=%s AND s.participant_code=%s AND s.session_id=%s""",
             (user['user_id'], user['participant_code'], session_id)).fetchone()
     if row:
-        result['section_reviews'] = build_section_reviews(json.loads(row['bank_json']), json.loads(row['answers_json']))
+        rebuilt = build_section_reviews(json.loads(row['bank_json']), json.loads(row['answers_json']))
+        if reviews:
+            by_id = {item['id']: item['transcript'] for item in rebuilt['listening']}
+            for item in reviews['listening']:
+                item.setdefault('transcript', by_id.get(item['id'], ''))
+        else:
+            result['section_reviews'] = rebuilt
         data.setdefault('submitted_at', row['submitted_at'])
     return data

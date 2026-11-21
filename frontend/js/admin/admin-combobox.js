@@ -8,6 +8,10 @@ function initAdminComboboxes() {
     const input = document.createElement('input'); input.type = 'text'; input.autocomplete = 'off';
     input.id = select.id + '-combo'; input.setAttribute('role', 'combobox');
     input.setAttribute('aria-autocomplete', 'list'); input.setAttribute('aria-expanded', 'false');
+    for (const name of ['aria-label', 'aria-labelledby', 'aria-describedby']) {
+      if (select.hasAttribute(name)) input.setAttribute(name, select.getAttribute(name));
+    }
+    if (select.required) input.setAttribute('aria-required', 'true');
     const list = document.createElement('div'); list.id = input.id + '-list'; list.className = 'combo-list hidden'; list.setAttribute('role', 'listbox');
     input.setAttribute('aria-controls', list.id);
     document.querySelectorAll(`label[for="${select.id}"]`).forEach(label => {
@@ -17,14 +21,16 @@ function initAdminComboboxes() {
     select.before(wrapper); wrapper.append(input, list); select.classList.add('combo-source');
     select.setAttribute('aria-hidden', 'true'); select.tabIndex = -1;
     let active = -1;
-    const close = () => { list.classList.add('hidden'); input.setAttribute('aria-expanded', 'false'); input.removeAttribute('aria-activedescendant'); sync(); };
+    const close = () => { active = -1; list.classList.add('hidden'); input.setAttribute('aria-expanded', 'false'); input.removeAttribute('aria-activedescendant'); sync(); };
     const sync = () => { input.disabled = select.disabled; if (input.getAttribute('aria-expanded') !== 'true') input.value = select.selectedOptions[0]?.textContent || ''; };
     const render = (filter = '') => {
-      list.replaceChildren(); active = -1;
+      list.replaceChildren(); active = -1; input.removeAttribute('aria-activedescendant');
       [...select.options].filter(option => !option.disabled && option.text.toLowerCase().includes(filter.toLowerCase())).forEach(option => {
         const item = document.createElement('div'); item.id = list.id + '-' + list.children.length;
         item.setAttribute('role', 'option'); item.setAttribute('aria-selected', String(option.selected)); item.textContent = option.text;
-        item.addEventListener('pointerdown', event => { event.preventDefault(); select.value = option.value; select.dispatchEvent(new Event('change', { bubbles: true })); close(); input.focus(); });
+        // Retain input focus on press, commit only after release/click.
+        item.addEventListener('pointerdown', event => event.preventDefault());
+        item.addEventListener('click', () => { select.value = option.value; select.dispatchEvent(new Event('change', { bubbles: true })); close(); });
         list.append(item);
       });
       if (!list.children.length) { const empty = document.createElement('p'); empty.textContent = 'Tidak ada pilihan'; list.append(empty); }
@@ -35,19 +41,20 @@ function initAdminComboboxes() {
     input.addEventListener('input', () => render(input.value));
     input.addEventListener('blur', close);
     input.addEventListener('keydown', event => {
-      if (event.key === 'Escape') { event.preventDefault(); close(); return; }
+      if (event.key === 'Escape' && input.getAttribute('aria-expanded') === 'true') { event.preventDefault(); event.stopPropagation(); close(); return; }
       if (!['ArrowDown', 'ArrowUp', 'Enter'].includes(event.key)) return;
       event.preventDefault();
       if (input.getAttribute('aria-expanded') !== 'true') render();
       const items = [...list.querySelectorAll('[role="option"]')];
       if (!items.length) return;
-      if (event.key === 'Enter') { if (active >= 0) items[active].dispatchEvent(new PointerEvent('pointerdown')); return; }
-      active = (active + (event.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length;
+      if (event.key === 'Enter') { if (active >= 0) items[active].click(); return; }
+      active = active < 0 ? (event.key === 'ArrowDown' ? 0 : items.length - 1) : (active + (event.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length;
       items.forEach((item, index) => item.classList.toggle('is-highlighted', index === active));
       input.setAttribute('aria-activedescendant', items[active].id); items[active].scrollIntoView({ block: 'nearest' });
     });
     select._syncCombobox = sync;
     select.addEventListener('change', sync);
+    select.form?.addEventListener('reset', () => queueMicrotask(close));
     const observer = new MutationObserver(() => { if (!select.isConnected) { observer.disconnect(); return; } select._syncCombobox?.(); });
     observer.observe(select, { childList: true, subtree: true, attributes: true });
     sync();

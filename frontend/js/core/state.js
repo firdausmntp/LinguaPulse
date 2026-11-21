@@ -40,16 +40,23 @@ async function api(path, options = {}) {
 
 function showToast(message) {
   const el = document.getElementById('toastBox');
-  el.textContent = message;
-  el.classList.remove('hidden');
+  el.textContent = '';
+  cancelAnimationFrame(window._toastFrame);
+  window._toastFrame = requestAnimationFrame(() => { el.textContent = message; });
   clearTimeout(window._toastTimer);
-  window._toastTimer = setTimeout(() => el.classList.add('hidden'), 5000);
+  window._toastTimer = setTimeout(() => { el.textContent = ''; }, 8000);
 }
 
 function renderError(el, message, retry) {
   if (!el) return;
-  el.innerHTML = `<div class="empty-state"><h2>Data belum dapat dimuat</h2><p>${escapeHtml(message)}</p><button type="button" class="btn-secondary">Coba lagi</button></div>`;
+  el.innerHTML = `<div class="empty-state"><div role="alert"><h2>Data belum dapat dimuat</h2><p>${escapeHtml(message)}</p></div><button type="button" class="btn-secondary">Coba lagi</button></div>`;
   el.querySelector('button').addEventListener('click', retry);
+  if (el.id === 'app') {
+    const main = document.createElement('main');
+    main.id = 'mainContent'; main.className = 'view-container';
+    main.append(...el.childNodes); el.append(main);
+    focusPageContent();
+  }
 }
 
 function switchView(view) {

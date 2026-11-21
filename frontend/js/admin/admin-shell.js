@@ -44,13 +44,24 @@ function syncAdminToggle() {
   toggle.setAttribute('aria-expanded', String(expanded));
   toggle.setAttribute('aria-label', adminNarrow.matches ? (expanded ? 'Tutup menu admin' : 'Buka menu admin') : (expanded ? 'Ciutkan sidebar' : 'Perluas sidebar'));
   const sidebar = document.getElementById('adminSidebar');
-  if (sidebar) sidebar.inert = adminNarrow.matches && !expanded;
+  if (sidebar) {
+    sidebar.inert = adminNarrow.matches && !expanded;
+    if (adminNarrow.matches && expanded) {
+      sidebar.setAttribute('role', 'dialog');
+      sidebar.setAttribute('aria-modal', 'true');
+    } else {
+      sidebar.removeAttribute('role');
+      sidebar.removeAttribute('aria-modal');
+    }
+  }
+  const content = document.querySelector('.admin-content');
+  if (content) content.inert = adminNarrow.matches && expanded;
 }
 function closeAdminMenu(restoreFocus = false) {
   document.body.classList.remove('admin-menu-open');
   document.getElementById('adminMenuShade')?.classList.add('hidden');
   syncAdminToggle();
-  if (restoreFocus) document.getElementById('adminSidebarToggle')?.focus();
+  if (restoreFocus === true) document.getElementById('adminSidebarToggle')?.focus();
 }
 function toggleAdminSidebar() {
   if (adminNarrow.matches) {
@@ -61,15 +72,27 @@ function toggleAdminSidebar() {
     try { localStorage.setItem('admin_sidebar_collapsed', String(collapsed)); } catch (_) {}
   }
   syncAdminToggle();
+  if (adminNarrow.matches && document.body.classList.contains('admin-menu-open')) {
+    document.querySelector('#adminSidebar .admin-drawer-close')?.focus();
+  }
 }
 adminNarrow.addEventListener('change', closeAdminMenu);
 document.addEventListener('keydown', event => {
+  const userDropdown = document.getElementById('adminUserDropdown');
+  if (event.key === 'Escape' && userDropdown && !userDropdown.classList.contains('hidden')) {
+    closeAdminUserMenu();
+    document.getElementById('adminUserDropdownToggle')?.focus();
+  }
   if (event.key === 'Escape' && document.body.classList.contains('admin-menu-open')) {
     closeAdminMenu(); document.getElementById('adminSidebarToggle')?.focus();
   }
   if (event.key === 'Tab' && adminNarrow.matches && document.body.classList.contains('admin-menu-open')) {
-    const items = [...document.querySelectorAll('#adminSidebar a, #adminSidebar button, #adminSidebarToggle')].filter(el => el.getClientRects().length);
+    const items = [...document.querySelectorAll('#adminSidebar a, #adminSidebar button')].filter(el => el.getClientRects().length && getComputedStyle(el).visibility !== 'hidden');
     if (event.shiftKey && event.target === items[0]) { event.preventDefault(); items.at(-1)?.focus(); }
     else if (!event.shiftKey && event.target === items.at(-1)) { event.preventDefault(); items[0]?.focus(); }
   }
+});
+
+document.addEventListener('focusin', event => {
+  if (!event.target.closest('.admin-user-dropdown-wrapper')) closeAdminUserMenu();
 });

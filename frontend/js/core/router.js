@@ -66,12 +66,14 @@ async function renderRoute() {
   if (!routes[path]) {
     app.innerHTML = '<main id="mainContent" class="view-container not-found-page" tabindex="-1"><div class="not-found-code" aria-hidden="true">404</div><h1>Halaman tidak ditemukan</h1><p>Alamat mungkin berubah atau belum tersedia. Kembali ke beranda untuk menemukan materi dan latihan Anda.</p><div class="action-row"><a href="/" class="btn-primary">Kembali ke beranda</a><a href="/dashboard" class="btn-secondary">Buka ruang peserta</a></div></main>';
     document.title = 'Halaman tidak ditemukan | LinguaPulse';
-    document.getElementById('mainContent').focus({ preventScroll: true });
+    focusPageContent();
     window.scrollTo(0, 0);
     return;
   }
   if (isAdminRoute && appState.currentUser.role !== 'admin') {
     app.innerHTML = '<main id="mainContent" class="view-container empty-state" tabindex="-1"><h1>Akses terbatas</h1><p>Halaman ini hanya dapat dibuka oleh pengawas.</p><a href="/dashboard" class="btn-primary">Ke dasbor peserta</a></main>';
+    document.title = 'Akses terbatas | LinguaPulse';
+    focusPageContent();
     return;
   }
   const [page, title] = routes[path];
@@ -106,12 +108,8 @@ async function renderRoute() {
       }
       await switchAdminTab(initialTab, false);
     }
-    const main = document.getElementById('mainContent') || document.querySelector('main');
-    if (main && !location.hash) {
-      main.setAttribute('tabindex', '-1');
-      main.focus({ preventScroll: true });
-    }
-    if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView();
+    if (!location.hash) focusPageContent();
+    if (location.hash) { focusPageContent(); focusPageAnchor(location.hash); }
     else window.scrollTo(0, 0);
   } catch (error) {
     if (version === appState.routeVersion) renderError(app, error.message, renderRoute);
@@ -128,7 +126,7 @@ document.addEventListener('click', event => {
   event.preventDefault();
   if (url.pathname === location.pathname && url.search === location.search && url.hash) {
     history.pushState({}, '', url.hash);
-    document.getElementById(url.hash.slice(1))?.scrollIntoView();
+    focusPageAnchor(url.hash);
   } else navigate(url.href);
 });
 window.addEventListener('popstate', () => { saveExamDraft(); renderRoute(); });

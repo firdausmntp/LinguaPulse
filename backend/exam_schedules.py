@@ -6,9 +6,11 @@ import time
 from .database import get_connection
 from .exam_packages import _read as read_package, start_package_bank
 from .package_schema import DEFAULT_PACKAGE_ID
+from .exam_accommodations import accommodation_for
 
 DEFAULT_SCHEDULE_ID = 'SCH-EXPERIMENTAL'
 DEFAULT_SESSION_CODE = 'EPT-TERBUKA'
+DEFAULT_SCHEDULE_TITLE = 'Simulasi TOEFL EPT Terbuka'
 VALID_CONDITIONS = {'MANDIRI', 'COPY_TYPING', 'AI_PARAPHRASE'}
 SCHEDULE_TABLES = {
     'exam_schedules': """
@@ -82,7 +84,7 @@ def initialize_schedules(conn):
         now = datetime.now(timezone.utc).isoformat()
         conn.execute(
             'INSERT INTO exam_schedules VALUES (%s,%s,%s,%s,%s,%s,NULL,NULL,%s,1,%s,%s)',
-            (DEFAULT_SCHEDULE_ID, DEFAULT_SESSION_CODE, 'Gelombang Terbuka Experimental',
+            (DEFAULT_SCHEDULE_ID, DEFAULT_SESSION_CODE, DEFAULT_SCHEDULE_TITLE,
              'Sesi jadwal terbuka untuk latihan dan uji fungsi platform.',
              DEFAULT_PACKAGE_ID, 'MANDIRI', int(bool(pkg['is_active'])), now, now),
         )
@@ -108,16 +110,20 @@ def _hydrate_schedule(conn, row, admin=False):
     return item
 
 
-def list_schedules(admin=False):
+def list_schedules(admin=False, user_id=None):
     with get_connection() as conn:
         sql = ('SELECT s.* FROM exam_schedules s JOIN exam_packages p ON p.package_id=s.package_id '
                + ('' if admin else 'WHERE s.is_active=1 AND p.is_active=1 ')
                + 'ORDER BY s.created_at DESC, s.schedule_id')
         rows = conn.execute(sql).fetchall()
-        return {'schedules': [_hydrate_schedule(conn, row, admin=admin) for row in rows]}
+        items = [_hydrate_schedule(conn, row, admin=admin) for row in rows]
+        if user_id is not None:
+            for item in items:
+                item.update(accommodation_for(conn, item['schedule_id'], user_id))
+        return {'schedules': items}
 
 
-def resolve_schedule_for_attempt(schedule_id=None, session_code=None):
+def resolve_schedule_for_attempt(schedule_id=None, session_code=None, user_id=None):
     sid = str(schedule_id or '').strip()
     code = str(session_code or '').strip().upper()
     if not sid and not code:
@@ -129,6 +135,8 @@ def resolve_schedule_for_attempt(schedule_id=None, session_code=None):
             row = conn.execute('SELECT * FROM exam_schedules WHERE schedule_id=%s', (sid,)).fetchone()
         if not row or not row['is_active']:
             raise ValueError('Kode atau sesi jadwal tidak ditemukan atau sedang nonaktif.')
+        if sid and row['schedule_id'] != sid:
+            raise ValueError('Kode dan jadwal berbeda. Pilih kembali sesi jadwal.')
         state = window_state(row)
         if state == 'upcoming':
             raise ValueError('Sesi ujian belum dibuka sesuai jadwal pengawas.')
@@ -140,6 +148,7 @@ def resolve_schedule_for_attempt(schedule_id=None, session_code=None):
             'title': row['title'], 'package_id': row['package_id'],
             'task_condition': row['task_condition'], 'opens_at': row['opens_at'],
             'closes_at': row['closes_at'], 'closes_ts': closes_ts,
+            **accommodation_for(conn, row['schedule_id'], user_id),
         }
     bank = start_package_bank(info['package_id'])
     return info, bank

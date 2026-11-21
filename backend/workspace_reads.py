@@ -24,7 +24,7 @@ def admin_overview():
             'completed': completed, 'ongoing': ongoing, 'recent': sessions}
 
 
-def practice_question(section, excluded):
+def practice_question(section, excluded, transcript=False):
     if section not in {'listening', 'grammar', 'reading'}:
         raise ValueError('Modul latihan tidak tersedia.')
     with get_connection() as conn:
@@ -51,6 +51,9 @@ def practice_question(section, excluded):
             continue
         if section == 'listening' and not row['audio_url']:
             continue
+        text = (row['passage'] or '').strip() if section == 'listening' and transcript else ''
+        if section == 'listening' and transcript and not text:
+            continue
         if isinstance(options, list) and len(options) >= 2 and answer.isdigit() and 0 <= int(answer) < len(options):
             valid.append({
                 'question_id': row['question_id'],
@@ -58,6 +61,7 @@ def practice_question(section, excluded):
                 'prompt': row['prompt'] or '',
                 'passage': passage,
                 'audio_url': (row['audio_url'] or '') if section == 'listening' else '',
+                'transcript': text,
                 'options': options,
             })
     candidates = [row for row in valid if row['question_id'] != excluded] or valid

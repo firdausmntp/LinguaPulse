@@ -19,6 +19,7 @@ from backend.seed_data import seed_all
 from backend.router import TOEFLPlatformRouter
 from backend.exam_schedules import classify_triage_status, delete_schedule, list_schedules, save_schedule
 from backend.attempts import resume_attempt, start_attempt
+from backend.exam_accommodations import save_time_accommodation
 
 
 def _iso_offset(hours=0, minutes=0):
@@ -94,11 +95,15 @@ class ExamScheduleTests(unittest.TestCase):
             'title': 'Gelombang Ketat', 'session_code': 'KETAT-01', 'package_id': 'PKG-EXPERIMENTAL',
             'task_condition': 'COPY_TYPING', 'opens_at': _iso_offset(minutes=-5), 'closes_at': _iso_offset(minutes=10), 'is_active': True,
         })['schedule']
+        save_time_accommodation({'schedule_id': closing_soon['schedule_id'],
+                                 'username': self.user['username'], 'extra_minutes': 20})
         started = start_attempt(self.user, {
             'session_code': 'ketat-01', 'device_profile': 'PC_PHYSICAL', 'consent_agreed': True,
         })
         self.assertLessEqual(started['deadline'] / 1000 - time.time(), 10 * 60 + 65)
         self.assertEqual(started['bank']['schedule']['session_code'], 'KETAT-01')
+        self.assertEqual(started['bank']['schedule']['extra_minutes'], 20)
+        self.assertEqual(started['deadline'], round(datetime.fromisoformat(closing_soon['closes_at']).timestamp() * 1000))
         self.assertNotIn('task_condition', started['bank']['schedule'])
         resumed = resume_attempt(self.user, started['attempt_id'])
         self.assertEqual(resumed, started)
@@ -116,6 +121,32 @@ class ExamScheduleTests(unittest.TestCase):
         self.assertEqual(classify_triage_status(0.20, 1), 'FLAG')
         self.assertEqual(classify_triage_status(0.62, 1), 'TERDETEKSI')
         self.assertEqual(classify_triage_status(0.75, 0), 'TERDETEKSI')
+
+    def test_listening_transcript_requires_complete_consistent_recordings(self):
+        schedule = {'schedule_id': 'SCH-EXPERIMENTAL', 'username': self.user['username'],
+                    'extra_minutes': 0, 'listening_transcript': True}
+        with get_connection() as conn:
+            questions = conn.execute("SELECT question_id, passage FROM questions WHERE section='listening'").fetchall()
+            conn.execute("UPDATE questions SET passage='' WHERE section='listening'")
+        with self.assertRaisesRegex(ValueError, 'transkrip'):
+            save_time_accommodation(schedule)
+        with get_connection() as conn:
+            conn.execute('UPDATE questions SET passage=%s WHERE question_id=%s',
+                         (questions[0]['passage'], questions[0]['question_id']))
+        self.assertTrue(save_time_accommodation(schedule)['accommodations'][0]['listening_transcript'])
+        payload = {'schedule_id': schedule['schedule_id'], 'device_profile': 'PC_PHYSICAL', 'consent_agreed': True}
+        started = start_attempt(self.user, payload)
+        self.assertEqual({q['transcript'] for q in started['bank']['listening']['questions']},
+                         {questions[0]['passage']})
+        with get_connection() as conn:
+            conn.execute('UPDATE questions SET passage=%s WHERE question_id=%s',
+                         ('Conflicting transcript.', questions[1]['question_id']))
+            conn.execute('UPDATE exam_attempts SET expires_at=%s WHERE attempt_id=%s',
+                         (time.time() - 1, started['attempt_id']))
+        with self.assertRaisesRegex(ValueError, 'transkrip'):
+            start_attempt(self.user, payload)
+        resumed = resume_attempt(self.user, started['attempt_id'])
+        self.assertTrue(all('transcript' not in q for q in resumed['bank']['listening']['questions']))
 
     def test_browser_schedule_flow_and_proctor_triage(self):
         class QuietRouter(TOEFLPlatformRouter):

@@ -82,8 +82,11 @@ def _public_question(item, condition=None):
     return q
 
 
-def public_bank(bank, condition=None, include_list=False):
+def public_bank(bank, condition=None, include_list=False, transcripts=None):
     listening = [_public_question(item, condition) for item in bank.get('listening', {}).get('questions', [])]
+    if transcripts:
+        for item in listening:
+            item['transcript'] = transcripts[item['audio_url']]
     reading = [_public_question(item, condition) for item in bank.get('reading', {}).get('questions', [])]
     grammar_mc = [_public_question(item, condition) for item in bank.get('grammar_mc', [])]
     grammar_rewrite = [_public_question(item, condition) for item in bank.get('grammar_rewrite', [])]

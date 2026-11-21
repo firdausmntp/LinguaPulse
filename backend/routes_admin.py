@@ -7,11 +7,14 @@ from .auth import format_user_row
 from .question_store import get_question_detail, save_question, import_questions, export_questions, delete_question
 from .audio_upload import upload_audio
 from .exam_schedules import classify_triage_status, delete_schedule, list_schedules, save_schedule
+from .exam_accommodations import list_time_accommodations, save_time_accommodation
 from .survey import update_proctor_label
 
 
 class AdminRoutes:
     def admin_get(self, parsed):
+        if parsed.path == '/api/admin/time-accommodations':
+            return self._send_json(list_time_accommodations(parse_qs(parsed.query).get('schedule_id', [''])[0]))
         if parsed.path == "/api/admin/schedules":
             return self._send_json(list_schedules(admin=True))
         if parsed.path == "/api/admin/questions":
@@ -130,6 +133,7 @@ class AdminRoutes:
             '/api/admin/questions/import': import_questions,
             '/api/admin/audio': upload_audio,
             '/api/admin/schedules': save_schedule,
+            '/api/admin/time-accommodations': save_time_accommodation,
         }
         if parsed.path not in handlers:
             return self._send_json({'error': 'Endpoint tidak ditemukan.'}, 404)

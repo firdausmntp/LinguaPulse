@@ -27,7 +27,7 @@ from .survey import submit_respondent_survey, get_respondent_survey
 PAGE_ROUTES = {'/', '/login', '/register', '/dashboard', '/exam', '/exam/session',
                '/results', '/history', '/admin', '/admin/overview', '/admin/proctor',
                '/admin/questions', '/admin/users', '/admin/packages', '/admin/schedules', '/privacy', '/terms', '/practice'}
-ADMIN_PATHS = {'/api/admin/users', '/api/admin/questions', '/api/admin/schedules', '/api/proctor/sessions', '/api/export/csv', '/api/admin/questions/export', '/api/admin/overview'}
+ADMIN_PATHS = {'/api/admin/users', '/api/admin/questions', '/api/admin/schedules', '/api/admin/time-accommodations', '/api/proctor/sessions', '/api/export/csv', '/api/admin/questions/export', '/api/admin/overview'}
 
 
 class TOEFLPlatformRouter(AdminRoutes, ExamRoutes, SimpleHTTPRequestHandler):
@@ -94,9 +94,10 @@ class TOEFLPlatformRouter(AdminRoutes, ExamRoutes, SimpleHTTPRequestHandler):
                 return
             return self._send_json(get_exam_settings())
         if path == '/api/exam/schedules':
-            if not self._authorize():
+            user = self._authorize()
+            if not user:
                 return
-            return self._send_json(list_schedules(admin=False))
+            return self._send_json(list_schedules(user_id=user['user_id']))
         if path in {'/api/exam/packages', '/api/admin/packages'}:
             admin = path.startswith('/api/admin/')
             if not self._authorize(admin=admin):
@@ -122,7 +123,8 @@ class TOEFLPlatformRouter(AdminRoutes, ExamRoutes, SimpleHTTPRequestHandler):
                 return self._send_json({'error': 'Gunakan akun peserta untuk latihan bebas.'}, 403)
             query = parse_qs(parsed.query)
             try:
-                return self._send_json(practice_question(query.get('section', ['grammar'])[0], query.get('exclude', [''])[0]))
+                return self._send_json(practice_question(query.get('section', ['grammar'])[0],
+                    query.get('exclude', [''])[0], query.get('transcript', [''])[0] == '1'))
             except ValueError as error:
                 return self._send_json({'error': str(error)}, 400)
         if path == '/api/survey':
@@ -277,7 +279,7 @@ class TOEFLPlatformRouter(AdminRoutes, ExamRoutes, SimpleHTTPRequestHandler):
                 return self._send_json(save_user(payload, actor))
             except ValueError as error:
                 return self._send_json({'error': str(error)}, 400)
-        if parsed.path in {'/api/admin/questions', '/api/admin/questions/import', '/api/admin/audio', '/api/admin/schedules', '/api/proctor/label'}:
+        if parsed.path in {'/api/admin/questions', '/api/admin/questions/import', '/api/admin/audio', '/api/admin/schedules', '/api/admin/time-accommodations', '/api/proctor/label'}:
             if not self._authorize(admin=True):
                 return
             return self.admin_post(parsed, payload)

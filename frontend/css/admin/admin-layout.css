@@ -35,14 +35,17 @@
   display: grid;
   place-items: center;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: background-color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out), transform var(--dur-micro) var(--ease-out);
   flex-shrink: 0;
 }
+.admin-menu-toggle:active { transform: scale(0.95); }
 
-.admin-menu-toggle:hover {
-  background: #eff6ff;
-  color: #1d4ed8;
-  border-color: #bfdbfe;
+@media (hover: hover) {
+  .admin-menu-toggle:hover {
+    background: #eff6ff;
+    color: #1d4ed8;
+    border-color: #bfdbfe;
+  }
 }
 
 .admin-context {
@@ -70,19 +73,21 @@
   align-items: center;
   gap: 6px;
   font-size: 11px;
-  color: #64748b;
+  color: var(--color-muted);
   margin: 0;
 }
 
 .admin-breadcrumbs a {
-  color: #64748b;
+  color: var(--color-muted);
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.15s ease;
+  transition: color var(--dur-short) var(--ease-out);
 }
 
-.admin-breadcrumbs a:hover {
-  color: #2563eb;
+@media (hover: hover) {
+  .admin-breadcrumbs a:hover {
+    color: #2563eb;
+  }
 }
 
 .admin-breadcrumbs .breadcrumb-sep {
@@ -116,14 +121,17 @@
   background: #ffffff;
   color: #475569;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: background-color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out), transform var(--dur-micro) var(--ease-out);
   white-space: nowrap;
 }
+.admin-refresh-top:active, .admin-home-link:active { transform: scale(0.97); }
 
-.admin-refresh-top:hover {
-  background: #f8fafc;
-  color: #0f172a;
-  border-color: #cbd5e1;
+@media (hover: hover) {
+  .admin-refresh-top:hover {
+    background: #f8fafc;
+    color: #0f172a;
+    border-color: #cbd5e1;
+  }
 }
 
 .admin-home-link {
@@ -139,14 +147,16 @@
   border-radius: 8px;
   background: #ffffff;
   border: 1px solid #e2e8f0;
-  transition: all 0.15s ease;
+  transition: background-color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out), transform var(--dur-micro) var(--ease-out);
   white-space: nowrap;
 }
 
-.admin-home-link:hover {
-  color: #1d4ed8;
-  border-color: #bfdbfe;
-  background: #eff6ff;
+@media (hover: hover) {
+  .admin-home-link:hover {
+    color: #1d4ed8;
+    border-color: #bfdbfe;
+    background: #eff6ff;
+  }
 }
 
 .admin-user-dropdown-wrapper {
@@ -165,11 +175,14 @@
   padding: 0;
   cursor: pointer;
   border-radius: 50%;
-  transition: transform 0.15s ease;
+  transition: transform var(--dur-micro) var(--ease-out);
 }
+.admin-user-pill:active { transform: scale(0.95); }
 
-.admin-user-pill:hover {
-  transform: scale(1.04);
+@media (hover: hover) {
+  .admin-user-pill:hover {
+    transform: scale(1.04);
+  }
 }
 
 .admin-user-dropdown {
@@ -178,19 +191,21 @@
   right: 0;
   width: 200px;
   background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.12), 0 8px 10px -6px rgba(15, 23, 42, 0.08);
+  border: 1px solid transparent;
+  border-radius: 14px;
+  box-shadow: var(--shadow-lg), 0 0 0 1px oklch(0 0 0 / 0.06);
   padding: 6px;
   z-index: 1050;
   display: flex;
   flex-direction: column;
-  animation: dropdownFadeIn 0.15s ease-out;
+  transform-origin: top right;
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  transition: opacity var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out);
 }
 
-@keyframes dropdownFadeIn {
-  from { opacity: 0; transform: translateY(-4px); }
-  to { opacity: 1; transform: translateY(0); }
+@starting-style {
+  .admin-user-dropdown:not(.hidden) { opacity: 0; transform: scale(0.96) translateY(-4px); }
 }
 
 .admin-user-dropdown.hidden {
@@ -245,22 +260,23 @@
   width: 100%;
   text-align: left;
   cursor: pointer;
-  transition: all 0.12s ease;
+  transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
   box-sizing: border-box;
 }
 
-.dropdown-item:hover {
-  background: #f8fafc;
-  color: #0f172a;
+@media (hover: hover) {
+  .dropdown-item:hover {
+    background: #f8fafc;
+    color: #0f172a;
+  }
+  .dropdown-logout:hover {
+    background: #fef2f2 !important;
+    color: #b91c1c !important;
+  }
 }
 
 .dropdown-logout {
   color: #dc2626 !important;
-}
-
-.dropdown-logout:hover {
-  background: #fef2f2 !important;
-  color: #b91c1c !important;
 }
 
 

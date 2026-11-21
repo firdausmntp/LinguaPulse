@@ -121,6 +121,7 @@ class ExamRoutes:
                 "accuracy_percent": accuracy_percent,
                 "listening_mc_correct": l_correct,
                 "listening_mc_total": len(l_questions),
+                "listening_transcript_enabled": bool(q_bank.get('listening_transcripts')),
                 "grammar_mc_correct": g_correct,
                 "grammar_mc_total": len(q_bank["grammar_mc"]),
                 "reading_mc_correct": r_correct,

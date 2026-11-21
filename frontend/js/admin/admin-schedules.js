@@ -57,15 +57,20 @@ async function editExamSchedule(id) {
   const pkgOptions = scheduleEditor.packages.map(p => `<option value="${escapeHtml(p.package_id)}" ${p.package_id === s.package_id ? 'selected' : ''}>${escapeHtml(p.name)} (${p.duration_minutes} menit)</option>`).join('');
   panel.innerHTML = `<form id="scheduleForm"><fieldset id="scheduleFields"><legend class="sr-only">Pengaturan sesi jadwal</legend><div class="package-editor-heading"><h3>${id ? 'Edit sesi jadwal' : 'Sesi jadwal baru'}</h3><span id="scheduleDirtyStatus" role="status">${id ? 'Tersimpan' : 'Belum disimpan'}</span></div>
     <label for="scheduleTitle">Judul gelombang / sesi</label><input id="scheduleTitle" type="text" maxlength="120" required value="${escapeHtml(s.title)}" placeholder="Misalnya EPT Gelombang 1 Kelas A">
-    <div class="package-settings-row"><div><label for="scheduleCode">Kode sesi / kelas</label><input id="scheduleCode" type="text" maxlength="32" required pattern="[A-Za-z0-9_-]{3,32}" value="${escapeHtml(s.session_code)}" placeholder="EPT-2026-A"></div>
+    <div class="package-settings-row"><div><label for="scheduleCode">Kode sesi / kelas</label><input id="scheduleCode" type="text" maxlength="32" required pattern="[A-Za-z0-9_\\-]{3,32}" data-error-pattern="Gunakan 3 sampai 32 huruf, angka, tanda hubung, atau garis bawah." value="${escapeHtml(s.session_code)}" placeholder="EPT-2026-A"></div>
     <div><label for="schedulePackage">Paket ujian</label><select id="schedulePackage" required>${pkgOptions}</select></div></div>
-    <div class="package-settings-row"><div><label for="scheduleOpensAt">Jadwal buka (opsional)</label><input id="scheduleOpensAt" type="datetime-local" value="${escapeHtml(toLocalDatetimeInput(s.opens_at))}"></div>
+    <div class="package-settings-row schedule-time-fields"><div><label for="scheduleOpensAt">Jadwal buka (opsional)</label><input id="scheduleOpensAt" type="datetime-local" value="${escapeHtml(toLocalDatetimeInput(s.opens_at))}"></div>
     <div><label for="scheduleClosesAt">Batas waktu / deadline (opsional)</label><input id="scheduleClosesAt" type="datetime-local" value="${escapeHtml(toLocalDatetimeInput(s.closes_at))}"></div></div>
     <label for="scheduleCondition">Penugasan kondisi riset (tidak tampil ke peserta)</label><select id="scheduleCondition"><option value="MANDIRI" ${s.task_condition === 'MANDIRI' ? 'selected' : ''}>Mandiri</option><option value="COPY_TYPING" ${s.task_condition === 'COPY_TYPING' ? 'selected' : ''}>Simulasi menyalin teks</option><option value="AI_PARAPHRASE" ${s.task_condition === 'AI_PARAPHRASE' ? 'selected' : ''}>Simulasi parafrase AI</option></select>
     <label for="scheduleDescription">Catatan / instruksi gelombang</label><textarea id="scheduleDescription" maxlength="2000" rows="2" placeholder="Keterangan gelombang atau kelompok peserta.">${escapeHtml(s.description || '')}</textarea>
     <label class="checkbox-label package-publish"><input id="scheduleActive" type="checkbox" ${s.is_active ? 'checked' : ''}><span>Aktifkan sesi jadwal untuk peserta</span></label>
     <div id="scheduleError" class="inline-error hidden" role="alert"></div>
-    <div class="package-editor-actions"><button class="btn-primary" type="submit" id="saveScheduleButton">Simpan sesi jadwal</button>${id ? '<button class="btn-secondary" type="button" id="deleteScheduleButton">Hapus sesi</button>' : ''}<span id="scheduleSaveStatus" role="status"></span></div></fieldset></form>`;
+    <div class="package-editor-actions"><button class="btn-primary" type="submit" id="saveScheduleButton">Simpan sesi jadwal</button>${id ? '<button class="btn-secondary btn-danger" type="button" id="deleteScheduleButton">Hapus sesi</button>' : ''}<span id="scheduleSaveStatus" role="status"></span></div></fieldset></form><section id="scheduleTimeAccommodations" class="schedule-time-accommodations" aria-label="Akomodasi peserta"></section>`;
+  enableFormErrors(document.getElementById('scheduleForm'), form => {
+    const opens = form.querySelector('#scheduleOpensAt').value;
+    const closes = form.querySelector('#scheduleClosesAt').value;
+    return { scheduleClosesAt: opens && closes && closes <= opens ? 'Pilih waktu tutup sesudah waktu buka.' : '' };
+  });
   document.getElementById('scheduleForm').addEventListener('input', () => {
     scheduleEditor.dirty = true;
     const st = document.getElementById('scheduleDirtyStatus');
@@ -73,6 +78,7 @@ async function editExamSchedule(id) {
   });
   document.getElementById('scheduleForm').addEventListener('submit', saveExamSchedule);
   document.getElementById('deleteScheduleButton')?.addEventListener('click', () => removeExamSchedule(s.schedule_id));
+  showTimeAccommodations(id);
   renderAdminScheduleList();
   document.getElementById('scheduleTitle').focus({ preventScroll: true });
 }
@@ -103,13 +109,14 @@ async function saveExamSchedule(event) {
     scheduleEditor.current = data.schedule; scheduleEditor.dirty = false;
     document.getElementById('scheduleDirtyStatus').textContent = 'Tersimpan';
     document.getElementById('scheduleSaveStatus').textContent = data.schedule.is_active ? 'Sesi jadwal aktif tersimpan.' : 'Sesi jadwal disimpan sebagai nonaktif.';
+    if (!old?.schedule_id) showTimeAccommodations(data.schedule.schedule_id);
     renderAdminScheduleList(); showToast('Sesi jadwal berhasil disimpan.');
-  } catch (e) { error.textContent = e.message; error.classList.remove('hidden'); }
+  } catch (e) { showFormError(error, e.message); }
   finally { scheduleEditor.saving = false; fields.disabled = false; button.disabled = false; }
 }
 
 async function removeExamSchedule(scheduleId) {
-  if (!scheduleId || !confirm('Hapus sesi jadwal ini? Riwayat telemetri sesi yang sudah terkirim tetap tersimpan.')) return;
+  if (!scheduleId || !await adminConfirm('Hapus sesi jadwal?', 'Riwayat telemetri sesi yang sudah terkirim tetap tersimpan.', 'Hapus sesi', true)) return;
   try {
     await api('/api/admin/schedules?id=' + encodeURIComponent(scheduleId), { method: 'DELETE' });
     scheduleEditor.items = scheduleEditor.items.filter(item => item.schedule_id !== scheduleId);

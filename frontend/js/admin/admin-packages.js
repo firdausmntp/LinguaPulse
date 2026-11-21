@@ -1,6 +1,6 @@
 // Each package owns its selection and duration; running attempts keep snapshots.
 const packageEditor = { items: [], questions: [], selected: new Set(), current: null, dirty: false, saving: false };
-const packageModuleNames = { listening: 'Listening', grammar: 'Structure', reading: 'Reading', writing: 'Writing riset' };
+const packageModuleNames = { listening: 'Listening', grammar: 'Structure', reading: 'Reading', writing: 'Esai riset' };
 
 async function confirmAdminTransition() {
   if (packageEditor.saving) { showToast('Tunggu sampai paket selesai disimpan.'); return false; }
@@ -42,7 +42,7 @@ async function editExamPackage(id) {
   packageEditor.selected = new Set(p.question_ids);
   const panel = document.getElementById('packageEditorPanel');
   panel.innerHTML = `<form id="packageForm"><fieldset id="packageFields"><legend class="sr-only">Pengaturan paket ujian</legend><div class="package-editor-heading"><h3>${id ? 'Edit paket' : 'Paket baru'}</h3><span id="packageDirtyStatus" role="status">${id ? 'Tersimpan' : 'Belum disimpan'}</span></div>
-    <label for="packageName">Nama paket</label><input id="packageName" type="text" maxlength="100" required value="${escapeHtml(p.name)}" placeholder="Misalnya Experimental">
+    <label for="packageName">Nama paket</label><input id="packageName" type="text" maxlength="100" required value="${escapeHtml(p.name)}" placeholder="Misalnya Simulasi TOEFL EPT">
     <label for="packageDescription">Deskripsi</label><textarea id="packageDescription" maxlength="2000" rows="2" placeholder="Jelaskan tujuan atau materi paket ini.">${escapeHtml(p.description)}</textarea>
     <div class="package-settings-row"><div><label for="packageDuration">Durasi (menit)</label><input id="packageDuration" type="number" min="1" max="240" required value="${p.duration_minutes}"></div><label class="checkbox-label package-publish"><input id="packagePublished" type="checkbox" ${p.is_active ? 'checked' : ''}><span>Publikasikan untuk peserta</span></label></div>
     <div class="package-picker-heading"><div><h4>Pilih soal dari bank</h4><p id="packageSelectionCount" role="status"></p></div><button type="button" class="btn-secondary" id="packageSelectVisible">Pilih hasil pencarian</button></div>
@@ -50,6 +50,7 @@ async function editExamPackage(id) {
     <div id="packageQuestionList" class="package-question-picker"></div>
     <p class="package-editor-note">Untuk dipublikasikan, paket memerlukan soal aktif Listening dengan audio, Structure, dan Reading dengan bacaan. Jika tersedia beberapa tugas Writing, peserta memilih satu sebelum mulai. Perubahan hanya berlaku untuk sesi baru.</p>
     <div id="packageError" class="inline-error hidden" role="alert"></div><div class="package-editor-actions"><button class="btn-primary" type="submit" id="savePackageButton">Simpan paket</button><span id="packageSaveStatus" role="status"></span></div></fieldset></form>`;
+  enableFormErrors(document.getElementById('packageForm'));
   document.getElementById('packageForm').addEventListener('input', markPackageDirty);
   document.getElementById('packageForm').addEventListener('change', markPackageDirty);
   document.getElementById('packageForm').addEventListener('submit', saveExamPackage);
@@ -112,6 +113,6 @@ async function saveExamPackage(event) {
     document.getElementById('packageDirtyStatus').textContent = 'Tersimpan';
     document.getElementById('packageSaveStatus').textContent = data.package.is_active ? 'Paket tersedia untuk peserta.' : 'Draf tersimpan, belum ditampilkan kepada peserta.';
     renderAdminPackageList(); showToast('Paket berhasil disimpan.');
-  } catch (e) { error.textContent = e.message; error.classList.remove('hidden'); }
+  } catch (e) { showFormError(error, e.message); }
   finally { packageEditor.saving = false; fields.disabled = false; button.disabled = false; }
 }

@@ -47,6 +47,8 @@ def check_finished_browser(browser, origin, artifacts):
     page.locator('.history-cards a').first.click()
     page.wait_for_url('**/results?id=*')
     expect(page.locator('.accuracy-value')).to_be_visible()
+    assert page.locator('.result-summary').evaluate('(el) => el.getBoundingClientRect().top + scrollY < 650')
+    assert not page.locator('.results-survey-disclosure[open]').count()
     for module in ('listening', 'grammar', 'reading'):
         page.locator('[data-result-module="' + module + '"]').click()
         expect(page.locator('.review-question').first).to_be_visible()
@@ -89,6 +91,12 @@ def check_finished_browser(browser, origin, artifacts):
     manager.goto(origin + '/admin?tab=questions')
     manager.wait_for_load_state('networkidle')
     expect(manager.locator('.bank-detail')).to_be_hidden()
+    for width in (320, 768):
+        manager.set_viewport_size({'width': width, 'height': 812})
+        assert manager.locator('.bank-table-scroll').evaluate('(el) => el.scrollWidth <= el.clientWidth + 1')
+        actions = manager.locator('.bank-row-actions').first
+        assert actions.evaluate('(el) => el.getBoundingClientRect().right <= innerWidth')
+    manager.set_viewport_size({'width': 375, 'height': 812})
     manager.locator('#adminQuestionsBody').get_by_role('button', name='Edit', exact=True).first.click()
     expect(manager.locator('#qFormTitle')).to_be_focused()
     expect(manager.locator('#qFormPrompt')).not_to_have_value('')

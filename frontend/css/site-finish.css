@@ -13,9 +13,10 @@
   .account-nav .btn-primary, .account-nav .btn-secondary { padding-inline: var(--space-xs); min-height: 38px; }
   .site-menu-toggle { display: grid; place-items: center; flex-shrink: 0; width: 32px; height: 38px; padding: var(--space-2xs); border: 1px solid var(--color-rule); border-radius: var(--radius-sm); background: var(--color-paper-2); color: var(--color-ink); cursor: pointer; }
   .site-menu-toggle svg { width: 19px; height: 19px; }
-  .site-header .main-nav { display: none; position: absolute; top: calc(100% - 1px); left: var(--space-md); right: var(--space-md); width: auto; margin: 0; padding: var(--space-xs); order: initial; border: 1px solid var(--color-rule); border-radius: var(--radius-md); background: var(--color-paper-2); z-index: var(--z-sticky); }
+  .site-header .main-nav { display: none; position: absolute; top: calc(100% - 1px); left: var(--space-md); right: var(--space-md); width: auto; max-height: calc(100dvh - 88px); overflow-y: auto; overscroll-behavior: contain; margin: 0; padding: var(--space-xs); order: initial; border: 1px solid transparent; border-radius: var(--radius-md); background: var(--color-paper-2); box-shadow: var(--shadow-border); z-index: var(--z-sticky); }
   .site-header.menu-open .main-nav:not(.hidden) { display: flex; flex-direction: column; gap: var(--space-2xs); align-items: stretch; }
-  .site-header .main-nav a { padding: var(--space-sm); min-height: 44px; }
-  .site-header .main-nav a:hover { background: var(--color-accent-soft); }
+  .site-header .main-nav a { padding: var(--space-sm); min-height: 44px; border-radius: var(--radius-sm); }
+  @media (hover: hover) {
+    .site-header .main-nav a:hover { background: var(--color-accent-soft); }
+  }
 }
-@media (prefers-reduced-motion: reduce) { .site-header * { transition: none; } }

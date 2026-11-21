@@ -69,6 +69,11 @@ def check_package_browser(browser, origin, artifacts):
         expect(learner.locator('#previousQuestion')).to_be_disabled()
         first_id = learner.evaluate('appState.exam.currentQuestionId')
         learner.locator('.q-card:visible input').first.check()
+        learner.locator('.q-card:visible [data-clear-choice]').press('Enter')
+        expect(learner.locator('.q-card:visible input:checked')).to_have_count(0)
+        expect(learner.locator('.q-card:visible [data-clear-choice]')).to_be_hidden()
+        expect(learner.locator('#examProgressText')).to_contain_text('0 dari 4')
+        learner.locator('.q-card:visible input').first.check()
         learner.locator('.q-card:visible [data-flag]').click()
         expect(learner.locator(f'[data-jump="{first_id}"]')).to_have_class(__import__('re').compile('is-marked'))
         learner.screenshot(path=str(artifacts / 'packages-session-desktop.png'), full_page=True)
@@ -98,27 +103,33 @@ def check_package_browser(browser, origin, artifacts):
         expect(learner.locator('#examPackageTitle')).to_have_text('Experimental ringkas')
         assert learner.evaluate('appState.exam.deadline') == deadline
         assert student_ctx.request.get(origin + '/api/exam/packages?id=' + package_id).status == 404
+        learner.locator('#questionNavigator button').first.focus()
+        learner.set_viewport_size({'width': 768, 'height': 812})
+        expect(learner.locator('.question-navigation summary')).to_be_focused()
         for width in (1100, 768, 375, 320):
             learner.set_viewport_size({'width': width, 'height': 812})
             assert learner.evaluate('document.documentElement.scrollWidth <= innerWidth'), ('session', width)
             expect(learner.locator('.q-card:visible')).to_have_count(1)
-            if width < 761:
+            if width <= 960:
                 learner.locator('.question-navigation').evaluate('(el) => el.open = true')
             learner.locator('#questionNavigator [data-jump]').nth(2).click()
-            expect(learner.locator('#examPaneContext')).to_have_text('Bacaan')
-            learner.locator('#examPaneContext').click()
+            reading_summary = learner.locator('#readingContext summary')
+            expect(reading_summary).to_have_text('Baca teks')
+            assert reading_summary.evaluate('el => el.getBoundingClientRect().height >= 44')
+            reading_summary.click()
             expect(learner.locator('#readingPassageText')).to_be_visible()
-            assert learner.locator('.pane-right').evaluate('el => el.inert') is True
-            learner.locator('#examPaneAnswers').click()
             expect(learner.locator('.q-card:visible')).to_have_count(1)
-            if width < 761:
-                assert learner.locator('.exam-pane-switch').bounding_box()['y'] >= learner.locator('.exam-session-header').bounding_box()['height'] - 1
+            learner.locator('#readingBackToQuestion').press('Enter')
+            expect(learner.locator('#readingContext')).not_to_have_attribute('open', '')
+            expect(learner.locator('.q-card:visible .q-prompt')).to_be_focused()
             learner.screenshot(path=str(artifacts / f'packages-session-{width}.png'), full_page=True)
             learner.screenshot(path=str(artifacts / f'packages-session-viewport-{width}.png'))
         learner.locator('#nextQuestion').click()
+        expect(learner.locator('#writingPromptText')).to_be_visible()
         expect(learner.locator('#essayEditor')).to_be_visible()
         expect(learner.locator('#nextQuestion')).to_be_disabled()
         learner.locator('#essayEditor').fill('Jawaban uji Writing, bukan data responden penelitian.')
+        expect(learner.locator('#examProgressText')).to_contain_text('3 dari 4')
         learner.locator('#submitExamButton').click()
         learner.wait_for_url('**/results?id=*')
         expect(learner.locator('.accuracy-value')).to_be_visible()

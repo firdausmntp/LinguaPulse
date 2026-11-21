@@ -63,11 +63,13 @@
 
 .admin-table tbody tr {
   cursor: pointer;
-  transition: background-color 0.12s ease;
+  transition: background-color var(--dur-micro) var(--ease-out);
 }
 
-.admin-table tbody tr:hover {
-  background: #f8fafc;
+@media (hover: hover) {
+  .admin-table tbody tr:hover {
+    background: #f8fafc;
+  }
 }
 
 .admin-table tbody tr.selected-row {
@@ -170,6 +172,7 @@
   margin-top: var(--space-xs);
   padding: var(--space-xs) var(--space-sm);
   overflow-y: auto;
+  overscroll-behavior: contain;
   border: 1px solid var(--color-rule);
   border-radius: var(--radius-md);
   background: var(--color-paper-3);
@@ -221,13 +224,5 @@
 @media (max-width: 700px) {
   .top-action-label {
     display: none !important;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .subtab-btn,
-  .btn-export-csv,
-  .admin-table tbody tr {
-    transition: none !important;
   }
 }

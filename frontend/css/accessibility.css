@@ -1,0 +1,122 @@
+/* Shared WCAG 2.2 AA controls, focus, reflow and user preference support. */
+html {
+  scroll-padding-block: 7rem 6rem;
+}
+
+:where(button, input, select, textarea, summary, [tabindex]) {
+  scroll-margin-block: 7rem 6rem;
+}
+
+/* Keep a two-colour indicator visible on both dark and light surfaces. */
+body :is(a, button, input, select, textarea, summary, [tabindex]):focus-visible,
+body #app :is(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 3px #fff;
+  transition: none !important;
+}
+
+.skip-link { position: fixed; }
+.toast:empty { opacity: 0; transform: translateY(10px); padding: 0; border-width: 0; pointer-events: none; }
+.field-error { display: block; color: #b91c1c; font-weight: 600; margin-block: 4px 8px; }
+.audio-transcript { white-space: pre-wrap; overflow-wrap: anywhere; }
+.schedule-time-accommodations { border-top: 1px solid var(--color-rule); margin-top: 24px; padding-top: 20px; }
+.schedule-time-accommodations p, .schedule-time-accommodations .package-settings-row { margin-block: 8px; }
+.schedule-time-accommodations ul { padding-inline-start: 24px; }
+.listening-practice-mode { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-block: 12px; }
+.listening-practice-mode label { margin: 0; }
+.listening-practice-mode select { width: auto; max-width: 100%; }
+
+:where(button, summary, input:not([type="hidden"]), select) {
+  min-width: 24px;
+  min-height: 24px;
+}
+
+/* Borders identify editable fields even without hover or keyboard focus. */
+#app :is(input:not([type="checkbox"], [type="radio"], [type="hidden"]), select, textarea) {
+  border-color: var(--color-input-border);
+}
+
+input::placeholder, textarea::placeholder { color: var(--color-muted); opacity: 1; }
+#app :is(input, textarea)[aria-invalid="true"] { border-color: var(--color-bad); }
+
+.btn-primary, .btn-secondary, .btn-subtle, .btn-outline-light,
+.btn-submit-exam, .is-admin .btn-primary, .is-admin .btn-secondary {
+  white-space: normal;
+  height: auto;
+  overflow-wrap: normal;
+}
+
+main, section, form, dialog, .admin-content { min-width: 0; }
+main p, main dd, main label, main small { overflow-wrap: anywhere; }
+audio { max-width: 100%; }
+
+/* A short viewport or increased text spacing must not clip dialog actions. */
+.user-editor-dialog, .account-help-dialog {
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.user-dialog-heading, .user-dialog-actions { flex-wrap: wrap; }
+.admin-top-bar h1 { white-space: normal; overflow: visible; }
+.admin-breadcrumbs { flex-wrap: wrap; }
+.admin-collapsed .admin-console-brand { min-width: 24px; min-height: 24px; }
+.sample-choice, .practice-option, .practice-letter { border-color: var(--color-input-border); }
+
+/* A non-colour cue identifies answered and flagged navigator buttons. */
+.question-number.is-answered { text-decoration: underline; text-underline-offset: 3px; }
+.question-number.is-marked::after { content: '*'; margin-inline-start: 2px; }
+
+@media (max-width: 700px) {
+  /* Flowing headers keep enlarged text and keyboard targets unobscured. */
+  .site-header { position: relative; }
+  .header-inner { flex-wrap: wrap; }
+  .account-nav { flex-wrap: wrap; }
+  .admin-top-bar { flex-wrap: wrap; }
+  .admin-top-actions { flex-wrap: wrap; margin-left: auto; }
+  .users-heading, .question-bank-heading, .package-manager-heading, .package-editor-heading,
+  .package-picker-heading, .exam-question-meta, .package-card-top {
+    flex-wrap: wrap;
+  }
+  .toast { left: 16px; right: 16px; bottom: 16px; overflow-wrap: anywhere; }
+  .question-bank-heading > button { flex-shrink: 0; }
+  .bank-kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .bank-kpi-grid .kpi-card { padding: 14px; min-height: 112px; }
+  .pagination-size-wrap { flex-wrap: wrap; }
+  .pagination-size-wrap > span { flex-shrink: 0; }
+  .pagination-nav { flex-wrap: wrap; }
+  .is-admin.admin-menu-open { overflow: hidden; }
+  .is-admin.admin-menu-open .admin-sidebar {
+    height: 100dvh;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-property: color, background-color, border-color, opacity, box-shadow !important;
+    transition-duration: 150ms !important;
+    transition-timing-function: ease !important;
+  }
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    transition: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  body :is(a, button, input, select, textarea, summary, [tabindex]):focus-visible,
+  body #app :is(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline-color: Highlight;
+  }
+  .practice-option:has(input:checked), .q-option-label:has(input:checked),
+  .question-number.is-current, button[aria-pressed="true"] {
+    outline: 2px solid Highlight;
+    outline-offset: -3px;
+  }
+}
